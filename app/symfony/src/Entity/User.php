@@ -51,10 +51,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $department;
-
     /**
      * @return mixed
      */
@@ -270,17 +266,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getDepartment(): ?Department
-    {
-        return $this->department;
-    }
-
-    public function setDepartment(?Department $department): self
-    {
-        $this->department = $department;
-
-        return $this;
     }
 }
