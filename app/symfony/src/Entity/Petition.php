@@ -41,6 +41,9 @@ class Petition
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]
     private $calendar;
 
+    #[ORM\OneToOne(mappedBy: 'petition', targetEntity: Justify::class, cascade: ['persist', 'remove'])]
+    private $justify;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,6 +153,28 @@ class Petition
     public function setCalendar(?Calendar $calendar): self
     {
         $this->calendar = $calendar;
+
+        return $this;
+    }
+
+    public function getJustify(): ?Justify
+    {
+        return $this->justify;
+    }
+
+    public function setJustify(?Justify $justify): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($justify === null && $this->justify !== null) {
+            $this->justify->setPetition(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($justify !== null && $justify->getPetition() !== $this) {
+            $justify->setPetition($this);
+        }
+
+        $this->justify = $justify;
 
         return $this;
     }
