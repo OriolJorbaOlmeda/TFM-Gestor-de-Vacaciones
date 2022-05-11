@@ -24,9 +24,13 @@ class Company
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Department::class)]
     private $departments;
 
+    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Calendar::class)]
+    private $calendars;
+
     public function __construct()
     {
         $this->departments = new ArrayCollection();
+        $this->calendars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +86,36 @@ class Company
             // set the owning side to null (unless already changed)
             if ($department->getCompany() === $this) {
                 $department->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Calendar>
+     */
+    public function getCalendars(): Collection
+    {
+        return $this->calendars;
+    }
+
+    public function addCalendar(Calendar $calendar): self
+    {
+        if (!$this->calendars->contains($calendar)) {
+            $this->calendars[] = $calendar;
+            $calendar->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendar(Calendar $calendar): self
+    {
+        if ($this->calendars->removeElement($calendar)) {
+            // set the owning side to null (unless already changed)
+            if ($calendar->getCompany() === $this) {
+                $calendar->setCompany(null);
             }
         }
 
