@@ -28,9 +28,13 @@ class Calendar
     #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: Petition::class)]
     private $petitions;
 
+    #[ORM\ManyToMany(targetEntity: Festive::class, mappedBy: 'calendar')]
+    private $festives;
+
     public function __construct()
     {
         $this->petitions = new ArrayCollection();
+        $this->festives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,6 +103,33 @@ class Calendar
             if ($petition->getCalendar() === $this) {
                 $petition->setCalendar(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Festive>
+     */
+    public function getFestives(): Collection
+    {
+        return $this->festives;
+    }
+
+    public function addFestive(Festive $festive): self
+    {
+        if (!$this->festives->contains($festive)) {
+            $this->festives[] = $festive;
+            $festive->addCalendar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFestive(Festive $festive): self
+    {
+        if ($this->festives->removeElement($festive)) {
+            $festive->removeCalendar($this);
         }
 
         return $this;
