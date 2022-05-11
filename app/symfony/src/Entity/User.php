@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private $department;
 
+    #[ORM\OneToOne(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
+    private $petition;
+
     /**
      * @return mixed
      */
@@ -280,6 +283,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDepartment(?Department $department): self
     {
         $this->department = $department;
+
+        return $this;
+    }
+
+    public function getPetition(): ?Petition
+    {
+        return $this->petition;
+    }
+
+    public function setPetition(Petition $petition): self
+    {
+        // set the owning side of the relation if necessary
+        if ($petition->getEmployee() !== $this) {
+            $petition->setEmployee($this);
+        }
+
+        $this->petition = $petition;
 
         return $this;
     }
