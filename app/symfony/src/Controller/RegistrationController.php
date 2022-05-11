@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Department;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\DepartmentRepository;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +18,7 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, DepartmentRepository $departmentRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -39,6 +41,9 @@ class RegistrationController extends AbstractController
             $user->setPostalcode("Prueba");
             $user->setPendingVacationDays(17);
             $user->setTotalVacationDays(25);
+
+            $deparment = $departmentRepository->find('1');
+            $user->setDepartment($deparment);
 
 
 

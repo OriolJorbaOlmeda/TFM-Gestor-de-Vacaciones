@@ -2,11 +2,12 @@ version: '3.5'
 
 services:
   service-web:
-    container_name: service-web
+    container_name: service-web-final
     build:
       context: ./docker/nginx
       args:
         UID: $U_ID
+    platform: linux/amd64
     ports:
       - 1000:80
     volumes:
@@ -18,11 +19,12 @@ services:
       - network
 
   service-php-pfm:
-    container_name: service-php-pfm
+    container_name: service-php-pfm-final
     build:
       context: docker/php
       args:
         UID: $U_ID
+    platform: linux/amd64
     volumes:
       - ./:/appdata/www
       - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
@@ -39,9 +41,10 @@ services:
       - network
 
   service-db:
-    container_name: service-db
+    container_name: service-db-final
     build:
       context: ./docker/database
+    platform: linux/amd64
     ports:
       - 10000:3306
     environment:
@@ -54,12 +57,12 @@ services:
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   service-mailhog:
-    container_name: service-mailhog
+    container_name: service-mailhog-final
     image: mailhog/mailhog:latest
     restart: always
     ports:
-      - 1026:1025
-      - 8026:8025
+      - 1025:1025
+      - 8025:8025
     networks:
       - network
 
