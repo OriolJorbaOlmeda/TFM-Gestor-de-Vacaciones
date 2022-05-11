@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CalendarRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CalendarRepository::class)]
@@ -22,6 +24,14 @@ class Calendar
     #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'calendars')]
     #[ORM\JoinColumn(nullable: false)]
     private $company;
+
+    #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: Petition::class)]
+    private $petitions;
+
+    public function __construct()
+    {
+        $this->petitions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +70,36 @@ class Calendar
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Petition>
+     */
+    public function getPetitions(): Collection
+    {
+        return $this->petitions;
+    }
+
+    public function addPetition(Petition $petition): self
+    {
+        if (!$this->petitions->contains($petition)) {
+            $this->petitions[] = $petition;
+            $petition->setCalendar($this);
+        }
+
+        return $this;
+    }
+
+    public function removePetition(Petition $petition): self
+    {
+        if ($this->petitions->removeElement($petition)) {
+            // set the owning side to null (unless already changed)
+            if ($petition->getCalendar() === $this) {
+                $petition->setCalendar(null);
+            }
+        }
 
         return $this;
     }
