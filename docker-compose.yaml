@@ -41,15 +41,10 @@ services:
       - network
 
   service-db:
-<<<<<<< Updated upstream:docker-compose.yaml
-    container_name: service-db-final
-=======
     container_name: service-db
     platform: linux/x86_64
->>>>>>> Stashed changes:docker-compose.yml
     build:
       context: ./docker/database
-    platform: linux/amd64
     ports:
       - 10000:3306
     environment:
