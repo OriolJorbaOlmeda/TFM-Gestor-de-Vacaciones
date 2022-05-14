@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        {{ include('empleado/navbar.html.twig') }}
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+            <div class="content-header">
+                <div class="container">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"> Mis vacaciones</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 p-0">
+                            <div class="card">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-bordered table-hover text-nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>Fecha inicio</th>
+                                            <th>Fecha fin</th>
+                                            <th style="width: 50px">Duración</th>
+                                            <th style="width: 50px">Estado</th>
+                                            <th style="width: 50px"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>10/01/2022</td>
+                                            <td>20/01/2022</td>
+                                            <td>5</td>
+                                            <td><span class="badge bg-danger">Denegado</span></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>03/03/2022</td>
+                                            <td>04/03/2022</td>
+                                            <td>2</td>
+                                            <td><span class="badge bg-success">Aprobado</span></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>04/04/2022</td>
+                                            <td>06/04/2022</td>
+                                            <td>3</td>
+                                            <td><span class="badge bg-warning">Pendiente</span></td>
+                                            <td>
+                                                <button type="button"
+                                                        class="btn btn-block btn-outline-primary btn-xs">Cancelar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="justify-content: right;">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+{% endblock %}

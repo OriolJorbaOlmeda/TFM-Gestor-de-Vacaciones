@@ -33,8 +33,8 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(["ROLE_SUPERVISOR"]);
-            $user->setName("Mireia");
-            $user->setLastname("Castillejo");
+            $user->setName("Ariane");
+            $user->setLastname("Gutierrez");
             $user->setDirection("Prueba");
             $user->setCity("Prueba");
             $user->setProvince("Prueba");
