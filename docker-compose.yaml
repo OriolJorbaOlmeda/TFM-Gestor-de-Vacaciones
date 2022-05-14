@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   service-web:
-    container_name: service-web-final
+    container_name: service-web
     build:
       context: ./docker/nginx
       args:
@@ -19,7 +19,7 @@ services:
       - network
 
   service-php-pfm:
-    container_name: service-php-pfm-final
+    container_name: service-php-pfm
     build:
       context: docker/php
       args:
@@ -57,7 +57,7 @@ services:
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   service-mailhog:
-    container_name: service-mailhog-final
+    container_name: service-mailhog
     image: mailhog/mailhog:latest
     restart: always
     ports:
