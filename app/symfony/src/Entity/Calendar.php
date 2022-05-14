@@ -31,6 +31,9 @@ class Calendar
     #[ORM\ManyToMany(targetEntity: Festive::class, mappedBy: 'calendar')]
     private $festives;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $year;
+
     public function __construct()
     {
         $this->petitions = new ArrayCollection();
@@ -131,6 +134,18 @@ class Calendar
         if ($this->festives->removeElement($festive)) {
             $festive->removeCalendar($this);
         }
+
+        return $this;
+    }
+
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
+
+    public function setYear(string $year): self
+    {
+        $this->year = $year;
 
         return $this;
     }
