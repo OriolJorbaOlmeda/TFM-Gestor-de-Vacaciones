@@ -4254,6 +4254,9 @@ readers do not read off random characters that represent icons */
 .fa-user-plus:before {
   content: "\f234"; }
 
+.fa-user-pen:before {
+  content: "\f4ff"; }
+
 .fa-user-secret:before {
   content: "\f21b"; }
 

@@ -26,7 +26,7 @@
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0"> Home</h1>
+                        <h1 class="m-0"> Área personal</h1>
                     </div>
                 </div>
             </div>
@@ -34,6 +34,11 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container">
+                    {#
+                    {% if user.role == "ROLE_SUPERVISOR" %}
+                    {{ include('supervisor/panel_info.html.twig') }}
+                    {% endif %}-->
+                    #}
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -85,6 +90,12 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="col-sm-6">
+                        <h4> Calendario </h4>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="card">

@@ -13,7 +13,7 @@
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0"> Solicitudes pendientes </h1>
+                        <h1 class="m-0"> Solicitudes del departamento </h1>
                     </div>
                 </div>
             </div>
@@ -23,163 +23,59 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div id="accordion">
-                                <div class="card card-primary">
-                                    <div class="card-header bg-warning">
-                                        <h4 class="card-title w-100">
-                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
-                                                Solicitudes pendientes de aprobar
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-hover text-nowrap">
-                                                <thead>
-                                                <tr>
-                                                    <th>Empleado</th>
-                                                    <th>Fecha inicio</th>
-                                                    <th>Fecha fin</th>
-                                                    <th style="width: 50px">Duración</th>
-                                                    <th style="width: 100px"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Maria Castaño</td>
-                                                    <td>10/01/2022</td>
-                                                    <td>20/01/2022</td>
-                                                    <td>5</td>
-                                                    <td>
-                                                        <button type="button"
-                                                                class="btn btn-primary btn-xs">Aprobar
-                                                        </button>
-                                                        <button type="button"
-                                                                class="btn btn-outline-primary btn-xs">Denegar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Alejandro Gomez</td>
-                                                    <td>03/03/2022</td>
-                                                    <td>04/03/2022</td>
-                                                    <td>2</td>
-                                                    <td>
-                                                        <button type="button"
-                                                                class="btn btn-primary btn-xs">Aprobar
-                                                        </button>
-                                                        <button type="button"
-                                                                class="btn btn-outline-primary btn-xs">Denegar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ana Belén</td>
-                                                    <td>04/04/2022</td>
-                                                    <td>06/04/2022</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <button type="button"
-                                                                class="btn btn-primary btn-xs">Aprobar
-                                                        </button>
-                                                        <button type="button"
-                                                                class="btn btn-outline-primary btn-xs">Denegar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card card-success">
-                                    <div class="card-header">
-                                        <h4 class="card-title w-100">
-                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
-                                                Solicitudes aprobadas
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-hover text-nowrap">
-                                                <thead>
-                                                <tr>
-                                                    <th>Empleado</th>
-                                                    <th>Fecha inicio</th>
-                                                    <th>Fecha fin</th>
-                                                    <th style="width: 50px">Duración</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Maria Castaño</td>
-                                                    <td>10/01/2022</td>
-                                                    <td>20/01/2022</td>
-                                                    <td>5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Alejandro Gomez</td>
-                                                    <td>03/03/2022</td>
-                                                    <td>04/03/2022</td>
-                                                    <td>2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ana Belén</td>
-                                                    <td>04/04/2022</td>
-                                                    <td>06/04/2022</td>
-                                                    <td>3</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card card-danger">
-                                    <div class="card-header">
-                                        <h4 class="card-title w-100">
-                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
-                                                Solicitudes denegadas
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-hover text-nowrap">
-                                                <thead>
-                                                <tr>
-                                                    <th>Empleado</th>
-                                                    <th>Fecha inicio</th>
-                                                    <th>Fecha fin</th>
-                                                    <th style="width: 50px">Duración</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Maria Castaño</td>
-                                                    <td>10/01/2022</td>
-                                                    <td>20/01/2022</td>
-                                                    <td>5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Alejandro Gomez</td>
-                                                    <td>03/03/2022</td>
-                                                    <td>04/03/2022</td>
-                                                    <td>2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ana Belén</td>
-                                                    <td>04/04/2022</td>
-                                                    <td>06/04/2022</td>
-                                                    <td>3</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
 
+                            <div class="callout callout-warning">
+                                <h5>Solicitudes pendientes</h5>
+
+                                <table class="table table-bordered table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>Empleado</th>
+                                        <th>Fecha inicio</th>
+                                        <th>Fecha fin</th>
+                                        <th style="width: 50px">Duración</th>
+                                        <th style="width: 50px">Tipo de solicitud</th>
+                                        <th style="width: 50px">Motivo</th>
+                                        <th style="width: 100px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Maria Castaño</td>
+                                        <td>10/01/2022</td>
+                                        <td>20/01/2022</td>
+                                        <td>5</td>
+                                        <td>Vacaciones</td>
+                                        <td>Vacaciones de verano</td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-xs">Aprobar
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-outline-primary btn-xs">Denegar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alejandro Gomez</td>
+                                        <td>03/03/2022</td>
+                                        <td>04/03/2022</td>
+                                        <td>2</td>
+                                        <td>Ausencia</td>
+                                        <td>Fallecimiento familiar</td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-xs">Aprobar
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-outline-primary btn-xs">Denegar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
+
                         </div>
                     </div>
                 </div>

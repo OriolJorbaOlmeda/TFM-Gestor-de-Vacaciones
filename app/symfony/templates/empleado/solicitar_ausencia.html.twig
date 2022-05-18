@@ -1,5 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{%  block javascripts %}
+    {{ parent() }}
+    <!-- bs-custom-file-input -->
+    <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
 
     <body class="hold-transition layout-top-nav">
@@ -25,7 +36,7 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Solicitar ausencia</h3>
+                                    <h3 class="card-title">Datos de la solicitud</h3>
                                 </div>
                                 <form>
                                     <div class="card-body">
@@ -52,7 +63,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Departamento</label>
+                                                    <label>Motivo</label>
                                                     <select class="form-control select2" style="width: 100%;">
                                                         <option selected="selected">Selecciona...</option>
                                                         <option>Fallecimiento familiar</option>
@@ -66,7 +77,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="exampleInputFile">Añadir justificante</label>
+                                                    <label for="exampleInputFile">Adjuntar justificante</label>
                                                     <div class="input-group">
                                                         <div class="custom-file">
                                                             <input type="file" class="custom-file-input"
@@ -79,7 +90,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Solicitar</button>
                                     </div>
