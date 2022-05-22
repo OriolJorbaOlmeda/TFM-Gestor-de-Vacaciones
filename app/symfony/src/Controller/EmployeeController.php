@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Petition;
+use App\Form\RequestVacationFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,8 +40,20 @@ class EmployeeController extends AbstractController
     }
 
     #[Route('/employee/request-vacation', name: 'app_employee_request-vacation')]
-    public function requestVacation(): Response
+    public function requestVacation(Request $request,  EntityManagerInterface $entityManager ): Response
     {
+        $petition = new Petition();
+        $form = $this->createForm(RequestVacationFormType::class, $petition);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+           var_dump("hools");
+           //pendiente hacer formulario date
+
+           // $entityManager->persist($petition);
+            //$entityManager->flush();
+        }
+
         return $this->render('empleado/solicitar_vacaciones.html.twig');
 
     }

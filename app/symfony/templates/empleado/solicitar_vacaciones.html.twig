@@ -28,6 +28,7 @@
                                     <h3 class="card-title">Datos de la solicitud</h3>
                                 </div>
                                 <form>
+                                    {{ form_start(requestVacation)}}
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-5">
@@ -62,6 +63,7 @@
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Solicitar</button>
                                     </div>
+                                    {{ form_end(requestVacation) }}
                                 </form>
                             </div>
                         </div>
