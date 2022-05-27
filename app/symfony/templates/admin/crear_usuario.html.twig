@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{%  block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/crear_modificar_usuario.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
 
     <body class="hold-transition layout-top-nav">
@@ -46,14 +51,16 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="emai">Email</label>
+                                                    <label for="email">Email</label>
                                                     <input type="email" class="form-control" id="email">
+                                                    <span class="error invalid-feedback"> El email introducido no es válido </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="password">Password</label>
                                                     <input type="text" class="form-control" id="password">
+                                                    <span class="error invalid-feedback"> La contraseña debe tener la menos 8 caracteres, mayúsculas, minúscula y números </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,15 +113,15 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label>Rol</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected>Selecciona...</option>
-                                                        <option>Administrador</option>
-                                                        <option>Supervisor</option>
-                                                        <option>Empleado</option>
+                                                    <select id="role" class="form-control select2" style="width: 100%;">
+                                                        <option value="-1" selected>Selecciona...</option>
+                                                        <option value="ROLE_ADMIN">Administrador</option>
+                                                        <option value="ROLE_SUPERVISOR">Supervisor</option>
+                                                        <option value="ROLE_EMPLEADO">Empleado</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-5">
+                                            <div class="col-md-5" id="groupSuper">
                                                 <div class="form-group">
                                                     <label>Supervisor</label>
                                                     <select class="form-control select2" style="width: 100%;">
@@ -126,7 +133,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" id="groupDiasVac">
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="diasVacaciones">Días de vacaciones</label>
