@@ -2,8 +2,6 @@ const fecha_festivo = document.getElementById("nuevoFestivo");
 const descripcion_festivo = document.getElementById("descNuevoFestivo");
 const btn_anadir = document.getElementById("btn-añadir");
 const lista_festivos = document.getElementById("listaFestivos");
-const fecha_inicio = document.getElementById("fechaInicio");
-const fecha_fin = document.getElementById("fechaFin");
 
 // CONTROL BOTÓN AÑADIR - SE DEBEN RELLENAR TANTO LA FECHA COMO LA DESCRIPCIÓN DEL FESTIVO PARA HABILITAR EL BOTÓN
 btn_anadir.disabled = true;
@@ -61,43 +59,3 @@ document.querySelectorAll('.eliminar-festivo').forEach(elem => {
         lista_festivos.removeChild(elem.parentElement);
     })
 })
-
-
-// COMPROBACIONES FECHA INICIO Y FECHA FIN
-fecha_inicio.addEventListener("change", event => {
-    comprobarFechaInicio()
-});
-
-
-fecha_fin.addEventListener("change", event => {
-    comprobarFechaFin()
-});
-
-
-function comprobarFechaInicio() {
-    let fecha = fecha_inicio.value;
-    if (comprobarFechaMayorFechaActual(fecha)) {
-        if (comprobarFechaMayorFechaActual(fecha_fin.value) && comprobarFechaMayor(fecha_inicio.value, fecha_fin.value)){
-            fecha_inicio.classList.remove("is-invalid")
-            fecha_fin.classList.remove("is-invalid")
-        } else {
-            fecha_inicio.classList.add("is-invalid")
-        }
-    } else {
-        fecha_inicio.classList.add("is-invalid")
-    }
-}
-
-function comprobarFechaFin() {
-    let fecha = fecha_fin.value;
-    if (comprobarFechaMayorFechaActual(fecha)) {
-        if (comprobarFechaMayorFechaActual(fecha_inicio.value) && comprobarFechaMayor(fecha_inicio.value, fecha_fin.value)){
-            fecha_inicio.classList.remove("is-invalid")
-            fecha_fin.classList.remove("is-invalid")
-        } else {
-            fecha_fin.classList.add("is-invalid")
-        }
-    } else {
-        fecha_fin.classList.add("is-invalid")
-    }
-}
