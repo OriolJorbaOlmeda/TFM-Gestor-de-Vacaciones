@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -60,37 +58,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
     private $petition;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
-    private $supervisor;
-
-    #[ORM\OneToMany(mappedBy: 'supervisor', targetEntity: self::class)]
-    private $employees;
-
-    public function __construct()
-    {
-        $this->employees = new ArrayCollection();
-    }
-
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param mixed $name
+     */
     public function setName($name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastname()
     {
         return $this->lastname;
     }
 
+    /**
+     * @param mixed $lastname
+     */
     public function setLastname($lastname): void
     {
         $this->lastname = $lastname;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDirection()
     {
         return $this->direction;
@@ -298,48 +300,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->petition = $petition;
-
-        return $this;
-    }
-
-    public function getSupervisor(): ?self
-    {
-        return $this->supervisor;
-    }
-
-    public function setSupervisor(?self $supervisor): self
-    {
-        $this->supervisor = $supervisor;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, self>
-     */
-    public function getEmployees(): Collection
-    {
-        return $this->employees;
-    }
-
-    public function addEmployee(self $user): self
-    {
-        if (!$this->employees->contains($user)) {
-            $this->employees[] = $user;
-            $user->setSupervisor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmployee(self $user): self
-    {
-        if ($this->employees->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getSupervisor() === $this) {
-                $user->setSupervisor(null);
-            }
-        }
 
         return $this;
     }
