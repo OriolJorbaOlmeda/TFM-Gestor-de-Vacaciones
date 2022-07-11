@@ -1,0 +1,189 @@
+{% extends 'base.html.twig' %}
+
+{%  block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/crear_calendario.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/control_fechas.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/bs-stepper/css/bs-stepper.min.css') }}">
+
+    <!-- BS-Stepper -->
+    <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/bs-stepper/js/bs-stepper.min.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        {{ include('admin/navbar.html.twig') }}
+
+
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+            <div class="content-header">
+                <div class="container">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Crear nuevo calendario vacacional</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Main content 1 -->
+            <div class="content">
+                <div class="container">
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">bs-stepper</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="bs-stepper">
+                                        <div class="bs-stepper-header" role="tablist">
+                                            <!-- your steps here -->
+                                            <div class="step" data-target="#calendar-part">
+                                                <button type="button" class="step-trigger" role="tab" aria-controls="calendar-part" id="calendar-part-trigger">
+                                                    <span class="bs-stepper-circle">1</span>
+                                                    <span class="bs-stepper-label">Logins</span>
+                                                </button>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="step" data-target="#festives-part">
+                                                <button type="button" class="step-trigger" role="tab" aria-controls="festives-part" id="festives-part-trigger">
+                                                    <span class="bs-stepper-circle">2</span>
+                                                    <span class="bs-stepper-label">Various information</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="bs-stepper-content">
+                                            <!-- your steps content here -->
+
+
+
+
+
+
+                                            <!-- CONTENT 1 -->
+
+
+                                            <div id="calendar-part" class="content" role="tabpanel" aria-labelledby="calendar-part-trigger">
+
+                                                {{ form_start(formCalendar) }}
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            {{ form_row(formCalendar.year) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ form_row(formCalendar.initial_date, { 'id': 'fechaInicio' }) }}
+                                                            <span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ form_row(formCalendar.final_date, { 'id': 'fechaFin' }) }}
+                                                            <span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{ form_row(formCalendar.createCalendar) }}
+                                                {{ form_end(formCalendar) }}
+
+
+                                                <button class="btn btn-primary" onclick="stepper.next(); save()">Next</button>
+                                            </div>
+
+
+
+                                            <!-- CONTENT 2 -->
+
+
+                                            <div id="festives-part" class="content" role="tabpanel" aria-labelledby="festives-part-trigger">
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Añadir días festivos del calendario</label>
+                                                            <div class="input-group">
+                                                                <input id="nuevoFestivo" type="date" class="form-control">
+                                                                <input id="descNuevoFestivo" type="text" class="form-control"
+                                                                       placeholder="Descripción día festivo">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" id="btn-añadir"
+                                                                            class="btn btn-primary">Añadir</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <ul id="listaFestivos" class="list-group">
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                01/01/2022 - Año nuevo
+                                                                <a class="eliminar-festivo" type="button"><span class="badge badge-primary badge-pill"><i
+                                                                                class="bi bi-x-lg"></i></span></a>
+                                                            </li>
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                06/01/2022 - Día de reyes
+                                                                <a class="eliminar-festivo" type="button"><span class="badge badge-primary badge-pill"><i
+                                                                                class="bi bi-x-lg"></i></span></a>
+                                                            </li>
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                19/03/2022 - Día del padre
+                                                                <a class="eliminar-festivo" type="button"><span class="badge badge-primary badge-pill"><i
+                                                                                class="bi bi-x-lg"></i></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+
+                                                <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper documentation</a> for more examples and information about the plugin.
+                                </div>
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // BS-Stepper Init
+        document.addEventListener('DOMContentLoaded', function () {
+            window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        })
+    </script>
+    </body>
+
+{% endblock %}

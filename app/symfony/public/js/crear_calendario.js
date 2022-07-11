@@ -20,6 +20,7 @@ function controlBotonAnadir() {
 
 // AÑADIR LINEA CON EL NUEVO FESTIVO
 btn_anadir.addEventListener("click", () => {
+    crearFes();
     crearNuevoFestivo(fecha_festivo.value, descripcion_festivo.value)
     fecha_festivo.value = "";
     descripcion_festivo.value = "";
@@ -50,6 +51,24 @@ function crearNuevoFestivo(fecha, descripcion) {
     nuevo_festivo.appendChild(link);
 
     lista_festivos.appendChild(nuevo_festivo)
+}
+
+
+function crearFes() {
+    $.ajax({
+        url : '/create-festive',
+        type: "POST",
+        data: JSON.stringify({
+            'date':descripcion_festivo.value,
+            'desc':fecha_festivo.value
+        }),
+        success : function (data) {
+            console.log("SUCCESS" + data['date']);
+        },
+        error   : function () {
+            console.log("ERROR");
+        }
+    });
 }
 
 

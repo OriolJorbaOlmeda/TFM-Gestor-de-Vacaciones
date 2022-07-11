@@ -15,6 +15,6 @@ class DashboardController extends AbstractController
             'controller_name' => 'DashboardController',
         ]);*/
 
-        return $this->render('admin/crear_usuario.html.twig');
+        return $this->redirectToRoute('app_create_calendar');
     }
 }
