@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
             $user->setPendingVacationDays(17);
             $user->setTotalVacationDays(25);
 
-            $deparment = $departmentRepository->find('1');
+            $deparment = $departmentRepository->find('2');
             $user->setDepartment($deparment);
 
 

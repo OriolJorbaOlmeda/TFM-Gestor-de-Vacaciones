@@ -27,19 +27,16 @@ class FestiveType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false
             ])
-            ->add('createFestive', ButtonType::class, [
-                'attr' => ['class' => 'btn btn-primary'],
-                'label' => 'Crear fes'
-            ])
+
+
             ->add('addFestive', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-primary'],
+                'attr' => ['class' => 'btn btn-primary','name'=>'addFestive', 'id'=> 'btn-añadir',],
                 'label' => 'Añadir'
             ])
 
             //->add('calendar')
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

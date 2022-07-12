@@ -19,12 +19,14 @@ function controlBotonAnadir() {
 }
 
 // AÑADIR LINEA CON EL NUEVO FESTIVO
-btn_anadir.addEventListener("click", () => {
-    crearFes();
+btn_anadir.addEventListener("click",  ()=>  {
     crearNuevoFestivo(fecha_festivo.value, descripcion_festivo.value)
     fecha_festivo.value = "";
     descripcion_festivo.value = "";
     btn_anadir.disabled = true;
+
+
+
 });
 
 function crearNuevoFestivo(fecha, descripcion) {
@@ -49,21 +51,21 @@ function crearNuevoFestivo(fecha, descripcion) {
     fecha = convertirFechaPantalla(fecha)   // de utils.js
     nuevo_festivo.innerText = fecha + " - " + descripcion
     nuevo_festivo.appendChild(link);
-
-    lista_festivos.appendChild(nuevo_festivo)
+    lista_festivos.appendChild(nuevo_festivo);
+    //crearFes("prueba","pruebad")
 }
 
 
-function crearFes() {
+function crearFes(fecha, descripcion) {
     $.ajax({
         url : '/create-festive',
         type: "POST",
-        data: JSON.stringify({
-            'date':descripcion_festivo.value,
-            'desc':fecha_festivo.value
-        }),
+        data: {
+            'date':'fecha',
+            'desc':'descripcion'}
+        ,
         success : function (data) {
-            console.log("SUCCESS" + data['date']);
+            console.log("SUCCESS" +data);
         },
         error   : function () {
             console.log("ERROR");

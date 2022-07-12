@@ -10,7 +10,10 @@ use App\Form\FestiveType;
 use App\Repository\CalendarRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\FestiveRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,32 +24,59 @@ class CreateCalendarController extends AbstractController
 
     public function __construct(
         private CompanyRepository $companyRepository,
-        private CalendarRepository $calendarRepository
-    ){}
+        private CalendarRepository $calendarRepository,
+        private FestiveRepository $festiveRepository
+    ) {
+    }
 
     #[Route('/admin/create_calendar', name: 'app_create_calendar')]
-    public function createCalendar(Request $request): Response
+    public function createCalendar(Request $request, EntityManagerInterface $entityManager): Response
     {
         $calendar = new Calendar();
+        $festive = new Festive();
+
         $formCalendar = $this->createForm(CalendarType::class, $calendar);
         $formCalendar->handleRequest($request);
 
+        if ($formCalendar->get('festives')['date']->getData() != "") {
+            if ($formCalendar->get('festives')->get('addFestive')->isSubmitted() && $formCalendar->get('festives')->get(
+                    'addFestive'
+                )->isValid()) {
+                $date = $formCalendar->get('festives')['date']->getData();
+                $name = $formCalendar->get('festives')['name']->getData();
+                $festive->setDate($date);
+                $festive->setName($name);
+                $this->festiveRepository->add($festive, true);
+            }
+        }
         if ($formCalendar->isSubmitted() && $formCalendar->isValid()) {
-            // setear los campos que faltan
-            $calendar->setCompany($this->companyRepository->findOneBy(['id' => 1]));
+            $calendar = new Calendar();
 
-            // GUARDAR CALENDARIO
+
+            $calendar->setCompany($this->companyRepository->findOneBy(['id' => 1]));
+            $initial_date = $formCalendar['initial_date']->getData();
+            $year = $formCalendar['year']->getData();
+
+            $final_date = $formCalendar['final_date']->getData();
+            $calendar->setInitialDate($initial_date);
+            $calendar->setFinalDate($final_date);
+            $calendar->setYear($year);
+            $this->calendarRepository->add($calendar, true);
+            $festive->addCalendar($calendar);
+            //return $this->redirectToRoute('app_login');
 
         }
 
+
         return $this->render('admin/crear_calendario.html.twig', [
-            'formCalendar' => $formCalendar->createView()
+            'formCalendar' => $formCalendar->createView(),
+
         ]);
     }
 
     #[Route('/create-festive', name: 'app_create_festive', options: ['expose' => true])]
-    public function createFesByAjax(Request $request) {
-
+    public function createFesByAjax(Request $request)
+    {
         if ($request->isXmlHttpRequest()) {
             var_dump($request->request);
             $desc = $request->request->get('desc');
@@ -82,8 +112,6 @@ class CreateCalendarController extends AbstractController
             'formFestive' => $formFestive->createView()
         ]);*/
     /*}*/
-
-
 
 
     /*#[Route('/create-festive', name: 'app_new_festive')]
