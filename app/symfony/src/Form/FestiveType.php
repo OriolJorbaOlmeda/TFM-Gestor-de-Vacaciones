@@ -30,7 +30,7 @@ class FestiveType extends AbstractType
 
 
             ->add('addFestive', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-primary','name'=>'addFestive', 'id'=> 'btn-añadir',],
+                'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Añadir'
             ])
 

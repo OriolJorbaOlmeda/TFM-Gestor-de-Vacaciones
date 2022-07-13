@@ -49,12 +49,12 @@ class CalendarType extends AbstractType
             ->add('createCalendar', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Crear calendario'
-            ])
-            ->add('festives', FestiveType::class, [
+            ]);
+           /* ->add('festives', FestiveType::class, [
                 'required' => false,
                 'data_class'=>null,
 
-            ]);;
+            ]);;*/
             /*->add('festives', CollectionType::class, [
                 'label' => false,
                 'entry_type' => FestiveType::class,
