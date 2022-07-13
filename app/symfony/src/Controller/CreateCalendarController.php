@@ -39,9 +39,7 @@ class CreateCalendarController extends AbstractController
         $formCalendar->handleRequest($request);
 
         if ($formCalendar->get('festives')['date']->getData() != "") {
-            if ($formCalendar->get('festives')->get('addFestive')->isSubmitted() && $formCalendar->get('festives')->get(
-                    'addFestive'
-                )->isValid()) {
+            if ($formCalendar->get('festives')->get('addFestive')->isClicked() && $formCalendar->get('festives')->get('addFestive')->isValid()) {
                 $date = $formCalendar->get('festives')['date']->getData();
                 $name = $formCalendar->get('festives')['name']->getData();
                 $festive->setDate($date);
@@ -49,7 +47,7 @@ class CreateCalendarController extends AbstractController
                 $this->festiveRepository->add($festive, true);
             }
         }
-        if ($formCalendar->isSubmitted() && $formCalendar->isValid()) {
+        if ($formCalendar->get('createCalendar')->isClicked() && $formCalendar->get('createCalendar')->isValid()) {
             $calendar = new Calendar();
 
 
@@ -74,7 +72,81 @@ class CreateCalendarController extends AbstractController
         ]);
     }
 
-    #[Route('/create-festive', name: 'app_create_festive', options: ['expose' => true])]
+
+
+
+
+    #[Route('/admin/create_calendar_ariane', name: 'app_create_calendar_ariane')]
+    public function createCalendarAriane(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $calendar = new Calendar();
+        //$festive = new Festive();
+
+        $formCalendar = $this->createForm(CalendarType::class, $calendar);
+        $formCalendar->handleRequest($request);
+
+        if ($formCalendar->get('festives')['date']->getData() != "" && $formCalendar->get('festives')->get('addFestive')->isClicked() && $formCalendar->get('festives')->get('addFestive')->isValid()) {
+
+            $date = $formCalendar->get('festives')['date']->getData();
+            $name = $formCalendar->get('festives')['name']->getData();
+            $festive = new Festive();
+            $festive->setDate($date);
+            $festive->setName($name);
+            $entityManager->persist($festive);
+            //$calendar->addFestive($festive);
+            //$this->festiveRepository->add($festive);
+        }
+        //if ($formCalendar->isSubmitted() && $formCalendar->isValid()) {
+        if ($formCalendar->get('createCalendar')->isClicked() && $formCalendar->get('createCalendar')->isValid()) {
+
+            $calendar->setCompany($this->companyRepository->findOneBy(['id' => 1]));
+            //$this->calendarRepository->add($calendar);
+
+            $entityManager->persist($calendar);
+            $entityManager->flush();
+
+
+            //----------------------------------------
+
+
+            /*$calendar = new Calendar();
+
+            $calendar->setCompany($this->companyRepository->findOneBy(['id' => 1]));
+
+
+            $initial_date = $formCalendar['initial_date']->getData();
+            $year = $formCalendar['year']->getData();
+
+            $final_date = $formCalendar['final_date']->getData();
+            $calendar->setInitialDate($initial_date);
+            $calendar->setFinalDate($final_date);
+            $calendar->setYear($year);
+
+            $festive = new Festive();
+            $festive->setDate($formCalendar['final_date']->getData());
+            $festive->setName("festivo4");
+            $calendar->addFestive($festive);
+
+            $this->calendarRepository->add($calendar);
+            //$festive->addCalendar($calendar);
+
+            */
+
+            //return $this->redirectToRoute('app_login');
+
+        }
+
+
+        return $this->render('admin/crear_calendario.html.twig', [
+            'formCalendar' => $formCalendar->createView(),
+
+        ]);
+    }
+
+
+
+
+    /*#[Route('/create-festive', name: 'app_create_festive', options: ['expose' => true])]
     public function createFesByAjax(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
@@ -83,7 +155,7 @@ class CreateCalendarController extends AbstractController
             $date = $request->request->get('date');
             var_dump($desc);
         }
-    }
+    }*/
 
 
 
