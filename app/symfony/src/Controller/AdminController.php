@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Form\RegistrationFormType;
 use App\Form\UserRegistrationType;
+use App\Repository\DepartmentRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,13 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
-    public function createUser(Request $request, UserRepository $userRepository): Response
+    public function createUser(Request $request, UserRepository $userRepository, DepartmentRepository $departmentRepository): Response
     {
         $form = $this->createForm(UserRegistrationType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $department = $departmentRepository->findOneBy(['name' => $form->get('departments')->getData()]);
             $data = $form->getData();
-            $userRepository->add($data);
+            $data->setDepartment($department);
+            $userRepository->add($data, true);
             return $this->redirectToRoute($request->getUri());
         }else {
             return $this->render('admin/crear_usuario.html.twig', [

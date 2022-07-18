@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Repository\DepartmentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -16,6 +17,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserRegistrationType extends AbstractType
 {
+
+    private DepartmentRepository $departmentRepository;
+
+    public function __construct(DepartmentRepository $departmentRepository){
+        $this->departmentRepository = $departmentRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -64,7 +72,11 @@ class UserRegistrationType extends AbstractType
                 'attr' => ['class' => 'form-control', 'id' => 'codigoPostal'],
                 'label'=> 'Código postal'
              ])
-            //->add('department')
+            ->add('departments', ChoiceType::class, [
+                'label' => 'Departments',
+                'choices' => $this->departments(),
+                'attr' => ['class' => 'form-control select2'],
+            ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
@@ -76,7 +88,7 @@ class UserRegistrationType extends AbstractType
             ])
             ->add('total_vacation_days', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
-                'label'=> 'Días de vacaciones'
+                'label'=> 'Vacation days'
             ])
             //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [
@@ -91,5 +103,14 @@ class UserRegistrationType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
         ]);
+    }
+
+    public function departments(): array{
+        $departments = $this->departmentRepository->findAll();
+        $names = array();
+        foreach ($departments as $department){
+            $names[$department->getName()] = $department->getName();
+        }
+        return $names;
     }
 }

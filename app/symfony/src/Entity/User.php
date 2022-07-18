@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'OneToMany')]
     #[ORM\JoinColumn(nullable: false)]
-    private $department;
+    private $departments;
 
     #[ORM\OneToOne(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
     private $petition;
@@ -275,12 +275,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getDepartment(): ?Department
     {
-        return $this->department;
+        return $this->departments;
     }
 
     public function setDepartment(?Department $department): self
     {
-        $this->department = $department;
+        $this->departments = $department;
 
         return $this;
     }
