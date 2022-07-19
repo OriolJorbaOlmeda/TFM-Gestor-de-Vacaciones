@@ -24,7 +24,11 @@ class AdminController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $pass = $form->get('password')->getData();
             $user->setPassword($passwordHasher->hashPassword($user, $pass));
-            $user->setPendingVacationDays(10);
+            $pending_vacation_days = $form->get('total_vacation_days')->getData();
+            $roles = $form->get('roles')->getData();
+            $user->setRoles([$roles]);
+
+            $user->setPendingVacationDays($pending_vacation_days);
             $userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
         }else {

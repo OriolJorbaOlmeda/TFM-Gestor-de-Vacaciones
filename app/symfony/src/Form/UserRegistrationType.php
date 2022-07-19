@@ -89,15 +89,17 @@ class UserRegistrationType extends AbstractType
                 'required' => true
             ])
             ->add('roles', ChoiceType::class, [
-                'choices' => [
+                'choices' => array(
                     'Admin' => 'ROLE_ADMIN',
                     'Supervisor' => 'ROLE_SUPERVISOR',
                     'Empleado' => 'ROLE_EMPLEADO',
-                ],
+                ),
                 'attr' => ['class' => 'form-control select2'],
                 'label'=> 'Rol',
-                'multiple' => true,
-                'required' => true
+                'mapped' => false,
+                'required' => true,
+                'empty_data' => null
+
             ])
             ->add('total_vacation_days', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
