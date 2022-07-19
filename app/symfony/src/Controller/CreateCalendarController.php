@@ -80,7 +80,6 @@ class CreateCalendarController extends AbstractController
     public function createCalendarAriane(Request $request, EntityManagerInterface $entityManager): Response
     {
         $calendar = new Calendar();
-        $festive = new Festive();
 
         $formCalendar = $this->createForm(CalendarType::class, $calendar);
         $formCalendar->handleRequest($request);
@@ -89,27 +88,22 @@ class CreateCalendarController extends AbstractController
 
             $date = $formCalendar->get('festives')['date']->getData();
             $name = $formCalendar->get('festives')['name']->getData();
-
+            $festive = new Festive();
             $festive->setDate($date);
             $festive->setName($name);
-           // $entityManager->persist($festive);
-            //$calendar->addFestive($festive);
-            //$this->festiveRepository->add($festive);
+
+            $calendar->addFestive($festive);
+            //return new Response("FESTIVE SUBMITED");
         }
         //if ($formCalendar->isSubmitted() && $formCalendar->isValid()) {
         if ($formCalendar->get('createCalendar')->isClicked() && $formCalendar->get('createCalendar')->isValid()) {
 
-
-            $festive->setDate($formCalendar['final_date']->getData());
-            $festive->setName("festivo4");
-            $calendar->setCompany($this->companyRepository->findOneBy(['id' => 1]));
-            $calendar->addFestive($festive);
-
+            $calendar->setCompany($this->getUser()->getDepartment()->getCompany());
 
             $this->calendarRepository->add($calendar);
 
-            //$entityManager->persist($calendar);
-            //$entityManager->flush();
+            //return new Response("CALENDAR SUBMITED");
+
 
 
             //----------------------------------------

@@ -20,7 +20,6 @@ class CreateCalendarController1 extends AbstractController
 {
 
     public function __construct(
-        private CompanyRepository $companyRepository,
         private CalendarRepository $calendarRepository,
         private FestiveRepository $festiveRepository
 
@@ -37,10 +36,11 @@ class CreateCalendarController1 extends AbstractController
 
         if ($formCalendar->isSubmitted() && $formCalendar->isValid()) {
             // setear los campos que faltan
-            $calendar->setCompany($this->companyRepository->findOneBy(['id' => 1]));
-            $this->calendarRepository->add($calendar);
+            $calendar->setCompany($this->getUser()->getDepartment()->getCompany());
 
-            return new Response("CALENDAR SUBMITTED");
+            //$this->calendarRepository->add($calendar);
+
+            //return new Response("CALENDAR SUBMITTED");
         }
 
         $festive = new Festive();
@@ -48,13 +48,18 @@ class CreateCalendarController1 extends AbstractController
         $formFestive->handleRequest($request);
 
         if ($formFestive->isSubmitted() && $formFestive->isValid()) {
-            //$festive->addCalendar($calendar);
-            $festive->setName('prueba');
+
+
+            var_dump($calendar->getInitialDate());
+            $calendar->addFestive($festive);
+            $this->calendarRepository->add($calendar);
+
+
+            /*$festive->setName('prueba');
             $festive->setDate(new \DateTime());
+            $this->festiveRepository->add($festive);*/
 
-            $this->festiveRepository->add($festive);
-
-            //return new Response("Festive SUBMITTED");
+            //return new Response("FESTIVE SUBMITTED");
            // return $this->redirectToRoute('app_login');
         }
 
@@ -64,9 +69,32 @@ class CreateCalendarController1 extends AbstractController
         ]);
     }
 
-    public function save()
+
+    #[Route('/admin/create_calendar_prueba', name: 'app_create_calendar_prueba')]
+    public function createCalendarPrueba(Request $request): Response
     {
-        return new Response("CALENDAR SUBMITTED");
+        $calendar = new Calendar();
+        $calendar->setYear("2022");
+        $calendar->setInitialDate(new \DateTime("2022-01-01"));
+        $calendar->setFinalDate(new \DateTime("2023-02-20"));
+        $calendar->setCompany($this->getUser()->getDepartment()->getCompany());
+
+
+        $festive = new Festive();
+        $festive->setDate(new \DateTime("2022-01-06"));
+        $festive->setName("dia festivo");
+
+        $festive1 = new Festive();
+        $festive1->setDate(new \DateTime("2022-03-10"));
+        $festive1->setName("dia festivo 2");
+
+        $calendar->addFestive($festive);
+        $calendar->addFestive($festive1);
+
+        $this->calendarRepository->add($calendar);
+
+        return new Response("OK");
+
     }
 
 
