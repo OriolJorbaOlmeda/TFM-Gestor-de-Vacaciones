@@ -19,13 +19,13 @@ class FestiveType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => false,
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Descripción día festivo'],
-                'required' => false
+                'required' => true
             ])
             ->add('date', DateType::class, [
                 'label' => false,
                 'attr' => ['class' => 'form-control'],
                 'widget' => 'single_text',
-                'required' => false
+                'required' => true
             ])
 
 
@@ -33,8 +33,6 @@ class FestiveType extends AbstractType
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Añadir'
             ])
-
-            //->add('calendar')
         ;
     }
     public function configureOptions(OptionsResolver $resolver): void
