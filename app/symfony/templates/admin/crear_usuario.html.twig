@@ -27,61 +27,53 @@
                                 <div class="card-header">
                                     <h3 class="card-title">Datos personales</h3>
                                 </div>
-                                <form>
+                                {{ form_start(form) }}
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="nombre">Nombre</label>
-                                                    <input type="text" class="form-control" id="nombre">
+                                                    {{ form_row(form.name) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="apellidos">Apellidos</label>
-                                                    <input type="text" class="form-control" id="apellidos">
+                                                    {{ form_row(form.lastname) }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="emai">Email</label>
-                                                    <input type="email" class="form-control" id="email">
+                                                    {{ form_row(form.email) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="password">Password</label>
-                                                    <input type="text" class="form-control" id="password">
+                                                    {{ form_row(form.password) }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="direccion">Dirección</label>
-                                                    <input type="text" class="form-control" id="direccion">
+                                                    {{ form_row(form.direction) }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label for="ciudad">Ciudad</label>
-                                                    <input type="text" class="form-control" id="ciudad">
+                                                    {{ form_row(form.city) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label for="provincia">Provincia</label>
-                                                    <input type="text" class="form-control" id="provincia">
+                                                    {{ form_row(form.province) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label for="codigoPostal">Código postal</label>
-                                                    <input type="text" class="form-control" id="codigoPostal">
+                                                    {{ form_row(form.postalcode) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -94,24 +86,12 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label>Departamento</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected>Selecciona...</option>
-                                                        <option>Departamento de seguridad</option>
-                                                        <option>Departamento informático</option>
-                                                        <option>Departamento administrativo</option>
-                                                    </select>
+                                                    {{ form_row(form.departments) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label>Rol</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected>Selecciona...</option>
-                                                        <option>Administrador</option>
-                                                        <option>Supervisor</option>
-                                                        <option>Empleado</option>
-                                                    </select>
+                                                        {{ form_row(form.roles) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
@@ -129,16 +109,15 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label for="diasVacaciones">Días de vacaciones</label>
-                                                    <input type="text" class="form-control" id="diasVacaciones">
+                                                    {{ form_row(form.total_vacation_days) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Dar de alta</button>
+                                        {{ form_row(form.submit) }}
                                     </div>
-                                </form>
+                                {{ form_end(form) }}
                             </div>
                         </div>
                     </div>

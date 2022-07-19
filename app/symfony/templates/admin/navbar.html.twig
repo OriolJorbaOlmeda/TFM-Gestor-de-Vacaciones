@@ -1,6 +1,6 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-        <a href="home_admin.html" class="navbar-brand">
+        <a href="{{ path('app_admin_dashboard') }}" class="navbar-brand">
             <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg"
                  class="brand-image elevation-3" style="opacity: .8" alt="logo">
             <span class="brand-text font-weight-light">GetYourVacations</span>
@@ -16,14 +16,14 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="crear_calendario.html" class="nav-link">Crear calendario</a>
+                    <a href="{{ path('app_admin_calendar') }}" class="nav-link">Crear calendario</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu2" href="#" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" class="nav-link dropdown-toggle">Gestión usuarios</a>
                     <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                        <li><a href="crear_usuario.html" class="dropdown-item">Dar de alta usuario</a></li>
-                        <li><a href="modificar_usuario.html" class="dropdown-item">Modificar usuario</a></li>
+                        <li><a href="{{ path('app_admin_create-user') }}" class="dropdown-item">Dar de alta usuario</a></li>
+                        <li><a href="{{ path('app_admin_modifier') }}" class="dropdown-item">Modificar usuario</a></li>
                     </ul>
                 </li>
             </ul>
@@ -36,6 +36,7 @@
                    aria-expanded="false" class="nav-link dropdown-toggle">Mi perfil</a>
                 <ul aria-labelledby="dropdownPerfil" class="dropdown-menu border-0 shadow">
                     <li><a href="#" class="dropdown-item">Cambiar contraseña </a></li>
+                    <li><a href="{{ path('app_logout') }}" class="dropdown-item">Log out </a></li>
                 </ul>
             </li>
         </ul>
