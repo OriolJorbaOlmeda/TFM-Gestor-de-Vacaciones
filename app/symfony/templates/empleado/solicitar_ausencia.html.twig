@@ -9,6 +9,8 @@
             bsCustomFileInput.init();
         });
     </script>
+    <script type="text/javascript" src="{{ asset('js/control_fechas.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -45,12 +47,14 @@
                                                 <div class="form-group">
                                                     <label for="fechaInicio">Fecha inicio periodo ausencia</label>
                                                     <input type="date" class="form-control" id="fechaInicio">
+                                                    <span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label for="fechaFin">Fecha final periodo ausencia</label>
                                                     <input type="date" class="form-control" id="fechaFin">
+                                                    <span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-2">

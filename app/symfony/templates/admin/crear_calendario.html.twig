@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{%  block javascripts %}
+{% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/crear_calendario.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/control_fechas.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/bs-stepper/css/bs-stepper.min.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -13,6 +16,7 @@
 
         <!-- Navbar -->
         {{ include('admin/navbar.html.twig') }}
+
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
@@ -24,6 +28,7 @@
                 </div>
             </div>
 
+
             <!-- Main content 1 -->
             <div class="content">
                 <div class="container">
@@ -33,80 +38,79 @@
                                 <div class="card-header">
                                     <h3 class="card-title">Datos del calendario</h3>
                                 </div>
-                                <form>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label>Año laboral</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected>2022</option>
-                                                        <option>2023</option>
-                                                        <option>2025</option>
-                                                        <option>2026</option>
-                                                        <option>2027</option>
-                                                    </select>
-                                                </div>
+
+                                {{ form_start(formCalendar) }}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ form_row(formCalendar.year) }}
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="fechaInicio">Fecha inicio</label>
-                                                    <input type="date" class="form-control" id="fechaInicio">
-                                                    <span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="fechaFin">Fecha fin</label>
-                                                    <input type="date" class="form-control" id="fechaFin">
-                                                    <span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form_row(formCalendar.initial_date, { 'id': 'fechaInicio' }) }}
+                                                <span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Añadir días festivos del calendario</label>
-                                                    <div class="input-group">
-                                                        <input id="nuevoFestivo" type="date" class="form-control">
-                                                        <input id="descNuevoFestivo" type="text" class="form-control"
-                                                               placeholder="Descripción día festivo">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" id="btn-añadir"
-                                                                    class="btn btn-primary">Añadir</button>
-                                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form_row(formCalendar.final_date, { 'id': 'fechaFin' }) }}
+                                                <span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Añadir días festivos del calendario</label>
+                                                <div class="input-group">
+                                                    {{ form_row(formCalendar.festives.name,{ 'id': 'descNuevoFestivo'}) }}
+                                                    {{ form_row(formCalendar.festives.date,{ 'id': 'nuevoFestivo'}) }}
+                                                    <div class="input-group-prepend">
+                                                        {{ form_row(formCalendar.festives.addFestive, {'id': 'btn-','name':'addFestive'}) }}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <ul id="listaFestivos" class="list-group">
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        01/01/2022 - Año nuevo
-                                                        <a class="eliminar-festivo" type="button"><span class="badge badge-primary badge-pill"><i
-                                                                        class="bi bi-x-lg"></i></span></a>
-                                                    </li>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        06/01/2022 - Día de reyes
-                                                        <a class="eliminar-festivo" type="button"><span class="badge badge-primary badge-pill"><i
-                                                                        class="bi bi-x-lg"></i></span></a>
-                                                    </li>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        19/03/2022 - Día del padre
-                                                        <a class="eliminar-festivo" type="button"><span class="badge badge-primary badge-pill"><i
-                                                                        class="bi bi-x-lg"></i></span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul id="listaFestivos" class="list-group">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    01/01/2022 - Año nuevo
+                                                    <a class="eliminar-festivo" type="button"><span
+                                                                class="badge badge-primary badge-pill"><i
+                                                                    class="bi bi-x-lg"></i></span></a>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    06/01/2022 - Día de reyes
+                                                    <a class="eliminar-festivo" type="button"><span
+                                                                class="badge badge-primary badge-pill"><i
+                                                                    class="bi bi-x-lg"></i></span></a>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    19/03/2022 - Día del padre
+                                                    <a class="eliminar-festivo" type="button"><span
+                                                                class="badge badge-primary badge-pill"><i
+                                                                    class="bi bi-x-lg"></i></span></a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Crear calendario</button>
-                                    </div>
-                                </form>
+                                </div>
+                                <div class="card-footer">
+                                    {{ form_row(formCalendar.createCalendar) }}
+                                </div>
+
+                                {{ form_end(formCalendar) }}
+
+
                             </div>
                         </div>
                     </div>
