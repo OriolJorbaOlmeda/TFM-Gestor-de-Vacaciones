@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block extra_head %}
+{%  block stylesheets %}
+    {{ parent() }}
     <!------------ CALENDAR ------------>
     <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.css') }}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+{% endblock %}
+
+
+{%  block javascripts %}
+    {{ parent() }}
+    <!------------ CALENDAR ------------>
     <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- fullCalendar 2.2.5 -->
     <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.js') }}"></script>
-
-    <!------------ CHECKS ------------>
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-
-
 {% endblock %}
 
 {% block body %}

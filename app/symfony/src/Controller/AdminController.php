@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\UserRegistrationType;
 use App\Repository\DepartmentRepository;
 use App\Repository\UserRepository;
@@ -15,14 +16,17 @@ class AdminController extends AbstractController
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
     public function createUser(Request $request, UserRepository $userRepository, DepartmentRepository $departmentRepository): Response
     {
-        $form = $this->createForm(UserRegistrationType::class);
+        $user = new User();
+        $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
-            $department = $departmentRepository->findOneBy(['name' => $form->get('departments')->getData()]);
-            $data = $form->getData();
-            $data->setDepartment($department);
-            $userRepository->add($data, true);
-            return $this->redirectToRoute($request->getUri());
+            $pass = $form->get('password')->getData();
+            $user->setPassword($pass);
+
+            $user->setPendingVacationDays(10);
+            $userRepository->add($user, true);
+            return $this->redirectToRoute('app_dashboard');
         }else {
             return $this->render('admin/crear_usuario.html.twig', [
                 'controller_name' => 'AdminController',

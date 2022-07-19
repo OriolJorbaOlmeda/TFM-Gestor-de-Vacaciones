@@ -53,9 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'OneToMany')]
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private $departments;
+    private $department;
 
     #[ORM\OneToOne(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
     private $petition;
@@ -275,12 +275,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getDepartment(): ?Department
     {
-        return $this->departments;
+        return $this->department;
     }
 
     public function setDepartment(?Department $department): self
     {
-        $this->departments = $department;
+        $this->department = $department;
 
         return $this;
     }

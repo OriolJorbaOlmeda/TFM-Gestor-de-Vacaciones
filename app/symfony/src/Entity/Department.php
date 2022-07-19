@@ -21,7 +21,7 @@ class Department
     #[ORM\Column(type: 'string', length: 255)]
     private $code;
 
-    #[ORM\OneToMany(mappedBy: 'departments', targetEntity: User::class)]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: User::class)]
     private $users;
 
     #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'departments')]

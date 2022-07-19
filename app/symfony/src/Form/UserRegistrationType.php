@@ -29,16 +29,19 @@ class UserRegistrationType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'name'],
-                'label'=> 'Nombre'
+                'label'=> 'Nombre',
+                'required' => true
             ])
             ->add('lastname', TextType::class, [
-            'attr' => ['class' => 'form-control', 'id' => 'name'],
-            'label'=> 'Apellidos'
+                'attr' => ['class' => 'form-control', 'id' => 'name'],
+                'label'=> 'Apellidos',
+                'required' => true
             ])
-            ->add('email', EmailType::class, array(
+            ->add('email', EmailType::class, [
                 'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control', 'id' => 'email'],
-                'label'=> 'Email'
-            ))
+                'label'=> 'Email',
+                'required' => true
+            ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -54,28 +57,36 @@ class UserRegistrationType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'id' => 'password']
+                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'id' => 'password'],
+                'required' => true
             ])
             ->add('direction',TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'direccion'],
-                'label'=> 'Dirección'
+                'label'=> 'Dirección',
+                'required' => true
             ])
             ->add('city',TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'ciudad'],
-                'label'=> 'Ciudad'
+                'label'=> 'Ciudad',
+                'required' => true
             ])
             ->add('province',TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'provincia'],
-                'label'=> 'Provincia'
+                'label'=> 'Provincia',
+                'required' => true
             ])
             ->add('postalcode', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'codigoPostal'],
-                'label'=> 'Código postal'
+                'label'=> 'Código postal',
+                'required' => true
              ])
-            ->add('departments', ChoiceType::class, [
-                'label' => 'Departments',
+            ->add('department', ChoiceType::class, [
+                'label' => 'Department',
                 'choices' => $this->departments(),
+                'choice_value' => 'id',
+                'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
+                'required' => true
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
@@ -85,10 +96,13 @@ class UserRegistrationType extends AbstractType
                 ],
                 'attr' => ['class' => 'form-control select2'],
                 'label'=> 'Rol',
+                'multiple' => true,
+                'required' => true
             ])
             ->add('total_vacation_days', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
-                'label'=> 'Vacation days'
+                'label'=> 'Vacation days',
+                'required' => true
             ])
             //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [
@@ -106,11 +120,6 @@ class UserRegistrationType extends AbstractType
     }
 
     public function departments(): array{
-        $departments = $this->departmentRepository->findAll();
-        $names = array();
-        foreach ($departments as $department){
-            $names[$department->getName()] = $department->getName();
-        }
-        return $names;
+        return $this->departmentRepository->findAll();
     }
 }
