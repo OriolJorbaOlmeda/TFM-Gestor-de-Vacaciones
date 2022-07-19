@@ -22,7 +22,11 @@
     <div class="wrapper">
 
         <!-- Navbar -->
-        {{ include('empleado/navbar.html.twig') }}
+        {% if is_granted('ROLE_SUPERVISOR') %}
+            {{ include('supervisor/navbar.html.twig') }}
+        {% elseif is_granted('ROLE_EMPLEADO')%}
+            {{ include('empleado/navbar.html.twig') }}
+        {% endif %}
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">

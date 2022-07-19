@@ -23,10 +23,10 @@ class DashboardController extends AbstractController
         ]);*/
         $currentUser = $this->security->getUser();
         if (in_array("ROLE_EMPLEADO", $currentUser->getRoles())) {
-            return $this->render('empleado/home.html.twig');
+            return $this->redirectToRoute('app_employee_dashboard');
         } elseif (in_array("ROLE_SUPERVISOR", $currentUser->getRoles())) {
-            return $this->render('empleado/home.html.twig'); //pendiente saber el dashboard de supervisor
+            return $this->redirectToRoute('app_supervisor_dashboard');
         }
-            return $this->render('admin/home.html.twig');
+            return $this->redirectToRoute('app_admin_dashboard');
     }
 }

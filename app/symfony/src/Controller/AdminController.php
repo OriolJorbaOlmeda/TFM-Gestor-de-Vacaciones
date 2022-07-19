@@ -35,7 +35,7 @@ class AdminController extends AbstractController
             ]);
         }
     }
-    #[Route('/admin/modificar_usuario', name: 'app_admin_modifier')]
+    #[Route('/admin/modificar_usuario', name: 'app_admin_modify-user')]
     public function modifyUser(): Response
     {
         return $this->render('admin/modificar_usuario.html.twig', [
