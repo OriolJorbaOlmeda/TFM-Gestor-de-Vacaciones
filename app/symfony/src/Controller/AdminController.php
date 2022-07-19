@@ -9,12 +9,13 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
-    public function createUser(Request $request, UserRepository $userRepository, DepartmentRepository $departmentRepository): Response
+    public function createUser(Request $request, UserRepository $userRepository, DepartmentRepository $departmentRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserRegistrationType::class, $user);
@@ -22,8 +23,7 @@ class AdminController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $pass = $form->get('password')->getData();
-            $user->setPassword($pass);
-
+            $user->setPassword($passwordHasher->hashPassword($user, $pass));
             $user->setPendingVacationDays(10);
             $userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
