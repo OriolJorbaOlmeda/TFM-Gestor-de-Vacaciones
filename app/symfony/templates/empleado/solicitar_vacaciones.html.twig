@@ -42,30 +42,20 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <div class="form-group">
-                                                    {{ form_row(form.initial_date, { 'id': 'fechaInicio' }) }}
-                                                    <!--<span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>-->
-                                                </div>
+                                                {{ form_row(form.initial_date, { 'id': 'fechaInicio' }) }}
+                                                <!--<span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>-->
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group">
-                                                    {{ form_row(form.final_date, { 'id': 'fechaFin' }) }}
-                                                    <!--<span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>-->
-                                                </div>
+                                                {{ form_row(form.final_date, { 'id': 'fechaFin' }) }}
+                                                <!--<span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>-->
                                             </div>
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    {{ form_row(form.duration, { 'id': 'duracion' }) }}
-                                                </div>
+                                                {{ form_row(form.duration, { 'id': 'duracion' }) }}
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    {{ form_row(form.reason, { 'id': 'fechaFin' }) }}
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                        {{ form_row(form.reason) }}
+
                                     </div>
 
                                     <div class="card-footer">

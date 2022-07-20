@@ -21,6 +21,7 @@ class RequestVacationFormType extends AbstractType
                 'label' => 'Fecha inicio periodo vacaciones',
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
+                'row_attr' => ['class' => 'form-group'],
                 'required' => true,
                 //'invalid_message' => 'You entered an invalid value, it should include %num% letters',
             ])
@@ -28,19 +29,21 @@ class RequestVacationFormType extends AbstractType
                 'label' => 'Fecha final periodo vacaciones',
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
+                'row_attr' => ['class' => 'form-group'],
                 'required' => true,
                 //'invalid_message' => 'You entered an invalid value, it should include %num% letters',
             ])
             ->add('duration', TextType::class, [
                 'label' => 'Duración',
                 'attr' => ['class' => 'form-control'],
-                'required' => false,
+                'row_attr' => ['class' => 'form-group'],
+                'required' => true,
             ])
             ->add('reason', TextareaType::class, [
                 'label' => 'Motivo',
                 'attr' => ['class' => 'form-control', 'placeholder' => "Enter..."],
+                'row_attr' => ['class' => 'form-group'],
                 'required' => false,
-                //rows = 2
             ])
             ->add('save', SubmitType::class, [
             'attr' => ['class' => 'btn btn-primary'],
