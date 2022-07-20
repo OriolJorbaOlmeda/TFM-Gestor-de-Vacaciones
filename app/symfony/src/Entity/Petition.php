@@ -44,6 +44,8 @@ class Petition
     #[ORM\OneToOne(mappedBy: 'petition', targetEntity: Justify::class, cascade: ['persist', 'remove'])]
     private $justify;
 
+    private $justify_content;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -177,5 +179,15 @@ class Petition
         $this->justify = $justify;
 
         return $this;
+    }
+
+    public function getJustifyContent()
+    {
+        return $this->justify_content;
+    }
+
+    public function setJustifyContent($justify_content): void
+    {
+        $this->justify_content = $justify_content;
     }
 }
