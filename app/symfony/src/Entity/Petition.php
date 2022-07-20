@@ -28,14 +28,14 @@ class Petition
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $reason;
 
     #[ORM\Column(type: 'date')]
     private $petition_date;
 
-    #[ORM\OneToOne(inversedBy: 'petition', targetEntity: User::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'petitions')]
+    #[ORM\JoinColumn(name: 'employee_id', referencedColumnName: 'id', nullable: false)]
     private $employee;
 
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]
