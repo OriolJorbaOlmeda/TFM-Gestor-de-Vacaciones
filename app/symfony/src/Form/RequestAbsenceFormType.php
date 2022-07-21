@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RequestAbsenceFormType extends AbstractType
@@ -44,6 +46,7 @@ class RequestAbsenceFormType extends AbstractType
                 'label' => 'Motivo',
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
+                'placeholder' => '-- Selecciona --',
                 'choices' => [
                     'Baja por enfermedad' => 'Baja por enfermedad',
                     'Traslado' => 'Traslado',
@@ -63,6 +66,23 @@ class RequestAbsenceFormType extends AbstractType
                 'label' => 'Solicitar'
             ])
         ;
+
+        /*$builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $product = $event->getData();
+            var_dump($product);
+
+        });*/
+
+        $builder->get('initial_date')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $date = $event->getData();
+            var_dump($date);
+
+        });
+    }
+
+
+    public function listener() {
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
