@@ -3,6 +3,10 @@
 function convertirFechaPantalla(fecha) {
     return fecha.split("-")[2] + "/" + fecha.split("-")[1] + "/" + fecha.split("-")[0];
 }
+// Convertir la fecha de 20/12/2022 a 2022-12-20
+function convertirFecha(fecha) {
+    return fecha.split("/")[2] + "-" + fecha.split("/")[1] + "-" + fecha.split("/")[0];
+}
 
 // Devolver fecha de hoy
 function getFechaHoy(){

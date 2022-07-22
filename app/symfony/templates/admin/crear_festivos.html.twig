@@ -2,7 +2,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/crear_calendario.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/crear_festivo.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
 {% endblock %}
 
@@ -41,13 +41,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Añadir días festivos del calendario {{ calendar.getInitialDate()|date("d/m/Y")}} - {{ calendar.getFinalDate()|date("d/m/Y")}}</label>
+                                                <label>Añadir días festivos del calendario <span id="calendar_fecha_ini">{{ calendar.getInitialDate()|date("d/m/Y")}}</span> - <span id="calendar_fecha_fin">{{ calendar.getFinalDate()|date("d/m/Y")}}</span></label>
                                                 <p> Los sábados y domingos se agregan automáticamente como días libres </p>
                                                 <div class="input-group">
                                                     {{ form_row(form.name,{ 'id': 'descNuevoFestivo'}) }}
-                                                    {{ form_row(form.date,{ 'id': 'nuevoFestivo'}) }}
+                                                    {{ form_row(form.date,{ 'id': 'dateFestivo'}) }}
                                                     <div class="input-group-prepend">
-                                                        {{ form_row(form.addFestive, {'id': 'btn-añad','name':'addFestive'}) }}
+                                                        {{ form_row(form.addFestive, {'id': 'btn-añadir','name':'addFestive'}) }}
                                                     </div>
                                                 </div>
                                             </div>
