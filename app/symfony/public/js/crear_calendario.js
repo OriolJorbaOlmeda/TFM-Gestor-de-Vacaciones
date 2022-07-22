@@ -55,25 +55,6 @@ function crearNuevoFestivo(fecha, descripcion) {
     //crearFes("prueba","pruebad")
 }
 
-
-function crearFes(fecha, descripcion) {
-    $.ajax({
-        url : '/create-festive',
-        type: "POST",
-        data: {
-            'date':'fecha',
-            'desc':'descripcion'}
-        ,
-        success : function (data) {
-            console.log("SUCCESS" +data);
-        },
-        error   : function () {
-            console.log("ERROR");
-        }
-    });
-}
-
-
 // LISTENER BORRAR FESTIVOS
 document.querySelectorAll('.eliminar-festivo').forEach(elem => {
     elem.addEventListener('click', () => {

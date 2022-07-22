@@ -27,8 +27,6 @@ class FestiveType extends AbstractType
                 'widget' => 'single_text',
                 'required' => true
             ])
-
-
             ->add('addFestive', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Añadir'
