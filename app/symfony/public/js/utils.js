@@ -3,6 +3,10 @@
 function convertirFechaPantalla(fecha) {
     return fecha.split("-")[2] + "/" + fecha.split("-")[1] + "/" + fecha.split("-")[0];
 }
+// Convertir la fecha de 20/12/2022 a 2022-12-20
+function convertirFecha(fecha) {
+    return fecha.split("/")[2] + "-" + fecha.split("/")[1] + "-" + fecha.split("/")[0];
+}
 
 // Devolver fecha de hoy
 function getFechaHoy(){
@@ -26,12 +30,23 @@ function comprobarFechaMayorFechaActual(fecha) {
     return fecha >= fecha_hoy;
 }
 
-// Comprobar que la fecha final es mayor a la fecha inicio
+// Comprobar que la fecha final es mayor a la fecha inicio. Formato: 10-01-2022
 function comprobarFechaMayor(fechaInicio, fechaFin) {
     if (fechaInicio !== "" && fechaFin !== "") {
             fechaInicio = fechaInicio.split("-")[0] + "" + fechaInicio.split("-")[1] + "" + fechaInicio.split("-")[2];
             fechaFin = fechaFin.split("-")[0] + "" + fechaFin.split("-")[1] + "" + fechaFin.split("-")[2];
             return fechaInicio < fechaFin;
+    } else {
+        return true;
+    }
+}
+
+// Comprobar que la fecha final es mayor o igual a la fecha inicio. Formato: 10-01-2022
+function comprobarFechaMayorIgual(fechaInicio, fechaFin) {
+    if (fechaInicio !== "" && fechaFin !== "") {
+        fechaInicio = fechaInicio.split("-")[0] + "" + fechaInicio.split("-")[1] + "" + fechaInicio.split("-")[2];
+        fechaFin = fechaFin.split("-")[0] + "" + fechaFin.split("-")[1] + "" + fechaFin.split("-")[2];
+        return fechaInicio <= fechaFin;
     } else {
         return true;
     }

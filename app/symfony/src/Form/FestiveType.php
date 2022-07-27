@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Festive;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,8 +26,6 @@ class FestiveType extends AbstractType
                 'widget' => 'single_text',
                 'required' => true
             ])
-
-
             ->add('addFestive', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Añadir'

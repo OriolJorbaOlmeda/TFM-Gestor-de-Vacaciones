@@ -1,6 +1,11 @@
 const fechaInicio = document.getElementById("fechaInicio");
 const fechaFin = document.getElementById("fechaFin");
 
+window.onload = function() {
+    comprobarFechaInicio();
+    comprobarFechaFin();
+};
+
 // COMPROBACIONES FECHA INICIO Y FECHA FIN
 fechaInicio.addEventListener("change", event => {
     comprobarFechaInicio()
