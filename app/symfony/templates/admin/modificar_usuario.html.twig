@@ -33,45 +33,24 @@
                 <div class="container">
                     {% if user is not defined %}
 
-                        <form action="" method="post">
+                        {{ form_start(depar) }}
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Departamento</label>
-                                        <select class="form-control select2" style="width: 100%;" name="department">
-                                            <option selected>Selecciona...</option>
-                                            {% for department in departments %}
-                                                <option value="{{ department.name }}">{{ department.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Empleado</label>
-                                        <select class="form-control select2" style="width: 100%;" name="user">
-                                            <option selected>Selecciona...</option>
-                                            {% if users|length > 0 %}
-
-                                                {% for user in users %}
-                                                    <option value="{{ user.id }}">{{ user.name }}</option>
-                                                {% endfor %}
-                                            {% endif %}
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label style="visibility: hidden;">Botón</label>
-                                        <button type="submit" name="submit"
-                                                class="btn btn-primary form-control">Buscar
-                                        </button>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form_row(depar.department, {'attr': {'class': 'form-control select2'}}) }}
                             </div>
-                        </form>
+                            <div class="col-md-4">
+                                {% if depar.user is defined %}
+                                    {{ form_row(depar.user, {'attr': {'class': 'form-control select2' }}) }}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <label style="visibility: hidden;">Botón</label>
+                                {{ form_row(depar.submit, {'attr': {'class': 'btn btn-primary form-control'}}) }}
+                            </div>
+                        </div>
+                        {{ form_end(depar) }}
+
                     {% endif %}
                     {% if user is defined %}
                         <div class="row" id="formUser">
@@ -104,7 +83,6 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    {{ form_row(form.password) }}
                                                     <span class="error invalid-feedback"> La contraseña debe tener la menos 8 caracteres, mayúsculas, minúscula y números </span>
                                                 </div>
                                             </div>
@@ -148,14 +126,9 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    {{ form_row(form.roles) }}
-                                                    <select class="form-control select2" style="width: 100%;">
+                                                    {{ form_help(form.roles) }}
 
-                                                        <option value="ROLE_SUPERVISOR" {% if user.roles[0] == 'ROLE_SUPERVISOR' %}selected{% endif %}>Supervisor
-                                                        </option>
-                                                        <option value="ROLE_ADMIN" {% if user.roles[0] == 'ROLE_ADMIN' %}selected{% endif %}>Administrador</option>
-                                                        <option value="ROLE_EMPLEADO" {% if user.roles[0] == 'ROLE_EMPLEADO' %}selected{% endif %}>Empleado</option>
-                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-5" id="groupSuper">

@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\SelectUserType;
 use App\Form\UserRegistrationType;
 use App\Repository\DepartmentRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -16,13 +21,17 @@ use Symfony\Component\Security\Core\Security;
 class AdminController extends AbstractController
 {
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
-    public function createUser(Request $request, UserRepository $userRepository, DepartmentRepository $departmentRepository, UserPasswordHasherInterface $passwordHasher): Response
-    {
+    public function createUser(
+        Request $request,
+        UserRepository $userRepository,
+        DepartmentRepository $departmentRepository,
+        UserPasswordHasherInterface $passwordHasher
+    ): Response {
         $user = new User();
         $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $pass = $form->get('password')->getData();
             $user->setPassword($passwordHasher->hashPassword($user, $pass));
             $pending_vacation_days = $form->get('total_vacation_days')->getData();
@@ -32,7 +41,7 @@ class AdminController extends AbstractController
             $user->setPendingVacationDays($pending_vacation_days);
             $userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
-        }else {
+        } else {
             return $this->render('admin/crear_usuario.html.twig', [
                 'controller_name' => 'AdminController',
                 "form" => $form->createView(),
@@ -52,23 +61,36 @@ class AdminController extends AbstractController
 
         $actualUser = $userRepository->findOneBy(array('email' => 'mireia16@hotmail.com'));
         $departments = $departmentRepository->findBy(array('company' => '1'));
-        $selectedDepartment = $request->get('department');
-        print_r($selectedDepartment);
-        $users = $userRepository->findBy(array('department' => '2'));
-        if (isset($_POST['submit'])) {
-            if (isset($_POST['department']) && isset($_POST['user'])) {
-                $userid = $_POST['user'];
+        $choices = [];
+        $users = [];
+        foreach ($departments as $choice) {
+            $choices[$choice->getName()] = $choice->getId();
+        }
+        $form = $this->createForm(SelectUserType::class, $choices);
+        $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                //mirar si usuario no existe
+            if ($form->get('department')->isValid() && $form->get('user')->isValid() && $form->get('user')->getData()!=null) {
+
+                $userid = $form->get('user')->getData();
                 return $this->redirectToRoute('app_admin_edit-user', ['userid' => $userid]);
+
+
             }
         }
+
+
 
         return $this->render('admin/modificar_usuario.html.twig', [
             'controller_name' => 'AdminController',
             'users' => $users,
+            'depar' => $form->createView(),
             'departments' => $departments
 
         ]);
     }
+
 
     #[Route('/admin/modificar_usuario/{userid}', name: 'app_admin_edit-user')]
     public function editUser(
@@ -80,7 +102,7 @@ class AdminController extends AbstractController
         UserPasswordHasherInterface $passwordHasher
     ): Response {
         $user = $userRepository->findOneBy(array('id' => $userid));
-        $form = $this->createForm(UserRegistrationType::class,$user);
+        $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -107,13 +129,25 @@ class AdminController extends AbstractController
     public function dashboard(): Response
     {
         return $this->render('admin/home.html.twig');
-
     }
 
     #[Route('/admin/calendar', name: 'app_admin_calendar')]
     public function calendar(): Response
     {
         return $this->render('admin/crear_calendario.html.twig');
+    }
+
+    #[Route('/admin/prueba', name: 'app_admin_prueba')]
+    public function prueba(Request $request): Response
+    {
+
+        $prueba= $request->request->get('x');
+        $requestData = $request->getContent();
+
+        var_dump($prueba);
+
+        return $this->render('dashboard/index.html.twig',['prueba'=>$requestData]);
 
     }
+
 }

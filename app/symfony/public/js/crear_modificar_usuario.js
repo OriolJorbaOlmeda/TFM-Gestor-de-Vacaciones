@@ -1,8 +1,9 @@
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const role = document.getElementById("role");
+const sport =document.getElementById("select_user_department");
 
-document.getElementById("groupSuper").style.display = "none";
+/*document.getElementById("groupSuper").style.display = "none";
 document.getElementById("groupDiasVac").style.display = "none";
 
 // VALIDAR EMAIL
@@ -51,5 +52,36 @@ role.addEventListener("change", (event) => {
             break;
     }
 });
+*/
+function selectChange(selectOS){
+
+
+}
+sport.addEventListener("change", (e) => {
+console.log("HHHAA");
+ data2=e.target.selectedOptions[0].text; // get selected value.
+       deleteUser(this);
+}
+);
+
+
+var deleteUser = function ({callback = console.log}) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/prueba',
+        async: true,
+        data: JSON.stringify({ x: 5, y: 6 }),
+        success: function (data) {
+            console.log(data)
+
+        },
+        error: function (data){
+            console.log(data);
+        }
+    });
+
+};
+
 
 
