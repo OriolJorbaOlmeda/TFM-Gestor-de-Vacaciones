@@ -9,9 +9,13 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class CalendarType extends AbstractType
 {
+
+    public function __construct(private Security $security){}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -33,14 +37,7 @@ class CalendarType extends AbstractType
                 'label' => 'Año laboral',
                 'attr' => ['class' => 'form-control select2'],
                 'row_attr' => ['class' => 'form-group'],
-                'choices' => [
-                    '2022' => '2022',
-                    '2023' => '2023',
-                    '2024' => '2024',
-                    '2025' => '2025',
-                    '2026' => '2026',
-                    '2027' => '2027',
-                ],
+                'choices' => $this->getNextCalendarYear(),
                 'required' => true
             ])
             ->add('createCalendar', SubmitType::class, [
@@ -49,11 +46,22 @@ class CalendarType extends AbstractType
             ])
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Calendar::class,
         ]);
+    }
+
+    private function getNextCalendarYear(): array {
+        $calendars = $this->security->getUser()->getDepartment()->getCompany()->getCalendars();
+        if (count($calendars) == 0) {
+            $year = date("Y");
+            return [$year => $year];
+        }
+        $cal = $calendars[count($calendars) - 1];
+        $year = intval($cal->getYear()) + 1;
+        return [$year => $year];
+
     }
 }

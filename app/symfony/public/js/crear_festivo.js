@@ -9,8 +9,14 @@ fechaFestivo.addEventListener("change", event => {
 });
 
 function comprobarFechaFestivo() {
-    let fechaInicio = convertirFecha(fechaInicio)
-    let fechaFin = convertirFecha(fechaFin)
-    console.log(fechaInicio)
-    console.log(fechaFin)
+    let f1 = convertirFecha(fechaInicio)
+    let f2 = convertirFecha(fechaFin)
+    if (comprobarFechaMayorIgual(f1, fechaFestivo.value) && comprobarFechaMayorIgual(fechaFestivo.value, f2)) {
+        fechaFestivo.classList.remove("is-invalid")
+        document.getElementById("btn-añadir").disabled = false;
+    } else {
+        fechaFestivo.classList.add("is-invalid")
+        document.getElementById("btn-añadir").disabled = true;
+    }
+
 }
