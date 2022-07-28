@@ -141,9 +141,17 @@ class AdminController extends AbstractController
     {
         $departmentId = $request->request->get('id');
 
-        var_dump($departmentId);
+        //var_dump($departmentId);
 
-        return $this->render('dashboard/index.html.twig');
+        $users = $this->userRepository->findBy(['department' => $departmentId]);
+
+        $result = [];
+        foreach ($users as $user) {
+            $result[$user->getId()] = $user->getName();
+        }
+
+        return new JsonResponse(["users" => $result]);
+
 
     }
 

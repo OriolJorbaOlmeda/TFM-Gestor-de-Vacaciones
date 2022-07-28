@@ -72,7 +72,7 @@ function deleteUser(departmentId) {
         data: ({ id: departmentId }),
         datatype: 'json',
         success: function (data) {
-            console.log(data)
+            console.log(data['users'])
             //window.location.reload()
 
         },
