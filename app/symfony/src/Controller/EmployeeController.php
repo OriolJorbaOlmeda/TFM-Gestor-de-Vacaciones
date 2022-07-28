@@ -25,12 +25,12 @@ class EmployeeController extends AbstractController
         return $this->render('empleado/home.html.twig');
 
     }
-    #[Route('/employee/calendar', name: 'app_employee_calendar')]
+    /*#[Route('/employee/calendar', name: 'app_employee_calendar')]
     public function calendar(): Response
     {
         return $this->render('empleado/calendario.html.twig');
 
-    }
+    }*/
 
     #[Route('/employee/vacation', name: 'app_employee_vacation')]
     public function vacation(): Response
