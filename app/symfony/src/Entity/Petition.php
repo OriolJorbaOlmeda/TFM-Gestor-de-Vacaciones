@@ -34,7 +34,7 @@ class Petition
     #[ORM\Column(type: 'date')]
     private $petition_date;
 
-    #[ORM\OneToOne(inversedBy: 'petition', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'petitions')]
     #[ORM\JoinColumn(nullable: false)]
     private $employee;
 
