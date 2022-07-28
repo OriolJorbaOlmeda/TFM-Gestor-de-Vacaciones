@@ -66,7 +66,7 @@ function addSelectUser(departmentId) {
 
     $.ajax({
         type: 'POST',
-        url: '/admin/prueba',
+        url: '/admin/getUsers',
         async: true,
         data: ({id: departmentId}),
         datatype: 'json',

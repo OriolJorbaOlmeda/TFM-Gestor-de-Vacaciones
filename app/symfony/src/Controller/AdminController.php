@@ -137,25 +137,17 @@ class AdminController extends AbstractController
         return $this->render('admin/crear_calendario.html.twig');
     }
 
-    #[Route('/admin/prueba', name: 'app_admin_prueba')]
-    public function prueba(Request $request): Response
+    #[Route('/admin/getUsers', name: 'app_admin_prueba')]
+    public function getUsers(Request $request): Response
     {
-
-
-            $departmentId = $request->request->get('id');
-
-        //var_dump($departmentId);
-
+        $departmentId = $request->request->get('id');
         $users = $this->userRepository->findBy(['department' => $departmentId]);
-
         $result = [];
         foreach ($users as $user) {
             $result[$user->getId()] = $user->getName();
         }
 
         return new JsonResponse(["users" => $result]);
-
-
     }
 
 }
