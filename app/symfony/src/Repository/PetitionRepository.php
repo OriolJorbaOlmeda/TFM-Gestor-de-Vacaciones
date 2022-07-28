@@ -47,6 +47,36 @@ class PetitionRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findVacationsByUserAndCalendar($user_id, $calendar_id): array
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.employee = :user_id')
+            ->andWhere('i.calendar = :calendar_id')
+            ->andWhere('i.type = :type')
+            ->setParameter('user_id', $user_id)
+            ->setParameter('calendar_id', $calendar_id)
+            ->setParameter('type', "VACATION")
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findAbsencesByUserAndCalendar($user_id, $calendar_id): array
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.employee = :user_id')
+            ->andWhere('i.calendar = :calendar_id')
+            ->andWhere('i.type = :type')
+            ->setParameter('user_id', $user_id)
+            ->setParameter('calendar_id', $calendar_id)
+            ->setParameter('type', "ABSENCE")
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 //    /**
 //     * @return Petition[] Returns an array of Petition objects
 //     */
