@@ -40,9 +40,7 @@
                                 {{ form_row(depar.department, {'attr': {'class': 'form-control select2'}}) }}
                             </div>
                             <div class="col-md-4">
-                                {% if depar.user is defined %}
-                                    {{ form_row(depar.user, {'attr': {'class': 'form-control select2' }}) }}
-                                {% endif %}
+                                    {{ form_row(depar.user, {'attr': {'class': 'form-control select2', 'id':'selector' }}) }}
                             </div>
                             <div class="col-md-4">
                                 <label style="visibility: hidden;">Botón</label>

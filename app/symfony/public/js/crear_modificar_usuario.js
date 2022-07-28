@@ -72,8 +72,14 @@ function deleteUser(departmentId) {
         data: ({ id: departmentId }),
         datatype: 'json',
         success: function (data) {
-            console.log(data['users'])
-            //window.location.reload()
+            $("#select_user_user option").remove();
+
+            for (var key in data['users']){
+                var value = data['users'][key];
+                $("#select_user_user").append(new Option(value ,key));
+
+            }
+
 
         },
         error: function (data){

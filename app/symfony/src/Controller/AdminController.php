@@ -63,29 +63,26 @@ class AdminController extends AbstractController
         $actualUser = $this->userRepository->findOneBy(array('email' => 'mireia16@hotmail.com'));
         $departments = $this->departmentRepository->findBy(array('company' => '1'));
         $choices = [];
-        $users = [];
         foreach ($departments as $choice) {
             $choices[$choice->getName()] = $choice->getId();
         }
+
         $form = $this->createForm(SelectUserType::class, $choices);
         $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
                 //mirar si usuario no existe
-            if ($form->get('department')->isValid() && $form->get('user')->isValid() && $form->get('user')->getData()!=null) {
-
                 $userid = $form->get('user')->getData();
                 return $this->redirectToRoute('app_admin_edit-user', ['userid' => $userid]);
 
 
-            }
+
         }
 
 
 
         return $this->render('admin/modificar_usuario.html.twig', [
             'controller_name' => 'AdminController',
-            'users' => $users,
             'depar' => $form->createView(),
             'departments' => $departments
 
@@ -139,7 +136,9 @@ class AdminController extends AbstractController
     #[Route('/admin/prueba', name: 'app_admin_prueba')]
     public function prueba(Request $request): Response
     {
-        $departmentId = $request->request->get('id');
+
+
+            $departmentId = $request->request->get('id');
 
         //var_dump($departmentId);
 

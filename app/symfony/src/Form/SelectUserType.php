@@ -33,39 +33,53 @@ class SelectUserType extends AbstractType
                     'choices' => $options['data']
                 ]
             )
-
-        ->add('submit', SubmitType::class, [
-        'attr' => ['class' => 'btn btn-primary'],
-        'label'=> 'Buscar'
-    ]);
-
-        $formModifier = function (FormInterface $form, $data) {
-            $form->add('user', ChoiceType::class, [
-                'choices' => $data,
+           /* ->add('user', ChoiceType::class, [
+                'choices' => $usersName,
                 'attr' => [
                     'class' => 'form-control select2',
-                    'visibility'=> 'hidden'
                 ]
+            ])*/
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary'],
+                'label' => 'Buscar'
             ]);
-        };
+        /* $formModifier = function (FormInterface $form, $data) {
+             $form->add('user', ChoiceType::class, [
+                 'choices' => $data,
+                 'attr' => [
+                     'class' => 'form-control select2',
+                     'visibility'=> 'hidden'
+                 ]
+             ]);
+         };
+
+*/
+         $builder->addEventListener(
+             FormEvents::POST_SET_DATA,
+             function (FormEvent $event)  {
+                 $department = $event->getForm()->getData();
+                 $usersName = [];
+                 $users = $this->userRepository->findBy(array('department' => $department));
+                 foreach ($users as $user) {
+                     $usersName[$user->getName()] = $user->getId();
+                 }
+                 $form = $event->getForm();
+
+                 $formOptions = [
+
+                         'choices' => $usersName,
+                         'attr' => [
+                             'class' => 'form-control select2',
+                        ]
+
+                 ];
 
 
-        $builder->get('department')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                $department = $event->getForm()->getData();
-                $usersName = [];
-                $users = $this->userRepository->findBy(array('department' => $department));
-                foreach ($users as $user) {
-                    $usersName[$user->getName()] = $user->getId();
-                }
+                 $form->add('user', ChoiceType::class, $formOptions);
 
-               if(count($users)>0){
-                   $formModifier($event->getForm()->getParent(), $usersName);
 
-               }
-            }
-        );
+             }
+         );
     }
 
 
