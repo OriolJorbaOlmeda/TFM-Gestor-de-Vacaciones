@@ -58,22 +58,22 @@ function selectChange(selectOS){
 
 }
 sport.addEventListener("change", (e) => {
-console.log("HHHAA");
- data2=e.target.selectedOptions[0].text; // get selected value.
-       deleteUser(this);
-}
-);
+    let departmentId = e.target.value;
+    deleteUser(departmentId);
+});
 
 
-var deleteUser = function ({callback = console.log}) {
+function deleteUser(departmentId) {
 
     $.ajax({
         type: 'POST',
         url: '/admin/prueba',
         async: true,
-        data: JSON.stringify({ x: 5, y: 6 }),
+        data: ({ id: departmentId }),
+        datatype: 'json',
         success: function (data) {
             console.log(data)
+            //window.location.reload()
 
         },
         error: function (data){

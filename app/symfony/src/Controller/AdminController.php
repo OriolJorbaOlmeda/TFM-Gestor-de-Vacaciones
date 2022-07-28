@@ -20,11 +20,13 @@ use Symfony\Component\Security\Core\Security;
 
 class AdminController extends AbstractController
 {
+
+    public function __construct(private UserRepository $userRepository, private DepartmentRepository $departmentRepository) {
+
+    }
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
     public function createUser(
         Request $request,
-        UserRepository $userRepository,
-        DepartmentRepository $departmentRepository,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
         $user = new User();
@@ -39,7 +41,7 @@ class AdminController extends AbstractController
             $user->setRoles([$roles]);
 
             $user->setPendingVacationDays($pending_vacation_days);
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
         } else {
             return $this->render('admin/crear_usuario.html.twig', [
@@ -53,14 +55,13 @@ class AdminController extends AbstractController
     #[Route('/admin/modificar_usuario', name: 'app_admin_modify-user')]
     public function modifyUser(
         Request $request,
-        UserRepository $userRepository,
         Security $security,
-        DepartmentRepository $departmentRepository
+
     ): Response {
         ob_start();
 
-        $actualUser = $userRepository->findOneBy(array('email' => 'mireia16@hotmail.com'));
-        $departments = $departmentRepository->findBy(array('company' => '1'));
+        $actualUser = $this->userRepository->findOneBy(array('email' => 'mireia16@hotmail.com'));
+        $departments = $this->departmentRepository->findBy(array('company' => '1'));
         $choices = [];
         $users = [];
         foreach ($departments as $choice) {
@@ -96,12 +97,10 @@ class AdminController extends AbstractController
     public function editUser(
         string $userid,
         Request $request,
-        UserRepository $userRepository,
         Security $security,
-        DepartmentRepository $departmentRepository,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
-        $user = $userRepository->findOneBy(array('id' => $userid));
+        $user = $this->userRepository->findOneBy(array('id' => $userid));
         $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
@@ -113,7 +112,7 @@ class AdminController extends AbstractController
             $user->setRoles([$roles]);
 
             $user->setPendingVacationDays($pending_vacation_days);
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
         }
 
@@ -140,13 +139,11 @@ class AdminController extends AbstractController
     #[Route('/admin/prueba', name: 'app_admin_prueba')]
     public function prueba(Request $request): Response
     {
+        $departmentId = $request->request->get('id');
 
-        $prueba= $request->request->get('x');
-        $requestData = $request->getContent();
+        var_dump($departmentId);
 
-        var_dump($prueba);
-
-        return $this->render('dashboard/index.html.twig',['prueba'=>$requestData]);
+        return $this->render('dashboard/index.html.twig');
 
     }
 
