@@ -1,7 +1,7 @@
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const role = document.getElementById("role");
-const sport =document.getElementById("select_user_department");
+const selector = document.getElementById("select_user_department");
 
 /*document.getElementById("groupSuper").style.display = "none";
 document.getElementById("groupDiasVac").style.display = "none";
@@ -53,36 +53,31 @@ role.addEventListener("change", (event) => {
     }
 });
 */
-function selectChange(selectOS){
 
-
+if(selector!=null) {
+    selector.addEventListener("change", (e) => {
+        let departmentId = e.target.value;
+        addSelectUser(departmentId);
+    });
 }
-sport.addEventListener("change", (e) => {
-    let departmentId = e.target.value;
-    deleteUser(departmentId);
-});
 
 
-function deleteUser(departmentId) {
+function addSelectUser(departmentId) {
 
     $.ajax({
         type: 'POST',
         url: '/admin/prueba',
         async: true,
-        data: ({ id: departmentId }),
+        data: ({id: departmentId}),
         datatype: 'json',
         success: function (data) {
             $("#select_user_user option").remove();
-
-            for (var key in data['users']){
+            for (var key in data['users']) {
                 var value = data['users'][key];
-                $("#select_user_user").append(new Option(value ,key));
-
+                $("#select_user_user").append(new Option(value, key));
             }
-
-
         },
-        error: function (data){
+        error: function (data) {
             console.log(data);
         }
     });

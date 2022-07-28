@@ -102,11 +102,15 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pass = $form->get('password')->getData();
-            $user->setPassword($passwordHasher->hashPassword($user, $pass));
+            //$pass = $form->get('password')->getData();
+            //$user->setPassword($passwordHasher->hashPassword($user, $pass));
             $pending_vacation_days = $form->get('total_vacation_days')->getData();
-            $roles = $form->get('roles')->getData();
-            $user->setRoles([$roles]);
+            $roles = $user->getRoles();
+            $pass = $user->getPassword();
+
+            $user->setRoles([$roles[0]]);
+            $user->setPassword($pass);
+
 
             $user->setPendingVacationDays($pending_vacation_days);
             $this->userRepository->add($user, true);
