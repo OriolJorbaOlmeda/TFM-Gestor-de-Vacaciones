@@ -149,3 +149,4 @@ class AdminController extends AbstractController
 
         return new JsonResponse(["users" => $result]);
     }
+}
