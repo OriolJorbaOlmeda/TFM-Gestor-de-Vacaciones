@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Petition;
+use App\Entity\User;
 use App\Form\RequestVacationFormType;
 use App\Repository\CalendarRepository;
+use App\Repository\CompanyRepository;
+use App\Repository\DepartmentRepository;
+use App\Repository\FestiveRepository;
 use App\Repository\PetitionRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,11 +25,23 @@ class RequestVacationController extends AbstractController
         private PetitionRepository $petitionRepository) {}
 
     #[Route('/employee/request-vacation', name: 'app_employee_request-vacation')]
-    public function requestVacation(Request $request): Response
+    public function requestVacation(Request $request, CalendarRepository $calendarRepository, FestiveRepository $festiveRepository): Response
     {
         $petition = new Petition();
         $form = $this->createForm(RequestVacationFormType::class, $petition);
         $form->handleRequest($request);
+
+        $user = $this->getUser();
+        $department = $user->getDepartment();
+        $company = $department->getCompany();
+        $calendar = $calendarRepository->findOneBy(['company' => $company]);
+        $festives = $calendar->getFestives();
+        $days = array();
+        foreach ($festives as $festive) {
+            $day = $festive->getDate();
+            array_push($days, $day->format('Y-m-d'));
+        }
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -48,7 +64,8 @@ class RequestVacationController extends AbstractController
         }
 
         return $this->render('empleado/solicitar_vacaciones.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'festives' => $days
         ]);
 
     }

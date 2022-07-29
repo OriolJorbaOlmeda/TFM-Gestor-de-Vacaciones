@@ -1,6 +1,8 @@
 const fechaInicio = document.getElementById("fechaInicio");
 const fechaFin = document.getElementById("fechaFin");
 const totalDays = document.getElementById("duracion")
+let twigArray = document.querySelector('.js-data-festive');
+let festives = twigArray.dataset.festives;
 
 // COMPROBACIONES FECHA INICIO Y FECHA FIN
 fechaInicio.addEventListener("change", event => {
@@ -46,11 +48,9 @@ function getBusinessDatesCount() {
     let count = 0;
     const curDate = new Date(fechaInicio.value);
     const fin = new Date(fechaFin.value)
-    console.log(curDate)
-    console.log(fechaFin.value)
     while (curDate <= fin) {
         const dayOfWeek = curDate.getDay();
-        if(dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+        if (dayOfWeek !== 0 && dayOfWeek !== 6 && !festives.includes(curDate.toISOString().split('T')[0])) count++;
         curDate.setDate(curDate.getDate() + 1);
         console.log(count)
     }
