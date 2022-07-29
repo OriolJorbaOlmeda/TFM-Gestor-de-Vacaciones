@@ -1,9 +1,8 @@
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const role = document.getElementById("role");
-const selector = document.getElementById("select_user_department");
 
-/*document.getElementById("groupSuper").style.display = "none";
+document.getElementById("groupSuper").style.display = "none";
 document.getElementById("groupDiasVac").style.display = "none";
 
 // VALIDAR EMAIL
@@ -52,37 +51,7 @@ role.addEventListener("change", (event) => {
             break;
     }
 });
-*/
 
-if(selector!=null) {
-    selector.addEventListener("change", (e) => {
-        let departmentId = e.target.value;
-        addSelectUser(departmentId);
-    });
-}
-
-
-function addSelectUser(departmentId) {
-
-    $.ajax({
-        type: 'POST',
-        url: '/admin/getUsers',
-        async: true,
-        data: ({id: departmentId}),
-        datatype: 'json',
-        success: function (data) {
-            $("#select_user_user option").remove();
-            for (var key in data['users']) {
-                var value = data['users'][key];
-                $("#select_user_user").append(new Option(value, key));
-            }
-        },
-        error: function (data) {
-            console.log(data);
-        }
-    });
-
-};
 
 
 
