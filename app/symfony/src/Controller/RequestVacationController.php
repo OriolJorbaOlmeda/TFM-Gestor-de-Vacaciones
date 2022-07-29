@@ -31,7 +31,7 @@ class RequestVacationController extends AbstractController
         $user = $this->getUser();
         $department = $user->getDepartment();
         $company = $department->getCompany();
-        $calendar = $calendarRepository->findOneBy(['company' => $company]);
+        $calendar = $calendarRepository->findCurrentCalendar($company->getId());
         $festives = $calendar->getFestives();
         $days = array();
         foreach ($festives as $festive) {
