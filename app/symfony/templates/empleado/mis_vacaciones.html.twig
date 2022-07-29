@@ -45,42 +45,29 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>10/01/2022</td>
-                                            <td>20/01/2022</td>
-                                            <td>5</td>
-                                            <td>Vacaciones verano</td>
-                                            <td><span class="badge bg-danger">Denegado</span></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-block btn-outline-primary btn-xs disabled">Cancelar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>03/03/2022</td>
-                                            <td>04/03/2022</td>
-                                            <td>2</td>
-                                            <td></td>
-                                            <td><span class="badge bg-success">Aprobado</span></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-block btn-outline-primary btn-xs disabled">Cancelar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>04/04/2022</td>
-                                            <td>06/04/2022</td>
-                                            <td>3</td>
-                                            <td>Puente</td>
-                                            <td><span class="badge bg-warning">Pendiente</span></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-block btn-outline-primary btn-xs">Cancelar
-                                                </button>
-                                            </td>
-                                        </tr>
+
+                                        {% for petition in vacations %}
+                                            <tr>
+                                                <td> {{ petition.getInitialDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.duration}} </td>
+                                                <td> {{ petition.reason}} </td>
+                                                {% if petition.state == 'ACCEPTED' %}
+                                                    <td><span class="badge bg-success">Aprobado</span></td>
+                                                {% elseif petition.state == 'PENDING' %}
+                                                    <td><span class="badge bg-warning">Pendiente</span></td>
+                                                    <td>
+                                                        <div class="btn-group-sm">
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                {% elseif petition.state == 'DENIED' %}
+                                                    <td><span class="badge bg-danger">Denegado</span></td>
+                                                {% endif %}
+
+                                            </tr>
+                                        {% endfor %}
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -124,42 +111,29 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>10/01/2022</td>
-                                            <td>11/01/2022</td>
-                                            <td>1</td>
-                                            <td>Fallecimiento familiar</td>
-                                            <td><span class="badge bg-success">Aprobado</span></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-block btn-outline-primary btn-xs disabled">Cancelar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>03/03/2022</td>
-                                            <td>05/03/2022</td>
-                                            <td>2</td>
-                                            <td>Baja médica</td>
-                                            <td><span class="badge bg-success">Aprobado</span></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-block btn-outline-primary btn-xs disabled">Cancelar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>04/04/2022</td>
-                                            <td>06/04/2022</td>
-                                            <td>3</td>
-                                            <td>Puente</td>
-                                            <td><span class="badge bg-warning">Pendiente</span></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-block btn-outline-primary btn-xs">Cancelar
-                                                </button>
-                                            </td>
-                                        </tr>
+
+                                        {% for petition in absences %}
+
+                                            <tr>
+                                                <td> {{ petition.getInitialDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.duration}} </td>
+                                                <td> {{ petition.reason}} </td>
+                                                {% if petition.state == 'ACCEPTED' %}
+                                                    <td><span class="badge bg-success">Aprobado</span></td>
+                                                {% elseif petition.state == 'PENDING' %}
+                                                    <td><span class="badge bg-warning">Pendiente</span></td>
+                                                    <td>
+                                                        <div class="btn-group-sm">
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                {% elseif petition.state == 'DENIED' %}
+                                                    <td><span class="badge bg-danger">Denegado</span></td>
+                                                {% endif %}
+                                            </tr>
+
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
