@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Petition;
-use App\Entity\User;
 use App\Form\RequestVacationFormType;
 use App\Repository\CalendarRepository;
-use App\Repository\CompanyRepository;
-use App\Repository\DepartmentRepository;
 use App\Repository\FestiveRepository;
 use App\Repository\PetitionRepository;
 use App\Repository\UserRepository;
