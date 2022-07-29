@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{%  block javascripts %}
+{% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/crear_modificar_usuario.js') }}" defer></script>
+
+    <script type="text/javascript" src="{{ asset('js/modificar_usuario.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -13,8 +14,10 @@
         <!-- Navbar -->
         {{ include('admin/navbar.html.twig') }}
 
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
@@ -24,75 +27,60 @@
             </div>
 
             <!-- Main content 1 -->
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Departamento</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option selected>Selecciona...</option>
-                                    <option>Departamento de seguridad</option>
-                                    <option>Departamento informático</option>
-                                    <option>Departamento administrativo</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Empleado</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option selected>Selecciona...</option>
-                                    <option>Ana Lopez</option>
-                                    <option>Juan Hernandez</option>
-                                    <option>Irene Artetxe</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label style="visibility: hidden;">Botón</label>
-                                <button type="submit"
-                                        class="btn btn-primary form-control">Buscar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Datos personales</h3>
-                                </div>
-                                <form>
+            <div class="content">
+
+                <div class="container">
+                    {% if user is not defined %}
+
+                        {{ form_start(depar) }}
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form_row(depar.department, {'attr': {'class': 'form-control select2'}}) }}
+                            </div>
+                            <div class="col-md-4">
+                                    {{ form_row(depar.user, {'attr': {'class': 'form-control select2', 'id':'selector' }}) }}
+                            </div>
+                            <div class="col-md-4">
+                                <label style="visibility: hidden;">Botón</label>
+                                {{ form_row(depar.submit, {'attr': {'class': 'btn btn-primary form-control'}}) }}
+                            </div>
+                        </div>
+                        {{ form_end(depar) }}
+
+                    {% endif %}
+                    {% if user is defined %}
+                        <div class="row" id="formUser">
+                            <div class="col-md-12">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Datos personales</h3>
+                                    </div>
+                                    {{ form_start(form) }}
+
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="nombre">Nombre</label>
-                                                    <input type="text" class="form-control" id="nombre">
+                                                    {{ form_row(form.name) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="apellidos">Apellidos</label>
-                                                    <input type="text" class="form-control" id="apellidos">
+                                                    {{ form_row(form.lastname) }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="emai">Email</label>
-                                                    <input type="email" class="form-control" id="email" disabled>
+                                                    {{ form_row(form.email) }}
                                                     <span class="error invalid-feedback"> El email introducido no es válido </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="password">Password</label>
-                                                    <input type="text" class="form-control" id="password">
                                                     <span class="error invalid-feedback"> La contraseña debe tener la menos 8 caracteres, mayúsculas, minúscula y números </span>
                                                 </div>
                                             </div>
@@ -100,28 +88,25 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="direccion">Dirección</label>
-                                                    <input type="text" class="form-control" id="direccion">
+                                                    {{ form_row(form.direction) }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label for="ciudad">Ciudad</label>
-                                                    <input type="text" class="form-control" id="ciudad">
+                                                    {{ form_row(form.city) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label for="provincia">Provincia</label>
-                                                    <input type="text" class="form-control" id="provincia">
+                                                    {{ form_row(form.province) }}
+
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label for="codigoPostal">Código postal</label>
-                                                    <input type="text" class="form-control" id="codigoPostal">
+                                                    {{ form_row(form.postalcode) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -134,24 +119,14 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label>Departamento</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected>Selecciona...</option>
-                                                        <option>Departamento de seguridad</option>
-                                                        <option>Departamento informático</option>
-                                                        <option>Departamento administrativo</option>
-                                                    </select>
+                                                    {{ form_row(form.department) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label>Rol</label>
-                                                    <select id="role" class="form-control select2" style="width: 100%;">
-                                                        <option value="-1" selected>Selecciona...</option>
-                                                        <option value="ROLE_ADMIN">Administrador</option>
-                                                        <option value="ROLE_SUPERVISOR">Supervisor</option>
-                                                        <option value="ROLE_EMPLEADO">Empleado</option>
-                                                    </select>
+                                                    {{ form_help(form.roles) }}
+
+
                                                 </div>
                                             </div>
                                             <div class="col-md-5" id="groupSuper">
@@ -169,23 +144,23 @@
                                         <div class="row" id="groupDiasVac">
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label for="diasVacaciones">Días de vacaciones</label>
-                                                    <input type="text" class="form-control" id="diasVacaciones">
+                                                    {{ form_row(form.total_vacation_days) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        {{ form_row(form.submit) }}
+
                                     </div>
-                                </form>
+                                    {{ form_end(form,{'render_rest': false}) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
     </body>
-
 {% endblock %}

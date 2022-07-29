@@ -25,6 +25,23 @@ Una vez instalado se ha de inicializar el proyecto, para ello se tiene que levan
     * Nos conectamos a la base de datos Acordaros que el puerto es el 10000 y para actualizar cualquier cambio de la BD  
         bin/console doctrine:schema:update --force
 
+
+##APARTADOS
+
+- Modificar usuario 
+- Crear calendario 
+- Dar de alta usuario
+- Aprobar o denegar solicitud vacaciones 
+- Cancelar una vacacione
+- Buscar en el calendario por departamento o empleado
+- Solicitar vaciones
+- Solicitar ausencia justificada
+- Cambiar contraseña 
+- 
+
+
+## COSAS PENDIENTES  
+=======
 ## SOLICITUDES
 
 Estados: 
@@ -36,3 +53,4 @@ Estados:
 Tipos: 
 - VACATION
 - ABSENCE
+
