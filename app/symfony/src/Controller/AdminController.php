@@ -32,6 +32,7 @@ class AdminController extends AbstractController
             $userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
         }else {
+            $this->getDepartmentByCompany($departmentRepository);
             return $this->render('admin/crear_usuario.html.twig', [
                 'controller_name' => 'AdminController',
                 "form" => $form->createView(),
@@ -60,5 +61,10 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/crear_calendario.html.twig');
 
+    }
+
+    public function getDepartmentByCompany(DepartmentRepository $departmentRepository){
+        $user = $this->getUser();
+        var_dump($user);
     }
 }
