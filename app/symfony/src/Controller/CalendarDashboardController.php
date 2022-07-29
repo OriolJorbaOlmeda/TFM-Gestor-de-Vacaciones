@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\SearchByDepartmentType;
 use App\Repository\CalendarRepository;
 use App\Repository\DepartmentRepository;
+use App\Repository\FestiveRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,8 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarDashboardController extends AbstractController
 {
 
-    public function __construct(private UserRepository $userRepository, private CalendarRepository $calendarRepository)
-    {
+    public function __construct(
+        private UserRepository $userRepository,
+        private CalendarRepository $calendarRepository,
+        private FestiveRepository $festiveRepository
+    ) {
     }
 
     #[Route('/employee/calendar', name: 'app_employee_calendar')]
@@ -67,16 +71,19 @@ class CalendarDashboardController extends AbstractController
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
         //$content= $this->getCalendar()->getContent();
-        var_dump($calendar->getId());
+        $festives = $calendar->getFestives();
 
 
         $result = [];
-        foreach ($users as $user) {
-            $result[$user->getId()] = $user->getName();
+        foreach ($festives as $festive) {
+            $result[$festive->getId()] = [
+                "name" => $festive->getName(),
+                "date" => $festive->getDate()
+            ];
         }
 
 
-        return new JsonResponse(["users" => $result]);
+        return new JsonResponse(["festives" => $result]);
     }
 
 }
