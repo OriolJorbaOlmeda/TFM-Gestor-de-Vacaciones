@@ -2,6 +2,7 @@
 
 {%  block stylesheets %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}" defer></script>
     <!------------ CALENDAR ------------>
     <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.css') }}">
     <!-- iCheck for checkboxes and radio inputs -->
@@ -61,28 +62,32 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Búsqueda por departamentos</h4>
                                 </div>
+                                {{ form_start(formDepar) }}
                                 <div class="card-body">
                                     <div class="icheck-success d-inline">
                                         <div class="form-group">
-                                            <label>Departamento</label>
-                                            <select class="form-control select2" style="width: 100%;">
+                                           <!-- <label>Departamento</label>-->
+                                            {{ form_row(formDepar.department,{'attr': {'class': 'form-control select2','id':'select_user_department'}}) }}
+                                          <!--  <select class="form-control select2" style="width: 100%;" id="select_user_department">
                                                 <option selected="selected">Selecciona...</option>
                                                 {% for department in departments %}
                                                     <option value="{{ department.id }}"> {{ department.name }} </option>
                                                 {% endfor %}
-                                            </select>
+                                            </select>-->
                                         </div>
-                                        <!--<div class="form-group">
-                                            <label>Empleado</label>
-                                            <select class="form-control select2" style="width: 100%;">
+                                        <div class="form-group" >
+                                           <!-- <label>Empleado</label>-->
+                                            {{ form_row(formDepar.user,{'class': 'form-control select2', 'id':'selector' }) }}
+
+                                          <!--  <select class="form-control select2" style="width: 100%;" id="select_user_user">
                                                 <option selected="selected">Selecciona...</option>
-                                                <option>Ana Lopez</option>
-                                                <option>Juan Hernandez</option>
-                                                <option>Irene Artetxe</option>
-                                            </select>
-                                        </div>-->
+
+                                            </select>-->
+                                        </div>
                                     </div>
                                 </div>
+                                {{ form_end(formDepar) }}
+
                             </div>
                         </div>
                         <div class="col-md-8">
