@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use DateTime;
 
 /**
  * @extends ServiceEntityRepository<Calendar>
@@ -45,6 +46,21 @@ class CalendarRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function findCurrentCalendar($company_id): ?Calendar {
+        $actual_date = new DateTime();
+        $actual_date = $actual_date->format('Y-m-d');
+
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.initial_date < :actual_date OR i.initial_date = :actual_date')
+            ->andWhere('i.final_date > :actual_date OR i.initial_date = :actual_date')
+            ->andWhere('i.company = :company_id')
+            ->setParameter('actual_date', $actual_date)
+            ->setParameter('company_id', $company_id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
 
 //    /**

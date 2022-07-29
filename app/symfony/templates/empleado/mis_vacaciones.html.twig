@@ -57,9 +57,9 @@
                                                 {% elseif petition.state == 'PENDING' %}
                                                     <td><span class="badge bg-warning">Pendiente</span></td>
                                                     <td>
-                                                        <button type="button"
-                                                                class="btn btn-block btn-outline-primary btn-xs">Cancelar
-                                                        </button>
+                                                        <div class="btn-group-sm">
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
                                                     </td>
                                                 {% elseif petition.state == 'DENIED' %}
                                                     <td><span class="badge bg-danger">Denegado</span></td>
@@ -124,9 +124,9 @@
                                                 {% elseif petition.state == 'PENDING' %}
                                                     <td><span class="badge bg-warning">Pendiente</span></td>
                                                     <td>
-                                                        <button type="button"
-                                                                class="btn btn-block btn-outline-primary btn-xs">Cancelar
-                                                        </button>
+                                                        <div class="btn-group-sm">
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
                                                     </td>
                                                 {% elseif petition.state == 'DENIED' %}
                                                     <td><span class="badge bg-danger">Denegado</span></td>
