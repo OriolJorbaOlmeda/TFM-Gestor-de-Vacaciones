@@ -43,7 +43,7 @@ class AdminController extends AbstractController
             $user->setPendingVacationDays($pending_vacation_days);
             $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
-        } else {
+        }else {
             return $this->render('admin/crear_usuario.html.twig', [
                 'controller_name' => 'AdminController',
                 "form" => $form->createView(),
@@ -149,5 +149,3 @@ class AdminController extends AbstractController
 
         return new JsonResponse(["users" => $result]);
     }
-
-}

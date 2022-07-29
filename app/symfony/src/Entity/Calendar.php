@@ -6,6 +6,7 @@ use App\Repository\CalendarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalendarRepository::class)]
 class Calendar
@@ -15,9 +16,13 @@ class Calendar
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\GreaterThanOrEqual('today', message: 'La fecha de inicio debe ser mayor o igual a la fecha actual')]
+    #[Assert\LessThan(propertyPath: 'final_date', message: 'La fecha inicio debe ser inferior a la fecha de fin')]
     #[ORM\Column(type: 'date')]
     private $initial_date;
 
+    #[Assert\GreaterThanOrEqual('today', message: 'La fecha fin debe ser mayor o igual a la fecha actual')]
+    #[Assert\GreaterThan(propertyPath: 'initial_date', message: 'La fecha fin debe ser superior a la fecha de inicio')]
     #[ORM\Column(type: 'date')]
     private $final_date;
 

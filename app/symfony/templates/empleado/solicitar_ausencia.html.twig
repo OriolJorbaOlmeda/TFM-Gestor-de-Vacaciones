@@ -44,45 +44,30 @@
                                 <div class="card-header">
                                     <h3 class="card-title">Datos de la solicitud</h3>
                                 </div>
-                                <form>
+                                {{ form_start(form) }}
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label for="fechaInicio">Fecha inicio periodo ausencia</label>
-                                                    <input type="date" class="form-control" id="fechaInicio">
-                                                    <span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>
-                                                </div>
+                                                {{ form_row(form.initial_date, { 'id': 'fechaInicio' }) }}
+                                                <!--<span class="error invalid-feedback"> La fecha inicio tiene que ser mayor o igual a la fecha actual y menor a la fecha fin </span>-->
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label for="fechaFin">Fecha final periodo ausencia</label>
-                                                    <input type="date" class="form-control" id="fechaFin">
-                                                    <span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>
-                                                </div>
+                                                {{ form_row(form.final_date, { 'id': 'fechaFin' }) }}
+                                                <!--<span class="error invalid-feedback"> La fecha fin tiene que ser mayor o igual a la fecha actual y mayor a la fecha inicio </span>-->
                                             </div>
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="duracion">Duración</label>
-                                                    <input type="text" class="form-control" id="duracion">
-                                                </div>
+                                                {{ form_row(form.duration, { 'id': 'duracion' }) }}
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Motivo</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected="selected">Selecciona...</option>
-                                                        <option>Fallecimiento familiar</option>
-                                                        <option>Baja médica</option>
-                                                        <option>Motivos de salud</option>
-                                                        <option>Otros</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
+
+
+                                        {{ form_row(form.reason) }}
+
+                                        {{ form_row(form.justify_content) }}
+
+
+
+                                        <!--<div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="exampleInputFile">Adjuntar justificante</label>
@@ -96,12 +81,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Solicitar</button>
+                                        {{ form_row(form.save) }}
                                     </div>
-                                </form>
+                                {{ form_end(form) }}
+
                             </div>
                         </div>
                     </div>
