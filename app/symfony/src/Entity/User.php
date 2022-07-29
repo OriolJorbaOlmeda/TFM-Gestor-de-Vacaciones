@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private $department;
 
-    #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class)]
     private $petitions;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
@@ -285,32 +285,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, self>
-     */
-    public function getPetitions(): Collection
+    public function getPetition(): ?Petition
     {
-        return $this->petitions;
+        return $this->petition;
     }
 
-    public function addPetition(Petition $petition): self
+    public function setPetition(Petition $petition): self
     {
-        if (!$this->petitions->contains($petition)) {
-            $this->petitions[] = $petition;
+        // set the owning side of the relation if necessary
+        if ($petition->getEmployee() !== $this) {
             $petition->setEmployee($this);
         }
 
-        return $this;
-    }
-
-    public function removePetition(Petition $petition): self
-    {
-        if ($this->petitions->removeElement($petition)) {
-            // set the owning side to null (unless already changed)
-            if ($petition->getEmployee() === $this) {
-                $petition->setEmployee(null);
-            }
-        }
+        $this->petition = $petition;
 
         return $this;
     }

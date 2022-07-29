@@ -28,14 +28,14 @@ class Petition
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $reason;
 
     #[ORM\Column(type: 'date')]
     private $petition_date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'petitions')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'employee_id', referencedColumnName: 'id', nullable: false)]
     private $employee;
 
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]
@@ -43,6 +43,8 @@ class Petition
 
     #[ORM\OneToOne(mappedBy: 'petition', targetEntity: Justify::class, cascade: ['persist', 'remove'])]
     private $justify;
+
+    private $justify_content;
 
     public function getId(): ?int
     {
@@ -177,5 +179,15 @@ class Petition
         $this->justify = $justify;
 
         return $this;
+    }
+
+    public function getJustifyContent()
+    {
+        return $this->justify_content;
+    }
+
+    public function setJustifyContent($justify_content): void
+    {
+        $this->justify_content = $justify_content;
     }
 }
