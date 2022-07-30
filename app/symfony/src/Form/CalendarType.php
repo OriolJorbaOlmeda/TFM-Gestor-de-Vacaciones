@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use DateTime;
 
 class CalendarType extends AbstractType
 {
@@ -24,7 +25,9 @@ class CalendarType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'widget' => 'single_text',
-                'required' => true
+                'required' => true,
+                'data' => $this->getInitialDate()
+
             ])
             ->add('final_date', DateType::class, [
                 'label' => 'Fecha fin',
@@ -63,5 +66,18 @@ class CalendarType extends AbstractType
         $year = intval($cal->getYear()) + 1;
         return [$year => $year];
 
+    }
+
+    private function getInitialDate(): ?DateTime {
+        $calendars = $this->security->getUser()->getDepartment()->getCompany()->getCalendars();
+        if (count($calendars) == 0) {
+            $year = date("Y");
+            $date = strval($year) . '-01-01';
+            return new DateTime($date);
+        }
+        $cal = $calendars[count($calendars) - 1];
+        $ini = $cal->getFinalDate();
+        $ini->modify('+1 day');
+        return $ini;
     }
 }

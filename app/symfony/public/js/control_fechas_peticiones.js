@@ -24,7 +24,7 @@ fechaFin.addEventListener("change", event => {
 function comprobarFechaInicio() {
     let fecha = fechaInicio.value;
     if (comprobarFechaMayorFechaActual(fecha)) {
-        if (comprobarFechaMayorFechaActual(fechaFin.value) && comprobarFechaMayor(fechaInicio.value, fechaFin.value)){
+        if (comprobarFechaMayorFechaActual(fechaFin.value) && comprobarFechaMayorIgual(fechaInicio.value, fechaFin.value)){
             fechaInicio.classList.remove("is-invalid")
             fechaFin.classList.remove("is-invalid")
         } else {
@@ -38,7 +38,7 @@ function comprobarFechaInicio() {
 function comprobarFechaFin() {
     let fecha = fechaFin.value;
     if (comprobarFechaMayorFechaActual(fecha)) {
-        if (comprobarFechaMayorFechaActual(fechaInicio.value) && comprobarFechaMayor(fechaInicio.value, fechaFin.value)){
+        if (comprobarFechaMayorFechaActual(fechaInicio.value) && comprobarFechaMayorIgual(fechaInicio.value, fechaFin.value)){
             fechaInicio.classList.remove("is-invalid")
             fechaFin.classList.remove("is-invalid")
         } else {
