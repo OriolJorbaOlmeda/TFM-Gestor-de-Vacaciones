@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PetitionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PetitionRepository::class)]
 class Petition
@@ -13,9 +14,13 @@ class Petition
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\GreaterThan('today', message: 'La fecha de inicio debe ser mayor a la fecha actual')]
+    #[Assert\LessThanOrEqual(propertyPath: 'final_date', message: 'La fecha inicio debe ser inferior o igual a la fecha de fin')]
     #[ORM\Column(type: 'date')]
     private $initial_date;
 
+    #[Assert\GreaterThan('today', message: 'La fecha fin debe ser mayor a la fecha actual')]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'initial_date', message: 'La fecha fin debe ser superior o igual a la fecha de inicio')]
     #[ORM\Column(type: 'date')]
     private $final_date;
 
