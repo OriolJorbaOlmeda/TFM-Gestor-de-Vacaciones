@@ -34,9 +34,15 @@ function addSelectUser(departmentId) {
         datatype: 'json',
         success: function (data) {
             $("#selector option").remove();
-            for (var key in data['users']) {
-                var value = data['users'][key];
-                $("#selector").append(new Option(value, key));
+
+            if (data['users'].length === 0) {
+                $("#selector").prop('disabled', 'disabled');
+            } else {
+                $("#selector").prop('disabled', false);
+                for (var key in data['users']) {
+                    var value = data['users'][key];
+                    $("#selector").append(new Option(value, key));
+                }
             }
         },
         error: function (data) {
