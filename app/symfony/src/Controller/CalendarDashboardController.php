@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Form\SearchByDepartmentType;
 use App\Repository\CalendarRepository;
-use App\Repository\DepartmentRepository;
-use App\Repository\FestiveRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,37 +16,34 @@ class CalendarDashboardController extends AbstractController
 
     public function __construct(
         private UserRepository $userRepository,
-        private CalendarRepository $calendarRepository,
-        private FestiveRepository $festiveRepository
-    ) {
+        private CalendarRepository $calendarRepository) {
     }
 
     #[Route('/employee/calendar', name: 'app_employee_calendar')]
     public function calendar(Request $request): Response
     {
+        //Cogemos todos los departamentos de una compañia para mostrarlos en el select
         $allDepartments = $this->getUser()->getDepartment()->getCompany()->getDepartments();
-
-        // $department = $this->getUser()->getDepartment();
-
-        // var_dump($allDepartments[0]->getName());
-        // $employees = $this->userRepository->findBy(['department' => $department->getId()]);
         $result = [];
         foreach ($allDepartments as $department) {
             $result[$department->getName()] = $department->getId();
         }
 
+        //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
         $festives = $calendar->getFestives();
-        $result2 = [];
+        $festives_company = [];
+
         foreach ($festives as $festive) {
-            $result2[$festive->getId()] = [
+            $festives_company[$festive->getId()] = [
                 "name" => $festive->getName(),
                 "date" => $festive->getDate(),
                 "initialdate"=>$festive->getDate(),
                 "finaldate"=>$festive->getDate(),
             ];
         }
+
         $form = $this->createForm(SearchByDepartmentType::class, $result);
         $form->handleRequest($request);
 
@@ -56,7 +51,7 @@ class CalendarDashboardController extends AbstractController
         return $this->render('empleado/calendario.html.twig', [
             "departments" => $allDepartments,
             "formDepar" => $form->createView(),
-            "festives" => $result2
+            "festives" => $festives_company
         ]);
     }
 
@@ -78,18 +73,18 @@ class CalendarDashboardController extends AbstractController
     #[Route('/employee/getCalendar', name: 'app_calendar_get')]
     public function getCalendar(Request $request): Response
     {
+        //Pillamos la información del usuario seleccionado
         $userId = $request->request->get('id');
-        $users = $this->userRepository->findOneBy(['id' => $userId]);
+        $user = $this->userRepository->findOneBy(['id' => $userId]);
+        $festivos_usuario= $user->getPetition();
+
+
+        //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
-        //$content= $this->getCalendar()->getContent();
         $festives = $calendar->getFestives();
-       $festivos_usuario= $users->getPetition();
-       // var_dump($users[0]->getId());
-        //ar_dump($users);
 
-
-
+        //Nos guardamos los festivos del calendario
         $result = [];
         foreach ($festives as $festive) {
             $result[$festive->getId()] = [
@@ -99,10 +94,10 @@ class CalendarDashboardController extends AbstractController
                 "finaldate"=>$festive->getDate(),
             ];
         }
-        //$result2 = [];
 
+        //Nos guardamos los festivos del usuario
         //foreach ($festivos_usuario as $festivo_usuario) {
-        if(!empty($festivos_usuario)) {
+        if(!empty($festivos_usuario) && $festivos_usuario->getState()=="ACCEPTED") {
             $result[$festivos_usuario->getId()] = [
                 "name" => $festivos_usuario->getReason(),
                 "date" => $festivos_usuario->getPetitionDate(),
