@@ -14,28 +14,12 @@ selectorUser.addEventListener("change", (e) => {
 
 
 checkeBox.addEventListener("click", (e) => {
-    if(checkeBox.checked) {
+    if (checkeBox.checked) {
         console.log("festivos marcado");
         $('.fc-daygrid-event').css("visibility", "visible");
-
-
     } else {
         console.log("festivos desmarcador")
-        //var calendarEl=document.getElementById('calendar');
-        //calendarEl.events=[];
-            //var event = calendar.getEvents();
-        //console.log(event);
-
         $('.fc-daygrid-event').css("visibility", "hidden");
-        /*var festivos= calendarEl.getElementsByClassName('fc-daygrid-event-harness');
-        for (var i = 0; i < festivos.length; i++) {
-            festivos[i].remove();
-        }*/
-
-
-
-
-
     }
 });
 
@@ -78,7 +62,7 @@ function addSelectCalendar(userId) {
                 y = date.getFullYear()
             var Calendar = FullCalendar.Calendar;
 
-            var calendarEl=document.getElementById('calendar');
+            var calendarEl = document.getElementById('calendar');
             var event = [];
 
             for (var key in data['festives']) {
@@ -89,8 +73,8 @@ function addSelectCalendar(userId) {
                     title: value['name'],
                     start: value['initialdate'].date,
                     end: value['finaldate'].date,
-                    backgroundColor: Math.floor(Math.random()*16777215).toString(16), //orange
-                    borderColor: Math.floor(Math.random()*16777215).toString(16), //orange
+                    backgroundColor: Math.floor(Math.random() * 16777215).toString(16), //orange
+                    borderColor: Math.floor(Math.random() * 16777215).toString(16), //orange
                     allDay: true
                 })
 
