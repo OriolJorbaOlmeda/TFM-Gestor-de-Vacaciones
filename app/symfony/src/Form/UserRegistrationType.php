@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -20,8 +21,9 @@ class UserRegistrationType extends AbstractType
 
     private DepartmentRepository $departmentRepository;
 
-    public function __construct(DepartmentRepository $departmentRepository){
+    public function __construct(DepartmentRepository $departmentRepository, Security $security){
         $this->departmentRepository = $departmentRepository;
+        $this->security = $security;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -121,6 +123,10 @@ class UserRegistrationType extends AbstractType
     }
 
     public function departments(): array{
-        return $this->departmentRepository->findAll();
+        $user = $this->security->getUser();
+        $department = $user->getDepartment();
+        $company = $department->getCompany();
+
+        return $this->departmentRepository->findBy(['company' => $company]);
     }
 }
