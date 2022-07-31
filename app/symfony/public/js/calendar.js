@@ -1,5 +1,6 @@
 const selector = document.getElementById("search_by_department_department");
 const selectorUser = document.getElementById("selector");
+const checkeBox = document.getElementById("checkboxSuccess1");
 
 selector.addEventListener("change", (e) => {
     let departmentId = e.target.value;
@@ -9,6 +10,33 @@ selector.addEventListener("change", (e) => {
 selectorUser.addEventListener("change", (e) => {
     let userId = e.target.value;
     addSelectCalendar(userId);
+});
+
+
+checkeBox.addEventListener("click", (e) => {
+    if(checkeBox.checked) {
+        console.log("festivos marcado");
+        $('.fc-daygrid-event').css("visibility", "visible");
+
+
+    } else {
+        console.log("festivos desmarcador")
+        //var calendarEl=document.getElementById('calendar');
+        //calendarEl.events=[];
+            //var event = calendar.getEvents();
+        //console.log(event);
+
+        $('.fc-daygrid-event').css("visibility", "hidden");
+        /*var festivos= calendarEl.getElementsByClassName('fc-daygrid-event-harness');
+        for (var i = 0; i < festivos.length; i++) {
+            festivos[i].remove();
+        }*/
+
+
+
+
+
+    }
 });
 
 
@@ -43,6 +71,7 @@ function addSelectCalendar(userId) {
         data: ({id: userId}),
         datatype: 'json',
         success: function (data) {
+
             var date = new Date()
             var d = date.getDate(),
                 m = date.getMonth(),
@@ -53,11 +82,13 @@ function addSelectCalendar(userId) {
             var event = [];
 
             for (var key in data['festives']) {
+
                 var value = data['festives'][key];
+                console.log(value['initialdate'].date);
                 event.push({
                     title: value['name'],
-                    start: value['date'].date,
-                    end: value['date'].date,
+                    start: value['initialdate'].date,
+                    end: value['finaldate'].date,
                     backgroundColor: Math.floor(Math.random()*16777215).toString(16), //orange
                     borderColor: Math.floor(Math.random()*16777215).toString(16), //orange
                     allDay: true

@@ -37,14 +37,26 @@ class CalendarDashboardController extends AbstractController
             $result[$department->getName()] = $department->getId();
         }
 
-
+        $companyId = $this->getUser()->getDepartment()->getCompany();
+        $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
+        $festives = $calendar->getFestives();
+        $result2 = [];
+        foreach ($festives as $festive) {
+            $result2[$festive->getId()] = [
+                "name" => $festive->getName(),
+                "date" => $festive->getDate(),
+                "initialdate"=>$festive->getDate(),
+                "finaldate"=>$festive->getDate(),
+            ];
+        }
         $form = $this->createForm(SearchByDepartmentType::class, $result);
         $form->handleRequest($request);
 
 
         return $this->render('empleado/calendario.html.twig', [
             "departments" => $allDepartments,
-            "formDepar" => $form->createView()
+            "formDepar" => $form->createView(),
+            "festives" => $result2
         ]);
     }
 
@@ -67,20 +79,38 @@ class CalendarDashboardController extends AbstractController
     public function getCalendar(Request $request): Response
     {
         $userId = $request->request->get('id');
-        $users = $this->userRepository->findBy(['id' => $userId]);
+        $users = $this->userRepository->findOneBy(['id' => $userId]);
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
         //$content= $this->getCalendar()->getContent();
         $festives = $calendar->getFestives();
+       $festivos_usuario= $users->getPetition();
+       // var_dump($users[0]->getId());
+        //ar_dump($users);
+
 
 
         $result = [];
         foreach ($festives as $festive) {
             $result[$festive->getId()] = [
                 "name" => $festive->getName(),
-                "date" => $festive->getDate()
+                "date" => $festive->getDate(),
+                "initialdate"=>$festive->getDate(),
+                "finaldate"=>$festive->getDate(),
             ];
         }
+        //$result2 = [];
+
+        //foreach ($festivos_usuario as $festivo_usuario) {
+        if(!empty($festivos_usuario)) {
+            $result[$festivos_usuario->getId()] = [
+                "name" => $festivos_usuario->getReason(),
+                "date" => $festivos_usuario->getPetitionDate(),
+                "initialdate" => $festivos_usuario->getInitialDate(),
+                "finaldate" => $festivos_usuario->getFinalDate(),
+            ];
+        }
+      //  }
 
 
         return new JsonResponse(["festives" => $result]);
