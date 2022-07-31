@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{%  block stylesheets %}
+{% block stylesheets %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}" defer></script>
     <!------------ CALENDAR ------------>
     <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.css') }}">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 {% endblock %}
 
-{%  block javascripts %}
+{% block javascripts %}
     {{ parent() }}
     <!------------ CALENDAR ------------>
     <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -24,7 +25,7 @@
         <!-- Navbar -->
         {% if is_granted('ROLE_SUPERVISOR') %}
             {{ include('supervisor/navbar.html.twig') }}
-        {% elseif is_granted('ROLE_EMPLEADO')%}
+        {% elseif is_granted('ROLE_EMPLEADO') %}
             {{ include('empleado/navbar.html.twig') }}
         {% endif %}
 
@@ -61,28 +62,32 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Búsqueda por departamentos</h4>
                                 </div>
+                                {{ form_start(formDepar) }}
                                 <div class="card-body">
                                     <div class="icheck-success d-inline">
                                         <div class="form-group">
-                                            <label>Departamento</label>
-                                            <select class="form-control select2" style="width: 100%;">
+                                            <!-- <label>Departamento</label>-->
+                                            {{ form_row(formDepar.department,{'attr': {'class': 'form-control select2','id':'select_user_department'}}) }}
+                                            <!--  <select class="form-control select2" style="width: 100%;" id="select_user_department">
                                                 <option selected="selected">Selecciona...</option>
-                                                <option>Departamento de seguridad</option>
-                                                <option>Departamento informático</option>
-                                                <option>Departamento administrativo</option>
-                                            </select>
+                                                {% for department in departments %}
+                                                    <option value="{{ department.id }}"> {{ department.name }} </option>
+                                                {% endfor %}
+                                            </select>-->
                                         </div>
                                         <div class="form-group">
-                                            <label>Empleado</label>
-                                            <select class="form-control select2" style="width: 100%;">
-                                                <option selected="selected">Selecciona...</option>
-                                                <option>Ana Lopez</option>
-                                                <option>Juan Hernandez</option>
-                                                <option>Irene Artetxe</option>
-                                            </select>
+                                            <!-- <label>Empleado</label>-->
+                                            {{ form_row(formDepar.user,{'class': 'form-control select2', 'id':'selector' }) }}
+
+                                            <!--  <select class="form-control select2" style="width: 100%;" id="select_user_user">
+                                                  <option selected="selected">Selecciona...</option>
+
+                                              </select>-->
                                         </div>
                                     </div>
                                 </div>
+                                {{ form_end(formDepar) }}
+
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -103,14 +108,23 @@
 
                 /* initialize the calendar
                  -----------------------------------------------------------------*/
-                //Date for the calendar events (dummy data)
-                var date = new Date()
-                var d = date.getDate(),
-                    m = date.getMonth(),
-                    y = date.getFullYear()
                 var Calendar = FullCalendar.Calendar;
 
                 var calendarEl = document.getElementById('calendar');
+
+                var event = [];
+
+                {% for festive in festives %}
+
+                event.push({
+                    title: '{{ festive.name }}',
+                    start: new Date('{{ festive.initialdate|date('Y-m-d') }}'),
+                    end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
+                    backgroundColor: Math.floor(Math.random() * 16777215).toString(16), //orange
+                    borderColor: Math.floor(Math.random() * 16777215).toString(16), //orange
+                    allDay: true
+                })
+                {% endfor %}
 
                 var calendar = new Calendar(calendarEl, {
                     headerToolbar: {
@@ -120,38 +134,7 @@
                     },
                     themeSystem: 'bootstrap',
                     //Random default events
-                    events: [
-                        {
-                            title: 'Ana Fernandez',
-                            start: new Date(y, m, 1),
-                            end: new Date(y, m, 5),
-                            backgroundColor: '#ff851b', //orange
-                            borderColor: '#ff851b', //orange
-                            allDay: true
-                        },
-                        {
-                            title: 'Jon Artetxe',
-                            start: new Date(y, m, 13),
-                            end: new Date(y, m, 15),
-                            allDay: true,
-                            backgroundColor: '#e83e8c', //pink
-                            borderColor: '#e83e8c' //pink
-                        },
-                        {
-                            title: 'Maria Lopez',
-                            start: new Date(y, m, 21),
-                            allDay: true,
-                            backgroundColor: '#6610f2', //indigo
-                            borderColor: '#6610f2' //indigo
-                        },
-                        {
-                            title: 'Sergio Guerrero',
-                            start: new Date(y, m, 19),
-                            allDay: true,
-                            backgroundColor: '#3c8dbc', //Lightblue
-                            borderColor: '#3c8dbc' //Lightblue
-                        }
-                    ],
+                    events: event,
                     editable: true,
                     droppable: true // this allows things to be dropped onto the calendar !!!
                 });
