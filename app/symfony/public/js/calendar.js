@@ -65,9 +65,11 @@ function addSelectCalendar(userId) {
             var calendarEl = document.getElementById('calendar');
             var event = [];
 
-            for (var key in data['festives']) {
+            console.log(data['festivo_depar']);
 
-                var value = data['festives'][key];
+            for (var key in data['festivo_depar']) {
+
+                var value = data['festivo_depar'][key];
                 console.log(value['initialdate'].date);
                 event.push({
                     title: value['name'],
@@ -75,6 +77,22 @@ function addSelectCalendar(userId) {
                     end: value['finaldate'].date,
                     backgroundColor: Math.floor(Math.random() * 16777215).toString(16), //orange
                     borderColor: Math.floor(Math.random() * 16777215).toString(16), //orange
+                    allDay: true
+                })
+
+            }
+
+
+            for (var key in data['festivo_usuario']) {
+
+                var value = data['festivo_usuario'][key];
+                console.log(value['initialdate'].date);
+                event.push({
+                    title: value['name'],
+                    start: value['initialdate'].date,
+                    end: value['finaldate'].date,
+                    backgroundColor: "#F56547",
+                    borderColor: "#F56547", //orange
                     allDay: true
                 })
 

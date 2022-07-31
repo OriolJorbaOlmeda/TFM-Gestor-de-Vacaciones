@@ -16,7 +16,8 @@ class CalendarDashboardController extends AbstractController
 
     public function __construct(
         private UserRepository $userRepository,
-        private CalendarRepository $calendarRepository) {
+        private CalendarRepository $calendarRepository
+    ) {
     }
 
     #[Route('/employee/calendar', name: 'app_employee_calendar')]
@@ -39,8 +40,8 @@ class CalendarDashboardController extends AbstractController
             $festives_company[$festive->getId()] = [
                 "name" => $festive->getName(),
                 "date" => $festive->getDate(),
-                "initialdate"=>$festive->getDate(),
-                "finaldate"=>$festive->getDate(),
+                "initialdate" => $festive->getDate(),
+                "finaldate" => $festive->getDate(),
             ];
         }
 
@@ -76,7 +77,7 @@ class CalendarDashboardController extends AbstractController
         //Pillamos la información del usuario seleccionado
         $userId = $request->request->get('id');
         $user = $this->userRepository->findOneBy(['id' => $userId]);
-        $festivos_usuario= $user->getPetition();
+        $festivos_usuario = $user->getPetitions();
 
 
         //Pillamos la información de la compañia para recoger el calendario
@@ -86,29 +87,31 @@ class CalendarDashboardController extends AbstractController
 
         //Nos guardamos los festivos del calendario
         $result = [];
+        $result2 = [];
+
         foreach ($festives as $festive) {
             $result[$festive->getId()] = [
                 "name" => $festive->getName(),
                 "date" => $festive->getDate(),
-                "initialdate"=>$festive->getDate(),
-                "finaldate"=>$festive->getDate(),
+                "initialdate" => $festive->getDate(),
+                "finaldate" => $festive->getDate(),
             ];
         }
 
         //Nos guardamos los festivos del usuario
-        //foreach ($festivos_usuario as $festivo_usuario) {
-        if(!empty($festivos_usuario) && $festivos_usuario->getState()=="ACCEPTED") {
-            $result[$festivos_usuario->getId()] = [
-                "name" => $festivos_usuario->getReason(),
-                "date" => $festivos_usuario->getPetitionDate(),
-                "initialdate" => $festivos_usuario->getInitialDate(),
-                "finaldate" => $festivos_usuario->getFinalDate(),
-            ];
+        foreach ($festivos_usuario as $festivo_usuario) {
+            if (!empty($festivo_usuario) && $festivo_usuario->getState() == "ACCEPTED") {
+                $result2[$festivo_usuario->getId()] = [
+                    "name" => $festivo_usuario->getReason(),
+                    "date" => $festivo_usuario->getPetitionDate(),
+                    "initialdate" => $festivo_usuario->getInitialDate(),
+                    "finaldate" => $festivo_usuario->getFinalDate(),
+                ];
+            }
         }
-      //  }
 
 
-        return new JsonResponse(["festives" => $result]);
+        return new JsonResponse(["festivo_depar" => $result,"festivo_usuario"=>$result2]);
     }
 
 }
