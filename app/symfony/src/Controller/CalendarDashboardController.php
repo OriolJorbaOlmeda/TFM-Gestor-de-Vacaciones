@@ -30,6 +30,7 @@ class CalendarDashboardController extends AbstractController
             $result[$department->getName()] = $department->getId();
         }
 
+
         //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
@@ -77,6 +78,8 @@ class CalendarDashboardController extends AbstractController
         //Pillamos la información del usuario seleccionado
         $userId = $request->request->get('id');
         $user = $this->userRepository->findOneBy(['id' => $userId]);
+
+
         $festivos_usuario = $user->getPetitions();
 
 
