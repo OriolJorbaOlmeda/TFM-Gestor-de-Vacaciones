@@ -23,11 +23,22 @@ class RequestAbsenceController extends AbstractController
 
 
     #[Route('/employee/request-absence', name: 'app_employee_request-absence')]
-    public function requestAbsence(Request $request): Response
+    public function requestAbsence(Request $request, CalendarRepository $calendarRepository): Response
     {
         $petition = new Petition();
         $form = $this->createForm(RequestAbsenceFormType::class, $petition);
         $form->handleRequest($request);
+
+        $user = $this->getUser();
+        $department = $user->getDepartment();
+        $company = $department->getCompany();
+        $calendar = $calendarRepository->findCurrentCalendar($company->getId());
+        $festives = $calendar->getFestives();
+        $days = array();
+        foreach ($festives as $festive) {
+            $day = $festive->getDate();
+            array_push($days, $day->format('Y-m-d'));
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -61,7 +72,8 @@ class RequestAbsenceController extends AbstractController
         }
 
         return $this->render('empleado/solicitar_ausencia.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'festives' => $days
         ]);
 
     }
