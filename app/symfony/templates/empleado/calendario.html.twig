@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/calendar.js') }}" defer></script>
     <!------------ CALENDAR ------------>
     <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.css') }}">
     <!-- iCheck for checkboxes and radio inputs -->
@@ -11,6 +10,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}" defer></script>
+
     <!------------ CALENDAR ------------>
     <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- fullCalendar 2.2.5 -->
