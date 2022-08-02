@@ -41,7 +41,6 @@ class SelectUserType extends AbstractType
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             listener: function (FormEvent $event) {
-                $department = $event->getForm()->getData();
                 $usersName = [];
                 $users = $this->userRepository->findAll();
                  foreach ($users as $user) {
@@ -54,7 +53,7 @@ class SelectUserType extends AbstractType
                     'attr' => [
                         'class' => 'form-control select2',
                     ],
-                        'placeholder'=>'--Selecciona---'
+                        'placeholder'=>'--Selecciona---',
 
                 ];
 

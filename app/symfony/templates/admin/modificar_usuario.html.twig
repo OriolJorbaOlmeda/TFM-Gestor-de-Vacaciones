@@ -114,30 +114,29 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    {{ form_row(form.department) }}
-                                                </div>
-                                            </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    {{ form_row(form.roles) }}
-
+                                                    {{ form_row(form.roles,{ 'class': 'form-select', 'id': 'role'}) }}
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-5" id="groupSuper">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
-                                                    {{ form_row(form.supervisor) }}
-
-
+                                                    {{ form_row(form.department, {'id': 'department'}) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    {{ form_row(form.supervisor, {'id': 'supervisor'}) }}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" id="groupDiasVac">
+                                        <div class="row">
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    {{ form_row(form.total_vacation_days) }}
+                                                    {{ form_label(form.total_vacation_days) }}
+                                                    {{ form_widget(form.total_vacation_days, {'id': 'diasVac'}) }}
+                                                    <span style="color: red">{{ form_errors(form.total_vacation_days) }}</span>
                                                 </div>
                                             </div>
                                         </div>

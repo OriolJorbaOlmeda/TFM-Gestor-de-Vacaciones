@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,6 +32,7 @@ class UserModificationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+       // var_dump($options['data']->getSupervisor()->getId());
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'name'],
@@ -74,7 +76,9 @@ class UserModificationType extends AbstractType
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
-                'required' => true
+                'required' => true,
+                'placeholder' => '-- Selecciona --'
+
             ])
             ->add('supervisor', ChoiceType::class, [
                 'label' => 'Supervisor',
@@ -82,7 +86,8 @@ class UserModificationType extends AbstractType
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
-                'required' => false
+                'required' => true,
+                'placeholder' => '-- Selecciona --'
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
@@ -94,12 +99,14 @@ class UserModificationType extends AbstractType
                 'label'=> 'Rol',
                 'mapped' => false,
                 'required' => true,
-                'empty_data' => null
+                'empty_data' => null,
+                'data'=>$options['data']->getRoles()[0]
             ])
-            ->add('total_vacation_days', TextType::class, [
+            ->add('total_vacation_days', NumberType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
                 'label'=> 'Vacation days',
-                'required' => true
+                'required' => true,
+                'invalid_message' => 'Este valor debe ser numérico'
             ])
             //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [
