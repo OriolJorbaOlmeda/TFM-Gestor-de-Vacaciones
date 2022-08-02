@@ -206,6 +206,7 @@
 
             event.push({
                 id: 'absence',
+                groupId: 'absence', // recurrent events in this group move together
                 title: '{{ festive.name }}',
                 start: new Date('{{ festive.initialdate|date('Y-m-d') }}'),
                 end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),

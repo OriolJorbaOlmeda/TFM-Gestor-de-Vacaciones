@@ -89,22 +89,29 @@ class CalendarDashboardController extends AbstractController
         $festives = $calendar->getFestives();
 
         //Nos guardamos los festivos del calendario
-        $result = [];
-        $result2 = [];
 
+        $festives_company = [];
+        $vacation = [];
+        $absence = [];
         foreach ($festives as $festive) {
-            $result[$festive->getId()] = [
+            $festives_company[$festive->getId()] = [
                 "name" => $festive->getName(),
                 "date" => $festive->getDate(),
                 "initialdate" => $festive->getDate(),
                 "finaldate" => $festive->getDate(),
             ];
         }
-
-        //Nos guardamos los festivos del usuario
         foreach ($festivos_usuario as $festivo_usuario) {
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == "ACCEPTED") {
-                $result2[$festivo_usuario->getId()] = [
+            if (!empty($festivo_usuario) && $festivo_usuario->getState() == "ACCEPTED" && $festivo_usuario->getType()=="VACATION") {
+                $vacation[$festivo_usuario->getId()] = [
+                    "name" => $festivo_usuario->getReason(),
+                    "date" => $festivo_usuario->getPetitionDate(),
+                    "initialdate" => $festivo_usuario->getInitialDate(),
+                    "finaldate" => $festivo_usuario->getFinalDate(),
+                ];
+            }
+            if (!empty($festivo_usuario) && $festivo_usuario->getState() == "ACCEPTED" && $festivo_usuario->getType()=="ABSENCE") {
+                $absence[$festivo_usuario->getId()] = [
                     "name" => $festivo_usuario->getReason(),
                     "date" => $festivo_usuario->getPetitionDate(),
                     "initialdate" => $festivo_usuario->getInitialDate(),
@@ -114,7 +121,7 @@ class CalendarDashboardController extends AbstractController
         }
 
 
-        return new JsonResponse(["festivo_depar" => $result,"festivo_usuario"=>$result2]);
+        return new JsonResponse(["festivo_depar" => $festives_company,"festivo_usuario"=>$vacation,"absence_user"=>$absence]);
     }
 
 }

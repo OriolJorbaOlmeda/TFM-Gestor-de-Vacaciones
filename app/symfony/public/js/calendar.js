@@ -71,13 +71,12 @@ function addSelectCalendar(userId) {
                     title: value['name'],
                     start: value['initialdate'].date,
                     end: value['finaldate'].date,
-                    backgroundColor: Math.floor(Math.random() * 16777215).toString(16), //orange
-                    borderColor: Math.floor(Math.random() * 16777215).toString(16), //orange
+                    backgroundColor:"#5F9D72", //orange
+                    borderColor: "#5F9D72", //orange
                     allDay: true
                 })
 
             }
-
 
             for (var key in data['festivo_usuario']) {
 
@@ -88,8 +87,22 @@ function addSelectCalendar(userId) {
                     title: value['name'],
                     start: value['initialdate'].date,
                     end: value['finaldate'].date,
-                    backgroundColor: "#F56547",
-                    borderColor: "#F56547", //orange
+                    backgroundColor: "#ECB011",
+                    borderColor: "#ECB011", //orange
+                    allDay: true
+                })
+
+            }
+            for (var key in data['absence_user']) {
+                var value = data['absence_user'][key];
+                event.push({
+                    id: 'absence',
+                    groupId: 'absence', // recurrent events in this group move together
+                    title: value['name'],
+                    start: value['initialdate'].date,
+                    end: value['finaldate'].date,
+                    backgroundColor: "#1111EC",
+                    borderColor: "#1111EC", //orange
                     allDay: true
                 })
 

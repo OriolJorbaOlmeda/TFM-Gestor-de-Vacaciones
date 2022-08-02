@@ -124,12 +124,14 @@
                     title: '{{ festive.name }}',
                     start: new Date('{{ festive.initialdate|date('Y-m-d') }}'),
                     end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
-                    backgroundColor: Math.floor(Math.random() * 16777215).toString(16), //orange
-                    borderColor: Math.floor(Math.random() * 16777215).toString(16), //orange
+                    backgroundColor: "#5F9D72", //orange
+                    borderColor: "#5F9D72", //orange
                     allDay: true
                 })
                 {% endfor %}
                 {% endif %}
+
+
 
 
                 var calendar = new Calendar(calendarEl, {
