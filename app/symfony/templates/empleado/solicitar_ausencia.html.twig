@@ -9,7 +9,7 @@
             bsCustomFileInput.init();
         });
     </script>
-    <script type="text/javascript" src="{{ asset('js/control_fechas_peticiones.js') }}" defer></script>
+     <script type="text/javascript" src="{{ asset('js/control_fechas_peticiones.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
 {% endblock %}
 
@@ -69,25 +69,11 @@
 
                                         {{ form_row(form.reason) }}
 
+                                        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
                                         {{ form_row(form.justify_content) }}
 
 
-
-                                        <!--<div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="exampleInputFile">Adjuntar justificante</label>
-                                                    <div class="input-group">
-                                                        <div class="custom-file">
-                                                            <input type="file" class="custom-file-input"
-                                                                   id="exampleInputFile">
-                                                            <label class="custom-file-label" for="exampleInputFile">Choose
-                                                                file</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
                                     </div>
                                     <div class="card-footer">
                                         {{ form_row(form.save) }}

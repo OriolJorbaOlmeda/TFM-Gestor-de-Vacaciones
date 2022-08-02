@@ -46,6 +46,8 @@
                                 <label style="visibility: hidden;">Botón</label>
                                 {{ form_row(depar.submit, {'attr': {'class': 'btn btn-primary form-control'}}) }}
                             </div>
+                            {{ form_errors(depar) }}
+
                         </div>
                         {{ form_end(depar) }}
 
@@ -81,17 +83,12 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <span class="error invalid-feedback"> La contraseña debe tener la menos 8 caracteres, mayúsculas, minúscula y números </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
                                                     {{ form_row(form.direction) }}
+
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group">
@@ -124,20 +121,16 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    {{ form_help(form.roles) }}
+                                                    {{ form_row(form.roles) }}
 
 
                                                 </div>
                                             </div>
                                             <div class="col-md-5" id="groupSuper">
                                                 <div class="form-group">
-                                                    <label>Supervisor</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected>Selecciona...</option>
-                                                        <option>Ana Lopez</option>
-                                                        <option>Juan Hernandez</option>
-                                                        <option>Irene Artetxe</option>
-                                                    </select>
+                                                    {{ form_row(form.supervisor) }}
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -151,9 +144,9 @@
                                     </div>
                                     <div class="card-footer">
                                         {{ form_row(form.submit) }}
-
+                                        {{ form_errors(form) }}
                                     </div>
-                                    {{ form_end(form,{'render_rest': false}) }}
+                                    {{ form_end(form) }}
                                 </div>
                             </div>
                         </div>

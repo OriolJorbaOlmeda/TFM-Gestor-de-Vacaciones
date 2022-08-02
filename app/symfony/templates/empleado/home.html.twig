@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{%  block stylesheets %}
+{% block stylesheets %}
     {{ parent() }}
     <!------------ CALENDAR ------------>
     <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.css') }}">
@@ -9,7 +9,7 @@
 {% endblock %}
 
 
-{%  block javascripts %}
+{% block javascripts %}
     {{ parent() }}
 
     <!------------ CALENDAR ------------>
@@ -25,7 +25,7 @@
         <!-- Navbar -->
         {% if is_granted('ROLE_SUPERVISOR') %}
             {{ include('supervisor/navbar.html.twig') }}
-        {% elseif is_granted('ROLE_EMPLEADO')%}
+        {% elseif is_granted('ROLE_EMPLEADO') %}
             {{ include('empleado/navbar.html.twig') }}
         {% endif %}
 
@@ -166,6 +166,8 @@
 
             var event = [];
 
+            {% if festivo_depar|length > 0 %}
+
             {% for festive in festivo_depar %}
 
             event.push({
@@ -179,6 +181,10 @@
                 allDay: true
             })
             {% endfor %}
+            {% endif %}
+
+            {% if festivo_usuario|length > 0 %}
+
             {% for festive in festivo_usuario %}
 
             event.push({
@@ -192,10 +198,14 @@
                 allDay: true
             })
             {% endfor %}
+            {% endif %}
+
+            {% if absence_usuario|length > 0 %}
+
             {% for festive in absence_usuario %}
 
             event.push({
-                id :'absence',
+                id: 'absence',
                 title: '{{ festive.name }}',
                 start: new Date('{{ festive.initialdate|date('Y-m-d') }}'),
                 end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
@@ -204,6 +214,8 @@
                 allDay: true
             })
             {% endfor %}
+            {% endif %}
+
 
             var calendarEl = document.getElementById('calendar');
 
@@ -222,7 +234,7 @@
             });
 
             const checkeBox = document.querySelectorAll("input[type=checkbox]");
-            checkeBox.forEach(function(checkbox) {
+            checkeBox.forEach(function (checkbox) {
                 checkbox.addEventListener("click", (e) => {
                     var target = e.target.id;
                     console.log(target)

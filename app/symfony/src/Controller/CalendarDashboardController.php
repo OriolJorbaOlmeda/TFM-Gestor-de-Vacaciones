@@ -33,7 +33,7 @@ class CalendarDashboardController extends AbstractController
 
         //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
-        $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
+        $calendar = $this->calendarRepository->findCurrentCalendar($companyId);
         $festives = $calendar->getFestives();
         $festives_company = [];
 
@@ -85,7 +85,7 @@ class CalendarDashboardController extends AbstractController
 
         //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
-        $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
+        $calendar = $this->calendarRepository->findCurrentCalendar($companyId);
         $festives = $calendar->getFestives();
 
         //Nos guardamos los festivos del calendario
