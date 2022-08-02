@@ -43,7 +43,7 @@
             <div class="content">
                 <div class="container">
 
-                    {% if is_granted('ROLE_SUPERVISOR') %}
+                    {% if is_granted('ROLE_SUPERVISOR') and num_petitions > 0 %}
                         {{ include('supervisor/panel_info.html.twig') }}
                     {% endif %}
 

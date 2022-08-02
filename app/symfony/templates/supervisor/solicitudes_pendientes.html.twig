@@ -40,38 +40,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Maria Castaño</td>
-                                        <td>10/01/2022</td>
-                                        <td>20/01/2022</td>
-                                        <td>5</td>
-                                        <td>Vacaciones</td>
-                                        <td>Vacaciones de verano</td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-primary btn-xs">Aprobar
-                                            </button>
-                                            <button type="button"
-                                                    class="btn btn-outline-primary btn-xs">Denegar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alejandro Gomez</td>
-                                        <td>03/03/2022</td>
-                                        <td>04/03/2022</td>
-                                        <td>2</td>
-                                        <td>Ausencia</td>
-                                        <td>Fallecimiento familiar</td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-primary btn-xs">Aprobar
-                                            </button>
-                                            <button type="button"
-                                                    class="btn btn-outline-primary btn-xs">Denegar
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    {% for petition in petitions %}
+                                        <tr>
+                                            <td> {{ petition.employee.name }} {{ petition.employee.lastname }} </td>
+                                            <td> {{ petition.getInitialDate()|date("d/m/Y") }} </td>
+                                            <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
+                                            <td> {{ petition.duration}}  </td>
+                                            <td> {{ petition.type}}  </td>
+                                            <td> {{ petition.reason}} </td>
+                                            <td>
+                                                <a type="button" href="/supervisor/accept_request?petitionId={{ petition.id }}"
+                                                   style="text-decoration: none; color: white" class="btn btn-primary btn-xs">Aprobar
+                                                </a>
+                                                <a type="button" href="/supervisor/deny_request?petitionId={{ petition.id }}"
+                                                   style="text-decoration: none; color: #007bff" class="btn btn-outline-primary btn-xs">Denegar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

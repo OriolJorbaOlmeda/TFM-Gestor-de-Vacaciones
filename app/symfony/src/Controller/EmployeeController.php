@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Petition;
 use App\Form\RequestVacationFormType;
 use App\Repository\CalendarRepository;
+use App\Repository\PetitionRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,16 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EmployeeController extends AbstractController
 {
-    private $security;
-    private $calendarRepository;
 
-    public function __construct(SecurityController $security,  CalendarRepository $calendarRepository,
-    )
-    {
-        $this->security = $security;
-        $this->calendarRepository = $calendarRepository;
-
-    }
+    public function __construct(
+        private CalendarRepository $calendarRepository,
+        private PetitionRepository $petitionRepository) {}
 
     #[Route('/employee/dashboard', name: 'app_employee_dashboard')]
     public function dashboard(): Response
@@ -38,6 +33,8 @@ class EmployeeController extends AbstractController
         $dias_utilizados= $user_information->getTotalVacationDays()- $user_information->getPendingVacationDays();
 
         $festives_company = [];
+        $vacation = [];
+        $absence = [];
 
         foreach ($festives as $festive) {
             $festives_company[$festive->getId()] = [
@@ -66,6 +63,13 @@ class EmployeeController extends AbstractController
             }
         }
 
+        //Para el caso de SUPERVISOR para poner en el panel
+        $num_petitions = 0;
+        if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $num_petitions = count($petitions);
+        }
+
 
         return $this->render('empleado/home.html.twig',
             ["festivo_depar" => $festives_company,
@@ -74,7 +78,9 @@ class EmployeeController extends AbstractController
                 "user_information"=>$user_information,
                 "days"=> $dias_utilizados,
                 "initial_date"=>$calendar->getInitialDate()->format('d/m/y'),
-                "final_date"=>$calendar->getFinalDate()->format('d/m/y')]
+                "final_date"=>$calendar->getFinalDate()->format('d/m/y'),
+                "num_petitions" => $num_petitions],
+
         );
 
     }
