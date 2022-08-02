@@ -50,9 +50,21 @@
                                     <h4 class="card-title">Filtros</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="icheck-success d-inline">
-                                        <input type="checkbox" checked id="checkboxSuccess1">
-                                        <label for="checkboxSuccess1">
+                                    <div class="icheck-orange">
+                                        <input type="checkbox" checked id="vacances">
+                                        <label for="vacances">
+                                            Vacaciones
+                                        </label>
+                                    </div>
+                                    <div class="icheck-indigo">
+                                        <input type="checkbox" checked id="absence">
+                                        <label for="absence">
+                                            Ausencias
+                                        </label>
+                                    </div>
+                                    <div class="icheck-olive">
+                                        <input type="checkbox" checked id="festives">
+                                        <label for="festives">
                                             Días festivos
                                         </label>
                                     </div>
@@ -103,9 +115,12 @@
 
                 var event = [];
 
+                {% if festives|length > 0 %}
                 {% for festive in festives %}
 
                 event.push({
+                    id: 'festives',
+                    groupId: 'festives',
                     title: '{{ festive.name }}',
                     start: new Date('{{ festive.initialdate|date('Y-m-d') }}'),
                     end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
@@ -114,6 +129,8 @@
                     allDay: true
                 })
                 {% endfor %}
+                {% endif %}
+
 
                 var calendar = new Calendar(calendarEl, {
                     headerToolbar: {
@@ -127,7 +144,20 @@
                     editable: true,
                     droppable: true // this allows things to be dropped onto the calendar !!!
                 });
-
+                const checkeBox = document.querySelectorAll("input[type=checkbox]");
+                checkeBox.forEach(function (checkbox) {
+                    checkbox.addEventListener("click", (e) => {
+                        var target = e.target.id;
+                        console.log(target)
+                        var event = calendar.getEventById(target);
+                        console.log(event)
+                        if (checkbox.checked) {
+                            event.setProp('display', 'auto') // return to normal
+                        } else {
+                            event.setProp("display", "none")
+                        }
+                    });
+                });
                 calendar.render();
                 // $('#calendar').fullCalendar()
             })

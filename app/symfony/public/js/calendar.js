@@ -13,17 +13,6 @@ selectorUser.addEventListener("change", (e) => {
 });
 
 
-checkeBox.addEventListener("click", (e) => {
-    if (checkeBox.checked) {
-        console.log("festivos marcado");
-        $('.fc-daygrid-event').css("visibility", "visible");
-    } else {
-        console.log("festivos desmarcador")
-        $('.fc-daygrid-event').css("visibility", "hidden");
-    }
-});
-
-
 function addSelectUser(departmentId) {
 
     $.ajax({
@@ -71,13 +60,14 @@ function addSelectCalendar(userId) {
             var calendarEl = document.getElementById('calendar');
             var event = [];
 
-            console.log(data['festivo_depar']);
 
             for (var key in data['festivo_depar']) {
 
                 var value = data['festivo_depar'][key];
                 console.log(value['initialdate'].date);
                 event.push({
+                    id: 'festives',
+                    groupId: 'festives',
                     title: value['name'],
                     start: value['initialdate'].date,
                     end: value['finaldate'].date,
@@ -92,8 +82,9 @@ function addSelectCalendar(userId) {
             for (var key in data['festivo_usuario']) {
 
                 var value = data['festivo_usuario'][key];
-                console.log(value['initialdate'].date);
                 event.push({
+                    id: 'vacances',
+                    groupId: 'vacances', // recurrent events in this group move together
                     title: value['name'],
                     start: value['initialdate'].date,
                     end: value['finaldate'].date,
@@ -114,6 +105,21 @@ function addSelectCalendar(userId) {
                 events: event,
                 editable: true,
                 droppable: true // this allows things to be dropped onto the calendar !!!
+            });
+
+            const checkeBox = document.querySelectorAll("input[type=checkbox]");
+            checkeBox.forEach(function (checkbox) {
+                checkbox.checked = true;
+
+                checkbox.addEventListener("click", (e) => {
+                    var target = e.target.id;
+                    var event = calendar.getEventById(target);
+                    if (checkbox.checked) {
+                        event.setProp('display', 'auto') // return to normal
+                    } else {
+                        event.setProp("display", "none")
+                    }
+                });
             });
             calendar.render();
         },

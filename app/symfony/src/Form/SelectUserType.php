@@ -33,53 +33,38 @@ class SelectUserType extends AbstractType
                     'choices' => $options['data']
                 ]
             )
-           /* ->add('user', ChoiceType::class, [
-                'choices' => $usersName,
-                'attr' => [
-                    'class' => 'form-control select2',
-                ]
-            ])*/
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Buscar'
             ]);
-        /* $formModifier = function (FormInterface $form, $data) {
-             $form->add('user', ChoiceType::class, [
-                 'choices' => $data,
-                 'attr' => [
-                     'class' => 'form-control select2',
-                     'visibility'=> 'hidden'
-                 ]
-             ]);
-         };
 
-*/
-         $builder->addEventListener(
-             FormEvents::POST_SET_DATA,
-             function (FormEvent $event)  {
-                 $department = $event->getForm()->getData();
-                 $usersName = [];
-                 $users = $this->userRepository->findBy(array('department' => $department));
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            listener: function (FormEvent $event) {
+                $usersName = [];
+                $users = $this->userRepository->findAll();
                  foreach ($users as $user) {
                      $usersName[$user->getName()] = $user->getId();
                  }
-                 $form = $event->getForm();
+                $form = $event->getForm();
 
-                 $formOptions = [
+                $formOptions = [
+                    'choices' => $usersName,
+                    'attr' => [
+                        'class' => 'form-control select2',
+                    ],
+                        'placeholder'=>'--Selecciona---',
 
-                         'choices' => $usersName,
-                         'attr' => [
-                             'class' => 'form-control select2',
-                        ]
-
-                 ];
-
-
-                 $form->add('user', ChoiceType::class, $formOptions);
+                ];
 
 
-             }
-         );
+                $form->add('user', ChoiceType::class, $formOptions);
+
+
+            }
+        );
+
+
     }
 
 
