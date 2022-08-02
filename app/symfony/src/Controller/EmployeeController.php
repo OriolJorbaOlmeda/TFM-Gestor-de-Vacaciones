@@ -13,7 +13,8 @@ class EmployeeController extends AbstractController
 
     public function __construct(
         private CalendarRepository $calendarRepository,
-        private PetitionRepository $petitionRepository) {}
+        private PetitionRepository $petitionRepository
+    ) {}
 
     #[Route('/employee/dashboard', name: 'app_employee_dashboard')]
     public function dashboard(): Response
@@ -25,7 +26,7 @@ class EmployeeController extends AbstractController
         $festivos_usuario = $this->getUser()->getPetitions();
         $user_information = $this->getUser();
 
-        $dias_utilizados= $user_information->getTotalVacationDays()- $user_information->getPendingVacationDays();
+        $dias_utilizados = $user_information->getTotalVacationDays()- $user_information->getPendingVacationDays();
 
         $festives_company = [];
         $vacation = [];
@@ -72,8 +73,8 @@ class EmployeeController extends AbstractController
             "absence_usuario"=>$absence,
             "user_information"=>$user_information,
             "days"=> $dias_utilizados,
-            "initial_date"=>$calendar->getInitialDate()->format('d/m/y'),
-            "final_date"=>$calendar->getFinalDate()->format('d/m/y'),
+            "initial_date"=>$calendar->getInitialDate()->format('d/m/Y'),
+            "final_date"=>$calendar->getFinalDate()->format('d/m/Y'),
             "num_petitions" => $num_petitions
         ]);
 
