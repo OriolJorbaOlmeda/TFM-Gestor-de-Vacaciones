@@ -25,7 +25,7 @@ class EmployeeController extends AbstractController
     {
         //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
-        $calendar = $this->calendarRepository->findOneBy(['company' => $companyId]);
+        $calendar = $this->calendarRepository->findCurrentCalendar($companyId);
         $festives = $calendar->getFestives();
         $festivos_usuario = $this->getUser()->getPetitions();
         $user_information = $this->getUser();
