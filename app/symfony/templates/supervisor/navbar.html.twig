@@ -18,7 +18,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_supervisor_pending_requests') }}">
                         Solicitudes pendientes
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        {% if num_petitions > 0 %}
+                            <span class="badge badge-danger navbar-badge"> {{ num_petitions }} </span>
+                        {% endif %}
+
                     </a>
                 </li>
                 <li class="nav-item">

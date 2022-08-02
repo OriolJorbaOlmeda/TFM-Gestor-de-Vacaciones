@@ -60,6 +60,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
     private $petitions;
 
+    #[ORM\OneToMany(mappedBy: 'supervisor', targetEntity: Petition::class)]
+    private $supervisor_petitions;
+
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
     private $supervisor;
 
@@ -297,6 +300,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->petitions->contains($petition)) {
             $this->petitions[] = $petition;
+            $petition->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSupervisorPetitions(): Collection
+    {
+        return $this->supervisor_petitions;
+    }
+
+    public function addSupervisorPetition(Petition $petition): self
+    {
+        if (!$this->supervisor_petitions->contains($petition)) {
+            $this->supervisor_petitionst[] = $petition;
             $petition->setEmployee($this);
         }
 

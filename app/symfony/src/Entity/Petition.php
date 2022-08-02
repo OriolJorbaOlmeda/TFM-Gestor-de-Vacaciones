@@ -43,6 +43,10 @@ class Petition
     #[ORM\JoinColumn(name: 'employee_id', referencedColumnName: 'id', nullable: false)]
     private $employee;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'supervisor_petitions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $supervisor;
+
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]
     private $calendar;
 
@@ -148,6 +152,18 @@ class Petition
     public function setEmployee(User $employee): self
     {
         $this->employee = $employee;
+
+        return $this;
+    }
+
+    public function getSupervisor(): ?User
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(User $supervisor): self
+    {
+        $this->supervisor = $supervisor;
 
         return $this;
     }
