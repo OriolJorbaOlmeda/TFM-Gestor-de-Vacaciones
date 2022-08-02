@@ -1,9 +1,12 @@
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const role = document.getElementById("role");
+const postalCode = document.getElementById("postalCode");
+const department = document.getElementById("department");
+const supervisor = document.getElementById("supervisor");
 
-document.getElementById("groupSuper").style.display = "none";
-document.getElementById("groupDiasVac").style.display = "none";
+//document.getElementById("groupSuper").style.display = "none";
+//document.getElementById("groupDiasVac").style.display = "none";
 
 // VALIDAR EMAIL
 email.addEventListener("change", (event) => {
@@ -34,7 +37,7 @@ function validarPassword(valor) {
 
 
 // DEPENDIENDO DEL ROL, MOSTRAR O NO SUPERVISOR Y DIAS DE VACACIONES
-role.addEventListener("change", (event) => {
+/*role.addEventListener("change", (event) => {
     let $role = event.target.value;
     switch ($role) {
         case "ROLE_EMPLEADO":
@@ -50,8 +53,52 @@ role.addEventListener("change", (event) => {
             document.getElementById("groupSuper").style.display = "none";
             break;
     }
+});*/
+
+// VALIDACIÓN CÓDIGO POSTAL
+postalCode.addEventListener("change", (e) => {
+    let value = e.target.value;
+    if (/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/.test(value)) {
+        postalCode.classList.remove("is-invalid");
+    } else {
+        postalCode.classList.add("is-invalid");
+    }
+})
+
+
+
+
+// COMPORTAMIENTO SELECTORES
+
+department.addEventListener("change", (e) => {
+    let departmentId = e.target.value;
+    addSupervisors(departmentId);
 });
 
+function addSupervisors(departmentId) {
+    $.ajax({
+        type: 'POST',
+        url: '/admin/get_supervisors',
+        async: true,
+        data: ({department_id: departmentId}),
+        datatype: 'json',
+        success: function (data) {
 
+            $("#supervisor option").remove();
 
-
+            if (data['users'].length === 0) {
+                $("#supervisor").prop('disabled', 'disabled');
+            } else {
+                $("#supervisor").prop('disabled', false);
+                for (var key in data['users']) {
+                    console.log(data['users'][key]);
+                    var value = data['users'][key];
+                    $("#supervisor").append(new Option(data['users'][key]));
+                }
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}

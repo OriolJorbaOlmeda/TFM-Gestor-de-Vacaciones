@@ -2,66 +2,66 @@
 
 namespace App\Controller;
 
-use App\Entity\Department;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\UserRegistrationType;
 use App\Repository\DepartmentRepository;
-use App\Security\UserAuthenticator;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, DepartmentRepository $departmentRepository): Response
-    {
+
+    public function __construct(private UserRepository $userRepository, private DepartmentRepository $departmentRepository) {}
+
+    #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
+    public function createUser(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher
+    ): Response {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            $user->setRoles(["ROLE_SUPERVISOR"]);
-            $user->setName("Ariane");
-            $user->setLastname("Gutierrez");
-            $user->setDirection("Prueba");
-            $user->setCity("Prueba");
-            $user->setProvince("Prueba");
-            $user->setPostalcode("Prueba");
-            $user->setPendingVacationDays(17);
-            $user->setTotalVacationDays(25);
+            $pass = $form->get('password')->getData();
+            $user->setPassword($passwordHasher->hashPassword($user, $pass));
+            $pending_vacation_days = $form->get('total_vacation_days')->getData();
+            $roles = $form->get('roles')->getData();
+            $user->setRoles([$roles]);
 
-            $deparment = $departmentRepository->find('2');
-            $user->setDepartment($deparment);
+            $user->setPendingVacationDays($pending_vacation_days);
 
 
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_login');
-
-           /* return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );*/
+            $this->userRepository->add($user, true);
+            return $this->redirectToRoute('app_dashboard');
+        }else {
+            return $this->render('admin/crear_usuario.html.twig', [
+                'controller_name' => 'AdminController',
+                "form" => $form->createView(),
+                "error" => $form->getErrors(),
+            ]);
         }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
     }
+
+
+    #[Route('/admin/get_supervisors', name: 'app_admin_get_supervisors')]
+    public function getSupervisors(Request $request): Response
+    {
+        $departmentId = $request->request->get('department_id');
+        $users = $this->userRepository->findBy(['department' => $departmentId]);
+        $result = [];
+        /*foreach ($users as $user) {
+            if (in_array("ROLE_SUPERVISOR", $user->getRoles())) {
+                $result[] = $user->getName();
+            }
+
+        }*/
+        return new JsonResponse(["users" => $users]);
+    }
+
 }
