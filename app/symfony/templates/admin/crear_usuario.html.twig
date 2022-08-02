@@ -109,7 +109,9 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    {{ form_row(form.total_vacation_days) }}
+                                                    {{ form_label(form.total_vacation_days) }}
+                                                    {{ form_widget(form.total_vacation_days, {'id': 'diasVac'}) }}
+                                                    <span style="color: red">{{ form_errors(form.total_vacation_days) }}</span>
                                                 </div>
                                             </div>
                                         </div>

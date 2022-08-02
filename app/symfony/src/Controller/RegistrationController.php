@@ -34,6 +34,10 @@ class RegistrationController extends AbstractController
             $roles = $form->get('roles')->getData();
             $user->setRoles([$roles]);
 
+
+            //el supervisor y el vacation_days no serán obligatorios porque en el caso de admin no es necesario
+            //así que comprobar que se manda en esos casos
+
             $user->setPendingVacationDays($pending_vacation_days);
 
 

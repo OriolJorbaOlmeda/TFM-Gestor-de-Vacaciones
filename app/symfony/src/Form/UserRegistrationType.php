@@ -99,7 +99,7 @@ class UserRegistrationType extends AbstractType
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
-                'required' => true,
+                'required' => false,
                 'placeholder' => '-- Selecciona --'
             ])
             ->add('roles', ChoiceType::class, [
@@ -118,7 +118,8 @@ class UserRegistrationType extends AbstractType
             ->add('total_vacation_days', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label'=> 'Vacation days',
-                'required' => true
+                'required' => false,
+                'invalid_message' => 'Este valor debe ser numérico'
             ])
             //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [

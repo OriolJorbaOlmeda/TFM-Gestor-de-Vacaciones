@@ -4,9 +4,11 @@ const role = document.getElementById("role");
 const postalCode = document.getElementById("postalCode");
 const department = document.getElementById("department");
 const supervisor = document.getElementById("supervisor");
+const diasVac = document.getElementById("diasVac");
 
-//document.getElementById("groupSuper").style.display = "none";
-//document.getElementById("groupDiasVac").style.display = "none";
+diasVac.disabled = true;
+supervisor.disabled = true;
+department.disabled = true;
 
 // VALIDAR EMAIL
 email.addEventListener("change", (event) => {
@@ -23,7 +25,7 @@ function validarEmail(valor) {
 
 
 // VALIDAR PASSWORD
-password.addEventListener("change", (event) => {
+/*password.addEventListener("change", (event) => {
     validarPassword(event.target.value)
 });
 
@@ -33,27 +35,31 @@ function validarPassword(valor) {
     } else {
         password.classList.add("is-invalid");
     }
-}
+}*/
 
 
 // DEPENDIENDO DEL ROL, MOSTRAR O NO SUPERVISOR Y DIAS DE VACACIONES
-/*role.addEventListener("change", (event) => {
+role.addEventListener("change", (event) => {
     let $role = event.target.value;
+
     switch ($role) {
         case "ROLE_EMPLEADO":
-            document.getElementById("groupDiasVac").style.display = "block";
-            document.getElementById("groupSuper").style.display = "block";
+            diasVac.disabled = false;
+            supervisor.disabled = false;
+            department.disabled = false;
             break;
         case "ROLE_SUPERVISOR":
-            document.getElementById("groupDiasVac").style.display = "block";
-            document.getElementById("groupSuper").style.display = "none";
+            diasVac.disabled = false;
+            supervisor.disabled = false;
+            department.disabled = false;
             break;
         case "ROLE_ADMIN":
-            document.getElementById("groupDiasVac").style.display = "none";
-            document.getElementById("groupSuper").style.display = "none";
+            diasVac.disabled = true;
+            supervisor.disabled = true;
+            department.disabled = false;
             break;
     }
-});*/
+});
 
 // VALIDACIÓN CÓDIGO POSTAL
 postalCode.addEventListener("change", (e) => {
@@ -72,7 +78,9 @@ postalCode.addEventListener("change", (e) => {
 
 department.addEventListener("change", (e) => {
     let departmentId = e.target.value;
-    addSupervisors(departmentId);
+    if (!role.value === "ROLE_ADMIN"){
+        addSupervisors(departmentId);
+    }
 });
 
 function addSupervisors(departmentId) {
