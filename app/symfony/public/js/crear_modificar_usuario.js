@@ -6,9 +6,14 @@ const department = document.getElementById("department");
 const supervisor = document.getElementById("supervisor");
 const diasVac = document.getElementById("diasVac");
 
-diasVac.disabled = true;
-supervisor.disabled = true;
-department.disabled = true;
+
+if (role.value !== "") {
+    comprobarRole(role.value)
+} else {
+    diasVac.disabled = true;
+    supervisor.disabled = true;
+    department.disabled = true;
+}
 
 // VALIDAR EMAIL
 email.addEventListener("change", (event) => {
@@ -24,8 +29,8 @@ function validarEmail(valor) {
 }
 
 
-// VALIDAR PASSWORD
-/*password.addEventListener("change", (event) => {
+// VALIDAR PASSWORD - mínimo 8 carácteres, mayusculas y minusculas
+password.addEventListener("change", (event) => {
     validarPassword(event.target.value)
 });
 
@@ -35,13 +40,18 @@ function validarPassword(valor) {
     } else {
         password.classList.add("is-invalid");
     }
-}*/
+}
 
 
 // DEPENDIENDO DEL ROL, MOSTRAR O NO SUPERVISOR Y DIAS DE VACACIONES
 role.addEventListener("change", (event) => {
     let $role = event.target.value;
+    comprobarRole($role)
 
+});
+
+
+function comprobarRole($role) {
     switch ($role) {
         case "ROLE_EMPLEADO":
             diasVac.disabled = false;
@@ -57,9 +67,12 @@ role.addEventListener("change", (event) => {
             diasVac.disabled = true;
             supervisor.disabled = true;
             department.disabled = false;
+            diasVac.value = "";
+            supervisor.value = "";
+            department.value = "";
             break;
     }
-});
+}
 
 // VALIDACIÓN CÓDIGO POSTAL
 postalCode.addEventListener("change", (e) => {
@@ -78,7 +91,7 @@ postalCode.addEventListener("change", (e) => {
 
 department.addEventListener("change", (e) => {
     let departmentId = e.target.value;
-    if (!role.value === "ROLE_ADMIN"){
+    if (role.value !== "ROLE_ADMIN"){
         addSupervisors(departmentId);
     }
 });

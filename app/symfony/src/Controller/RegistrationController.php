@@ -59,12 +59,12 @@ class RegistrationController extends AbstractController
         $departmentId = $request->request->get('department_id');
         $users = $this->userRepository->findBy(['department' => $departmentId]);
         $result = [];
-        /*foreach ($users as $user) {
+        foreach ($users as $user) {
             if (in_array("ROLE_SUPERVISOR", $user->getRoles())) {
                 $result[] = $user->getName();
             }
 
-        }*/
+        }
         return new JsonResponse(["users" => $users]);
     }
 
