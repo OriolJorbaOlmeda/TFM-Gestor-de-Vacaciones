@@ -75,8 +75,6 @@ class RequestAbsenceFormType extends AbstractType
 
         $builder->get('initial_date')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $date = $event->getData();
-            var_dump($date);
-
         });
     }
 
