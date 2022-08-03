@@ -4,43 +4,45 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Repository\DepartmentRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserRegistrationType extends AbstractType
 {
 
-    private DepartmentRepository $departmentRepository;
 
-    public function __construct(DepartmentRepository $departmentRepository, Security $security){
-        $this->departmentRepository = $departmentRepository;
-        $this->security = $security;
+    public function __construct(
+        private DepartmentRepository $departmentRepository,
+        private Security $security,
+        private UserRepository $userRepository){
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'name'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Nombre',
                 'required' => true
             ])
             ->add('lastname', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'name'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Apellidos',
                 'required' => true
             ])
             ->add('email', EmailType::class, [
-                'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control', 'id' => 'email'],
+                'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control'],
                 'label'=> 'Email',
                 'required' => true
             ])
@@ -53,34 +55,39 @@ class UserRegistrationType extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter a password',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/',
+                        'message' => 'La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números'
+                    ])
                 ],
-                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'id' => 'password'],
+                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control'],
                 'required' => true
             ])
             ->add('direction',TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'direccion'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Dirección',
                 'required' => true
             ])
             ->add('city',TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'ciudad'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Ciudad',
                 'required' => true
             ])
             ->add('province',TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'provincia'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Provincia',
                 'required' => true
             ])
             ->add('postalcode', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'codigoPostal'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Código postal',
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/',
+                        'message' => 'Código postal incorrecto'
+                    ])
+                ],
              ])
             ->add('department', ChoiceType::class, [
                 'label' => 'Department',
@@ -88,7 +95,17 @@ class UserRegistrationType extends AbstractType
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
-                'required' => true
+                'required' => true,
+                'placeholder' => '-- Selecciona --'
+            ])
+            ->add('supervisor', ChoiceType::class, [
+                'label' => 'Supervisor',
+                'choices' => $this->supervisors(),
+                'choice_value' => 'id',
+                'choice_label' => 'name',
+                'attr' => ['class' => 'form-control select2'],
+                'required' => false,
+                'placeholder' => '-- Selecciona --'
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
@@ -100,14 +117,21 @@ class UserRegistrationType extends AbstractType
                 'label'=> 'Rol',
                 'mapped' => false,
                 'required' => true,
-                'empty_data' => null
+                'empty_data' => null,
+                'placeholder' => '-- Selecciona --',
             ])
-            ->add('total_vacation_days', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
+            ->add('total_vacation_days', NumberType::class, [
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Vacation days',
-                'required' => true
+                'required' => false,
+                'empty_data' => '0',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9]{1,2}$/',
+                        'message' => 'Este valor debe ser numérico'
+                    ])
+                ],
             ])
-            //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label'=> 'Dar de Alta'
@@ -122,11 +146,14 @@ class UserRegistrationType extends AbstractType
         ]);
     }
 
-    public function departments(): array{
-        $user = $this->security->getUser();
-        $department = $user->getDepartment();
-        $company = $department->getCompany();
-
+    public function departments(): array
+    {
+        $company = $this->security->getUser()->getDepartment()->getCompany();
         return $this->departmentRepository->findBy(['company' => $company]);
+    }
+
+    public function supervisors(): array
+    {
+        return $this->userRepository->findAll();
     }
 }

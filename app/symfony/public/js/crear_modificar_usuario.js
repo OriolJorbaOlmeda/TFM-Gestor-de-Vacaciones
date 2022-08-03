@@ -1,9 +1,18 @@
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const role = document.getElementById("role");
+const postalCode = document.getElementById("postalCode");
+const department = document.getElementById("department");
+const supervisor = document.getElementById("supervisor");
+const diasVac = document.getElementById("diasVac");
 
-document.getElementById("groupSuper").style.display = "none";
-document.getElementById("groupDiasVac").style.display = "none";
+if (role.value !== "") {
+    comprobarRole(role.value)
+} else {
+    diasVac.disabled = true;
+    supervisor.disabled = true;
+    department.disabled = true;
+}
 
 // VALIDAR EMAIL
 email.addEventListener("change", (event) => {
@@ -18,8 +27,21 @@ function validarEmail(valor) {
     }
 }
 
+// VALIDAR DIAS DE VACACIONES QUE SEA NUMÉRICO
+diasVac.addEventListener("change", (e) => {
+    validarDiasVac(e.target.value)
+})
 
-// VALIDAR PASSWORD
+function validarDiasVac(value) {
+    if (/^[0-9]{1,2}$/.test(value)) {
+        diasVac.classList.remove("is-invalid");
+    } else {
+        diasVac.classList.add("is-invalid");
+    }
+}
+
+
+// VALIDAR PASSWORD - mínimo 8 carácteres, mayúsculas, minúsculas y números
 password.addEventListener("change", (event) => {
     validarPassword(event.target.value)
 });
@@ -36,22 +58,75 @@ function validarPassword(valor) {
 // DEPENDIENDO DEL ROL, MOSTRAR O NO SUPERVISOR Y DIAS DE VACACIONES
 role.addEventListener("change", (event) => {
     let $role = event.target.value;
+    comprobarRole($role)
+
+});
+
+function comprobarRole($role) {
     switch ($role) {
         case "ROLE_EMPLEADO":
-            document.getElementById("groupDiasVac").style.display = "block";
-            document.getElementById("groupSuper").style.display = "block";
+            diasVac.disabled = false;
+            supervisor.disabled = false;
+            department.disabled = false;
             break;
         case "ROLE_SUPERVISOR":
-            document.getElementById("groupDiasVac").style.display = "block";
-            document.getElementById("groupSuper").style.display = "none";
+            diasVac.disabled = false;
+            supervisor.disabled = true;
+            department.disabled = false;
             break;
         case "ROLE_ADMIN":
-            document.getElementById("groupDiasVac").style.display = "none";
-            document.getElementById("groupSuper").style.display = "none";
+            diasVac.disabled = true;
+            supervisor.disabled = true;
+            department.disabled = false;
+            diasVac.value = "";
+            supervisor.value = "";
+            department.value = "";
             break;
+    }
+}
+
+// VALIDACIÓN CÓDIGO POSTAL
+postalCode.addEventListener("change", (e) => {
+    let value = e.target.value;
+    if (/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/.test(value)) {
+        postalCode.classList.remove("is-invalid");
+    } else {
+        postalCode.classList.add("is-invalid");
+    }
+})
+
+
+// COMPORTAMIENTO SELECTORES
+department.addEventListener("change", (e) => {
+    let departmentId = e.target.value;
+    if (role.value === "ROLE_EMPLEADO"){
+        addSupervisors(departmentId);
     }
 });
 
+function addSupervisors(departmentId) {
+    $.ajax({
+        type: 'POST',
+        url: '/admin/get_supervisors',
+        async: true,
+        data: ({department_id: departmentId}),
+        datatype: 'json',
+        success: function (data) {
 
+            $("#supervisor option").remove();
 
-
+            if (data['users'].length === 0) {
+                $("#supervisor").prop('disabled', 'disabled');
+            } else {
+                $("#supervisor").prop('disabled', false);
+                for (var key in data['users']) {
+                    var value = data['users'][key];
+                    $("#supervisor").append(new Option(value, key));
+                }
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
