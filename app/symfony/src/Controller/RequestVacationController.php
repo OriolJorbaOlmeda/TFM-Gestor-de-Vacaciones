@@ -53,7 +53,15 @@ class RequestVacationController extends AbstractController
             // Rellenar los datos que faltan: state, type, petition_date, employee y calendar
             $petition->setState("PENDING");
             $petition->setType("VACATION");
-            $petition->setSupervisor($this->getUser()->getSupervisor());
+
+            // si es supervisor el supervisor será el mismo
+            if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+                $petition->setSupervisor($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
+            } else {
+                $petition->setSupervisor($this->getUser()->getSupervisor());
+            }
+
+
             $petition->setPetitionDate(new \DateTime());
             $petition->setEmployee($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
             // quizá haría falta añadir al supervisor

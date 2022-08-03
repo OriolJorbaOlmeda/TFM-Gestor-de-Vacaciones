@@ -44,8 +44,8 @@ class RequestAbsenceController extends AbstractController
 
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
-        if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+        if (in_array("ROLE_SUPERVISOR", $user->getRoles())) {
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $user, 'state' => 'PENDING']);
             $num_petitions = count($petitions);
         }
 
@@ -56,12 +56,16 @@ class RequestAbsenceController extends AbstractController
             // Rellenar los datos que faltan: state, type, petition_date, employee, calendar y justify
             $petition->setState("PENDING");
             $petition->setType("ABSENCE");
+
+            // si es supervisor el supervisor será el mismo
+            if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+                $petition->setSupervisor($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
+            } else {
+                $petition->setSupervisor($this->getUser()->getSupervisor());
+            }
+
             $petition->setPetitionDate(new \DateTime());
             $petition->setEmployee($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
-
-            $supervisor = $user->getSupervisor();
-            $petition->setSupervisor($supervisor);
-            // quizá haría falta añadir al supervisor
 
             $calendar = $this->calendarRepository->findCalendarByDates($petition->getInitialDate(), $petition->getFinalDate());
             if ($calendar == null) {
