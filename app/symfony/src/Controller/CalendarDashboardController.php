@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\SearchByDepartmentType;
 use App\Repository\CalendarRepository;
+use App\Repository\PetitionRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +17,8 @@ class CalendarDashboardController extends AbstractController
 
     public function __construct(
         private UserRepository $userRepository,
-        private CalendarRepository $calendarRepository
+        private CalendarRepository $calendarRepository,
+        private PetitionRepository $petitionRepository
     ) {
     }
 
@@ -49,11 +51,19 @@ class CalendarDashboardController extends AbstractController
         $form = $this->createForm(SearchByDepartmentType::class, $result);
         $form->handleRequest($request);
 
+        //Para el caso de SUPERVISOR para poner en el panel
+        $num_petitions = 0;
+        if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $num_petitions = count($petitions);
+        }
+
 
         return $this->render('empleado/calendario.html.twig', [
             "departments" => $allDepartments,
             "formDepar" => $form->createView(),
-            "festives" => $festives_company
+            "festives" => $festives_company,
+            'num_petitions' => $num_petitions
         ]);
     }
 

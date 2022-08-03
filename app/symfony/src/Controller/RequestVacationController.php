@@ -39,6 +39,12 @@ class RequestVacationController extends AbstractController
             array_push($days, $day->format('Y-m-d'));
         }
 
+        //Para el caso de SUPERVISOR para poner en el panel
+        $num_petitions = 0;
+        if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $num_petitions = count($petitions);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -47,6 +53,7 @@ class RequestVacationController extends AbstractController
             // Rellenar los datos que faltan: state, type, petition_date, employee y calendar
             $petition->setState("PENDING");
             $petition->setType("VACATION");
+            $petition->setSupervisor($this->getUser()->getSupervisor());
             $petition->setPetitionDate(new \DateTime());
             $petition->setEmployee($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
             // quizá haría falta añadir al supervisor
@@ -62,7 +69,8 @@ class RequestVacationController extends AbstractController
 
         return $this->render('empleado/solicitar_vacaciones.html.twig', [
             'form' => $form->createView(),
-            'festives' => $days
+            'festives' => $days,
+            'num_petitions' => $num_petitions
         ]);
 
     }
