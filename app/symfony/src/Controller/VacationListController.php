@@ -31,12 +31,21 @@ class VacationListController extends AbstractController
         if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
             $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
             $num_petitions = count($petitions);
+            $justify =[];
+            foreach ($petitions as $petition) {
+                if($petition->getJustify()) {
+                    $justify [] = $petition->getJustify();
+                }
+
+            }
         }
+
 
         return $this->render('empleado/mis_vacaciones.html.twig', [
             'vacations' => $vacations,
             'absences' => $absences,
-            'num_petitions' => $num_petitions
+            'num_petitions' => $num_petitions,
+            'justify' => $justify,
         ]);
     }
 
