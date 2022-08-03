@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\SelectUserType;
 use App\Form\UserModificationType;
 use App\Form\UserRegistrationType;
-use App\Repository\DepartmentRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,16 +19,12 @@ class AdminController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository,
-        private DepartmentRepository $departmentRepository
-    ) {
-    }
+        private UserRepository $userRepository
+    ) {}
 
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
-    public function createUser(
-        Request $request,
-        UserPasswordHasherInterface $passwordHasher
-    ): Response {
+    public function createUser(Request $request, UserPasswordHasherInterface $passwordHasher): Response {
+
         $user = new User();
         $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
@@ -37,21 +32,22 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $pass = $form->get('password')->getData();
             $user->setPassword($passwordHasher->hashPassword($user, $pass));
-            $pending_vacation_days = $form->get('total_vacation_days')->getData();
+
+            $user->setPendingVacationDays($user->getTotalVacationDays());
+
             $roles = $form->get('roles')->getData();
             $user->setRoles([$roles]);
 
-            $user->setPendingVacationDays($pending_vacation_days);
             $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
-        } else {
+        }else {
             return $this->render('admin/crear_usuario.html.twig', [
-                'controller_name' => 'AdminController',
                 "form" => $form->createView(),
                 "error" => $form->getErrors(),
             ]);
         }
     }
+
 
     #[Route('/admin/modificar_usuario', name: 'app_admin_modify-user')]
     public function modifyUser(
@@ -147,7 +143,7 @@ class AdminController extends AbstractController
         $result = [];
         foreach ($users as $user) {
             if (in_array("ROLE_SUPERVISOR", $user->getRoles())) {
-                $result[$user->getId()] = $user->getName();
+                $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
             }
 
         }
