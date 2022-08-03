@@ -15,8 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserRegistrationType extends AbstractType
 {
@@ -55,11 +55,10 @@ class UserRegistrationType extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter a password',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ min }} characters',
-                        'max' => 4096,
-                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/',
+                        'message' => 'La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números'
+                    ])
                 ],
                 'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control'],
                 'required' => true
@@ -82,7 +81,13 @@ class UserRegistrationType extends AbstractType
             ->add('postalcode', TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label'=> 'Código postal',
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/',
+                        'message' => 'Código postal incorrecto'
+                    ])
+                ],
              ])
             ->add('department', ChoiceType::class, [
                 'label' => 'Department',
@@ -119,9 +124,14 @@ class UserRegistrationType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label'=> 'Vacation days',
                 'required' => false,
-                'invalid_message' => 'Este valor debe ser numérico'
+                'empty_data' => '0',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9]{1,2}$/',
+                        'message' => 'Este valor debe ser numérico'
+                    ])
+                ],
             ])
-            //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label'=> 'Dar de Alta'
@@ -136,19 +146,14 @@ class UserRegistrationType extends AbstractType
         ]);
     }
 
-    public function departments(): array{
-        $user = $this->security->getUser();
-        $department = $user->getDepartment();
-        $company = $department->getCompany();
-
+    public function departments(): array
+    {
+        $company = $this->security->getUser()->getDepartment()->getCompany();
         return $this->departmentRepository->findBy(['company' => $company]);
     }
 
-    public function supervisors(): array{
-
-        $users = $this->userRepository->findBy(['department' => '2']);
-
-        return $users;
-
+    public function supervisors(): array
+    {
+        return $this->userRepository->findAll();
     }
 }

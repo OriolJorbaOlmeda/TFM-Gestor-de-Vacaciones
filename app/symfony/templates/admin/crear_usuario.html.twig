@@ -49,12 +49,16 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    {{ form_row(form.email, { 'id': 'email' }) }}
+                                                    {{ form_label(form.email) }}
+                                                    {{ form_widget(form.email, {'id': 'email'}) }}
+                                                    <span style="color: red">{{ form_errors(form.email) }}</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    {{ form_row(form.password, {'id': 'password'}) }}
+                                                    {{ form_label(form.password) }}
+                                                    {{ form_widget(form.password, {'id': 'password'}) }}
+                                                    <span style="color: red">{{ form_errors(form.password) }}</span>
                                                 </div>
                                             </div>
                                         </div>

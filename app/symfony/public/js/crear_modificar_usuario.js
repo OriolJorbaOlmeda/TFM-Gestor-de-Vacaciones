@@ -6,7 +6,6 @@ const department = document.getElementById("department");
 const supervisor = document.getElementById("supervisor");
 const diasVac = document.getElementById("diasVac");
 
-
 if (role.value !== "") {
     comprobarRole(role.value)
 } else {
@@ -28,8 +27,21 @@ function validarEmail(valor) {
     }
 }
 
+// VALIDAR DIAS DE VACACIONES QUE SEA NUMÉRICO
+diasVac.addEventListener("change", (e) => {
+    validarDiasVac(e.target.value)
+})
 
-// VALIDAR PASSWORD - mínimo 8 carácteres, mayusculas y minusculas
+function validarDiasVac(value) {
+    if (/^[0-9]{1,2}$/.test(value)) {
+        diasVac.classList.remove("is-invalid");
+    } else {
+        diasVac.classList.add("is-invalid");
+    }
+}
+
+
+// VALIDAR PASSWORD - mínimo 8 carácteres, mayúsculas, minúsculas y números
 password.addEventListener("change", (event) => {
     validarPassword(event.target.value)
 });
@@ -50,7 +62,6 @@ role.addEventListener("change", (event) => {
 
 });
 
-
 function comprobarRole($role) {
     switch ($role) {
         case "ROLE_EMPLEADO":
@@ -60,7 +71,7 @@ function comprobarRole($role) {
             break;
         case "ROLE_SUPERVISOR":
             diasVac.disabled = false;
-            supervisor.disabled = false;
+            supervisor.disabled = true;
             department.disabled = false;
             break;
         case "ROLE_ADMIN":
@@ -85,13 +96,10 @@ postalCode.addEventListener("change", (e) => {
 })
 
 
-
-
 // COMPORTAMIENTO SELECTORES
-
 department.addEventListener("change", (e) => {
     let departmentId = e.target.value;
-    if (role.value !== "ROLE_ADMIN"){
+    if (role.value === "ROLE_EMPLEADO"){
         addSupervisors(departmentId);
     }
 });
@@ -112,9 +120,8 @@ function addSupervisors(departmentId) {
             } else {
                 $("#supervisor").prop('disabled', false);
                 for (var key in data['users']) {
-                    console.log(data['users'][key]);
                     var value = data['users'][key];
-                    $("#supervisor").append(new Option(data['users'][key]));
+                    $("#supervisor").append(new Option(value, key));
                 }
             }
         },
