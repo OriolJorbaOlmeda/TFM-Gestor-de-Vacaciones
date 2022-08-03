@@ -3,11 +3,11 @@
         <div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <h5 style="display: inline"><i class="icon fas fa-info"></i></h5>
-            Tienes {{ num_petitions }} solicitudes de vacaciones pendientes de aprobar
+            {{ "supervisorPanel.title"|trans({'%num_petitions%': num_petitions}) }}
             <br>
             <h5 style="display: inline; visibility: hidden"><i class="icon fas fa-info"></i></h5>
             <a href="{{ path('app_supervisor_pending_requests') }}">
-                Ver las solicitudes <i class="fas fa-arrow-circle-right"></i>
+                {{ "supervisorPanel.requests"|trans }} <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>

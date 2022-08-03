@@ -9,94 +9,88 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserModificationType extends AbstractType
 {
 
-    private DepartmentRepository $departmentRepository;
-
-    public function __construct(DepartmentRepository $departmentRepository, Security $security,UserRepository $userRepository){
-        $this->departmentRepository = $departmentRepository;
-        $this->security = $security;
-        $this->userRepository = $userRepository;
-
-    }
+    public function __construct(
+        private DepartmentRepository $departmentRepository,
+        private Security $security,
+        private UserRepository $userRepository,
+        private TranslatorInterface $translator){}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-       // var_dump($options['data']->getSupervisor()->getId());
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'name'],
-                'label'=> 'Nombre',
+                'label'=> $this->translator->trans('user.name'),
                 'required' => true
             ])
             ->add('lastname', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'name'],
-                'label'=> 'Apellidos',
+                'label'=> $this->translator->trans('user.lastname'),
                 'required' => true
             ])
             ->add('email', EmailType::class, [
                 'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control', 'id' => 'email'],
-                'label'=> 'Email',
+                'label'=> $this->translator->trans('user.email'),
                 'required' => true
             ])
             ->add('direction',TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'direccion'],
-                'label'=> 'Dirección',
+                'label'=> $this->translator->trans('user.direction'),
                 'required' => true
             ])
             ->add('city',TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'ciudad'],
-                'label'=> 'Ciudad',
+                'label'=> $this->translator->trans('user.city'),
                 'required' => true
             ])
             ->add('province',TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'provincia'],
-                'label'=> 'Provincia',
+                'label'=> $this->translator->trans('user.province'),
                 'required' => true
             ])
             ->add('postalcode', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'codigoPostal'],
-                'label'=> 'Código postal',
+                'label'=> $this->translator->trans('user.postalCode'),
                 'required' => true
              ])
 
             ->add('department', ChoiceType::class, [
-                'label' => 'Department',
+                'label' => $this->translator->trans('user.department'),
                 'choices' => $this->departments(),
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
                 'required' => true,
-                'placeholder' => '-- Selecciona --'
+                'placeholder' => $this->translator->trans('action.select'),
 
             ])
             ->add('supervisor', ChoiceType::class, [
-                'label' => 'Supervisor',
+                'label' => $this->translator->trans('user.supervisor'),
                 'choices' => $this->supervisor(),
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
                 'required' => true,
-                'placeholder' => '-- Selecciona --'
+                'placeholder' => $this->translator->trans('action.select'),
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'Admin' => 'ROLE_ADMIN',
-                    'Supervisor' => 'ROLE_SUPERVISOR',
-                    'Empleado' => 'ROLE_EMPLEADO',
+                    $this->translator->trans('roles.admin') => 'ROLE_ADMIN',
+                    $this->translator->trans('roles.supervisor') => 'ROLE_SUPERVISOR',
+                    $this->translator->trans('roles.employee') => 'ROLE_EMPLEADO',
                 ],
                 'attr' => ['class' => 'form-control select2'],
-                'label'=> 'Rol',
+                'label'=> $this->translator->trans('user.role'),
                 'mapped' => false,
                 'required' => true,
                 'empty_data' => null,
@@ -104,14 +98,13 @@ class UserModificationType extends AbstractType
             ])
             ->add('total_vacation_days', NumberType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
-                'label'=> 'Vacation days',
+                'label'=> $this->translator->trans('user.totalVacationDays'),
                 'required' => true,
-                'invalid_message' => 'Este valor debe ser numérico'
+                'invalid_message' => $this->translator->trans('user.totalVacationDaysError'),
             ])
-            //->add('pending_vacation_days')
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
-                'label'=> 'Dar de Alta'
+                'label'=>  $this->translator->trans('action.save'),
             ])
         ;
     }

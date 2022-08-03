@@ -23,7 +23,7 @@
                 <div class="content-header">
                     <div class="container">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> Mis vacaciones</h1>
+                            <h1 class="m-0"> {{ "vacationList.title1"|trans }} </h1>
                         </div>
                     </div>
                 </div>
@@ -36,11 +36,11 @@
                                     <table class="table table-bordered table-hover text-nowrap">
                                         <thead>
                                         <tr>
-                                            <th>Fecha inicio</th>
-                                            <th>Fecha fin</th>
-                                            <th style="width: 50px">Duración</th>
-                                            <th>Motivo</th>
-                                            <th style="width: 50px">Estado</th>
+                                            <th>{{ "petition.initialDate"|trans }}</th>
+                                            <th>{{ "petition.finalDate"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.duration"|trans }}</th>
+                                            <th>{{ "petition.reason"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.state"|trans }}</th>
                                             <th style="width: 50px"></th>
                                         </tr>
                                         </thead>
@@ -89,7 +89,7 @@
                 <div class="content-header">
                     <div class="container">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> Mis ausencias</h1>
+                            <h1 class="m-0"> {{ "vacationList.title2"|trans }}</h1>
                         </div>
                     </div>
                 </div>
@@ -102,11 +102,11 @@
                                     <table class="table table-bordered table-hover text-nowrap">
                                         <thead>
                                         <tr>
-                                            <th>Fecha inicio</th>
-                                            <th>Fecha fin</th>
-                                            <th style="width: 50px">Duración</th>
-                                            <th>Motivo</th>
-                                            <th style="width: 50px">Estado</th>
+                                            <th>{{ "petition.initialDate"|trans }}</th>
+                                            <th>{{ "petition.finalDate"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.duration"|trans }}</th>
+                                            <th>{{ "petition.reason"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.state"|trans }}</th>
                                             <th style="width: 50px"></th>
                                         </tr>
                                         </thead>
@@ -120,16 +120,16 @@
                                                 <td> {{ petition.duration}} </td>
                                                 <td> {{ petition.reason}} </td>
                                                 {% if petition.state == 'ACCEPTED' %}
-                                                    <td><span class="badge bg-success">Aprobado</span></td>
+                                                    <td><span class="badge bg-success">{{ "petition.states.accepted"|trans }}</span></td>
                                                 {% elseif petition.state == 'PENDING' %}
-                                                    <td><span class="badge bg-warning">Pendiente</span></td>
+                                                    <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
                                                     <td>
                                                         <div class="btn-group-sm">
                                                             <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 {% elseif petition.state == 'DENIED' %}
-                                                    <td><span class="badge bg-danger">Denegado</span></td>
+                                                    <td><span class="badge bg-danger">{{ "petition.states.denied"|trans }}</span></td>
                                                 {% endif %}
                                             </tr>
 

@@ -13,7 +13,7 @@
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0"> Home</h1>
+                        <h1 class="m-0"> {{ "homeAdmin.title"|trans }} </h1>
                     </div>
                 </div>
             </div>
@@ -26,13 +26,13 @@
                             <div class="small-box bg-info" style="opacity: 0.7">
                                 <div class="inner">
                                     <h3 style="visibility: hidden">10</h3>
-                                    <p>Crear nuevo calendario</p>
+                                    <p>{{ "homeAdmin.createCalendar"|trans }}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas bi-calendar-plus"></i>
                                 </div>
                                 <a href="{{ path('app_create_calendar') }}" class="small-box-footer">
-                                    Ir <i class="fas fa-arrow-circle-right"></i>
+                                    {{ "homeAdmin.go"|trans }} <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -40,13 +40,13 @@
                             <div class="small-box bg-info" style="opacity: 0.7">
                                 <div class="inner">
                                     <h3 style="visibility: hidden">10</h3>
-                                    <p>Registrar nuevo usuario</p>
+                                    <p>{{ "homeAdmin.createUser"|trans }}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-user-plus"></i>
                                 </div>
                                 <a href="{{ path('app_admin_create-user') }}" class="small-box-footer">
-                                    Ir <i class="fas fa-arrow-circle-right"></i>
+                                    {{ "homeAdmin.go"|trans }} <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -54,14 +54,14 @@
                             <div class="small-box bg-info" style="opacity: 0.7">
                                 <div class="inner">
                                     <h3 style="visibility: hidden">10</h3>
-                                    <p>Modificar usuario</p>
+                                    <p>{{ "homeAdmin.modifyUser"|trans }}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="f4ff"></i>
                                     <i class="fas fa-user-pen"></i>
                                 </div>
                                 <a href="{{ path('app_admin_modify-user') }}" class="small-box-footer">
-                                    Ir <i class="fas fa-arrow-circle-right"></i>
+                                    {{ "homeAdmin.go"|trans }} <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>

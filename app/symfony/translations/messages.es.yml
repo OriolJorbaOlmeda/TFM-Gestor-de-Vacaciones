@@ -1,0 +1,139 @@
+action:
+  save: Guardar
+  select: -- Selecciona --
+  search: Buscar
+general:
+  applicationTitle: GetYourVacations
+  logout: Cerrar sesión
+roles:
+  admin: Admin
+  supervisor: Supervisor
+  employee: Empleado
+createCalendar:
+  initialDate: Fecha inicio
+  finalDate: Fecha fin
+  year: Año laboral
+  createCalendar: Crear calendario
+  title: Crear nuevo calendario vacacional
+  subtitle: Datos del calendario
+  initialDateError1: La fecha de inicio debe ser mayor o igual a la fecha actual
+  initialDateError2: La fecha inicio debe ser inferior a la fecha de fin
+  finalDateError1: La fecha fin debe ser mayor o igual a la fecha actual
+  finalDateError2: La fecha fin debe ser superior a la fecha de inicio
+createFestive:
+  name: Descripción día festivo
+  addFestive: Añadir
+  addDays: Añadir días festivos del calendario
+  explication: Los sábados y domingos se agregan automáticamente como días libres
+user:
+  name: Nombre
+  lastname: Apellidos
+  email: Email
+  password: Password
+  passwordError: La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números
+  direction: Dirección
+  city: Ciudad
+  province: Provincia
+  postalCode: Código postal
+  postalCodeError: Código postal incorrecto
+  department: Departamento
+  supervisor: Supervisor
+  role: Rol
+  totalVacationDays: Días totales de vacaciones
+  totalVacationDaysError: Este valor debe ser numéric
+  createUser: Dar de alta
+createUser:
+  title: Dar de alta usuario
+  subtitle1: Datos personales
+  subtitle2: Datos de la empresa
+
+modifyUser:
+  title: Modificar usuario
+  user: Usuario
+  subtitle1: Datos personales
+  subtitle2: Datos de la empresa
+requestVacation:
+  initialDate: Fecha inicio periodo vacaciones
+  finalDate: Fecha fin periodo vacaciones
+  title: Solicitar vacaciones
+  subtitle: Datos de la solicitud
+requestAbsence:
+  initialDate: Fecha inicio periodo ausencia
+  finalDate: Fecha fin periodo ausencia
+  title: Solicitar ausencia justificada
+  subtitle: Datos de la solicitud
+  reason1: Baja por enfermedad
+  reason2: Traslado
+  reason3: Fallecimiento de un familiar
+  reason4: Otros
+petition:
+  initialDate: Fecha inicio
+  finalDate: Fecha fin
+  duration: Duración
+  reason: Motivo
+  state: Estado
+  justify: Adjuntar justificante
+  request: Solicitar
+  type: Tipo de solicitud
+  types:
+    vacation: Vacaciones
+    ausence: Ausencia
+  states:
+    accepted: Aprobado
+    pending: Pendiente
+    denied: Denegado
+calendarDashboard:
+  title: Calendario
+  filters: Filtros
+  search: Búsqueda por departamento
+  vacations: Vacaciones
+  absences: Ausencias
+  festives: Días festivos
+  department: Departamento
+  user: Usuario
+homeAdmin:
+  title: Home
+  createCalendar: Crear nuevo calendario
+  createUser: Registrar nuevo usuario
+  modifyUser: Modificar usuario
+  go: Ir
+navbarAdmin:
+  createCalendar: Crear calendario
+  users: Gestión usuarios
+  createUser: Registrar usuario
+  modifyUser: Modificar usuario
+homeEmployee:
+  title: Área personal
+  period: Periodo
+  totalDays: Días totales
+  availableDays: Días disponibles
+  usedDays: Días utilizados
+  calendar: Calendario
+  filters: Filtros
+  vacations: Vacaciones
+  absences: Ausencias
+  festives: Días festivos
+navbarEmployee:
+  vacationList: Mis vacaciones
+  calendar: Calendario
+  request: Solicitar
+  requestVacation: Solicitar vacaciones
+  requestAbsence: Solicitar ausencia
+  pendingRequests: Solicitudes pendientes
+vacationList:
+  title1: Mis vacaciones
+  title2: Mis ausencias
+supervisorPanel:
+  title: Tienes %num_petitions% solicitudes de vacaciones pendientes de aprobar
+  requests: Ver las solicitudes
+pendingRequests:
+  title: Solicitudes de vacaciones y ausencias
+  pendingRequests: Solicitudes pendientes
+  employee: Empleado
+  accept: Aprobar
+  deny: Denegar
+login:
+  email: Email
+  password: Contraseña
+  access: Acceder
+  loginError: Email o contraseña incorrectos
