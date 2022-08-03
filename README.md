@@ -32,9 +32,9 @@ Una vez instalado se ha de inicializar el proyecto, para ello se tiene que levan
 - Crear calendario 
 - Dar de alta usuario
 - Aprobar o denegar solicitud vacaciones 
-- Cancelar una vacacione
+- Cancelar unas vacaciones
 - Buscar en el calendario por departamento o empleado
-- Solicitar vaciones
+- Solicitar vacaciones
 - Solicitar ausencia justificada
 - Cambiar contraseña 
 - 
@@ -48,7 +48,7 @@ Estados:
 - PENDING
 - ACCEPTED
 - DENIED
-- CANCELED
+- CANCELED (en este caso en vez de guardar el estado, se borra la petición directamente)
 
 Tipos: 
 - VACATION
