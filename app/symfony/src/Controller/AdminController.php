@@ -114,12 +114,7 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/home.html.twig');
     }
-
-    #[Route('/admin/calendar', name: 'app_admin_calendar')]
-    public function calendar(): Response
-    {
-        return $this->render('admin/crear_calendario.html.twig');
-    }
+    
 
     #[Route('/admin/getUsers', name: 'app_admin_prueba')]
     public function getUsers(Request $request): Response
