@@ -13,7 +13,7 @@
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0"> Solicitudes del departamento </h1>
+                        <h1 class="m-0"> {{ "pendingRequests.title"|trans }} </h1>
                     </div>
                 </div>
             </div>
@@ -25,17 +25,17 @@
                         <div class="col-12">
 
                             <div class="callout callout-warning">
-                                <h5>Solicitudes pendientes</h5>
+                                <h5>{{ "pendingRequests.pendingRequests"|trans }}</h5>
 
                                 <table class="table table-bordered table-hover text-nowrap">
                                     <thead>
                                     <tr>
-                                        <th>Empleado</th>
-                                        <th>Fecha inicio</th>
-                                        <th>Fecha fin</th>
-                                        <th style="width: 50px">Duración</th>
-                                        <th style="width: 50px">Tipo de solicitud</th>
-                                        <th style="width: 50px">Motivo</th>
+                                        <th>{{ "pendingRequests.employee"|trans }}</th>
+                                        <th>{{ "petition.initialDate"|trans }}</th>
+                                        <th>{{ "petition.finalDate"|trans }}</th>
+                                        <th style="width: 50px">{{ "petition.duration"|trans }}</th>
+                                        <th style="width: 50px">{{ "petition.type"|trans }}</th>
+                                        <th style="width: 50px">{{ "petition.reason"|trans }}</th>
                                         <th style="width: 100px"></th>
                                     </tr>
                                     </thead>
@@ -46,14 +46,21 @@
                                             <td> {{ petition.getInitialDate()|date("d/m/Y") }} </td>
                                             <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
                                             <td> {{ petition.duration}}  </td>
-                                            <td> {{ petition.type}}  </td>
-                                            <td> {{ petition.reason}} </td>
+
+                                            {% if petition.type == 'VACATION' %}
+                                                <td> {{ "petition.types.vacation"|trans }} </td>
+                                            {% else %}
+                                                <td> {{ "petition.types.ausence"|trans }} </td>
+                                            {% endif %}
+
+                                            <td> {{ petition.reason}}  </td>
+
                                             <td>
                                                 <a type="button" href="/supervisor/accept_request?petitionId={{ petition.id }}"
-                                                   style="text-decoration: none; color: white" class="btn btn-primary btn-xs">Aprobar
+                                                   style="text-decoration: none; color: white" class="btn btn-primary btn-xs">{{ "pendingRequests.accept"|trans }}
                                                 </a>
                                                 <a type="button" href="/supervisor/deny_request?petitionId={{ petition.id }}"
-                                                   style="text-decoration: none; color: #007bff" class="btn btn-outline-primary btn-xs">Denegar
+                                                   style="text-decoration: none; color: #007bff" class="btn btn-outline-primary btn-xs">{{ "pendingRequests.deny"|trans }}
                                                 </a>
                                             </td>
                                         </tr>

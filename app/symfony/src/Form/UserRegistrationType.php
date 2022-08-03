@@ -15,8 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserRegistrationType extends AbstractType
 {
@@ -25,7 +25,8 @@ class UserRegistrationType extends AbstractType
     public function __construct(
         private DepartmentRepository $departmentRepository,
         private Security $security,
-        private UserRepository $userRepository){
+        private UserRepository $userRepository,
+        private TranslatorInterface $translator){
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -33,31 +34,28 @@ class UserRegistrationType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Nombre',
+                'label'=>  $this->translator->trans('user.name'),
                 'required' => true
             ])
             ->add('lastname', TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Apellidos',
+                'label'=> $this->translator->trans('user.lastname'),
                 'required' => true
             ])
             ->add('email', EmailType::class, [
                 'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control'],
-                'label'=> 'Email',
+                'label'=> $this->translator->trans('user.email'),
                 'required' => true
             ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'label' => 'Password',
+                'label' => $this->translator->trans('user.password'),
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
                     new Regex([
                         'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/',
-                        'message' => 'La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números'
+                        'message' => $this->translator->trans('user.passwordError')
                     ])
                 ],
                 'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control'],
@@ -65,76 +63,76 @@ class UserRegistrationType extends AbstractType
             ])
             ->add('direction',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Dirección',
+                'label'=> $this->translator->trans('user.direction'),
                 'required' => true
             ])
             ->add('city',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Ciudad',
+                'label'=> $this->translator->trans('user.city'),
                 'required' => true
             ])
             ->add('province',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Provincia',
+                'label'=> $this->translator->trans('user.province'),
                 'required' => true
             ])
             ->add('postalcode', TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Código postal',
+                'label'=> $this->translator->trans('user.postalCode'),
                 'required' => true,
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/',
-                        'message' => 'Código postal incorrecto'
+                        'message' => $this->translator->trans('user.postalCodeError')
                     ])
                 ],
              ])
             ->add('department', ChoiceType::class, [
-                'label' => 'Department',
+                'label' => $this->translator->trans('user.department'),
                 'choices' => $this->departments(),
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
                 'required' => true,
-                'placeholder' => '-- Selecciona --'
+                'placeholder' => $this->translator->trans('action.select')
             ])
             ->add('supervisor', ChoiceType::class, [
-                'label' => 'Supervisor',
+                'label' => $this->translator->trans('user.supervisor'),
                 'choices' => $this->supervisors(),
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
                 'required' => false,
-                'placeholder' => '-- Selecciona --'
+                'placeholder' => $this->translator->trans('action.select')
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'Admin' => 'ROLE_ADMIN',
-                    'Supervisor' => 'ROLE_SUPERVISOR',
-                    'Empleado' => 'ROLE_EMPLEADO',
+                    $this->translator->trans('role.admin') => 'ROLE_ADMIN',
+                    $this->translator->trans('role.supervisor') => 'ROLE_SUPERVISOR',
+                    $this->translator->trans('role.employee') => 'ROLE_EMPLEADO',
                 ],
                 'attr' => ['class' => 'form-control select2'],
-                'label'=> 'Rol',
+                'label'=> $this->translator->trans('user.role'),
                 'mapped' => false,
                 'required' => true,
                 'empty_data' => null,
-                'placeholder' => '-- Selecciona --',
+                'placeholder' => $this->translator->trans('action.select')
             ])
             ->add('total_vacation_days', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label'=> 'Vacation days',
+                'label'=> $this->translator->trans('user.totalVacationDays'),
                 'required' => false,
                 'empty_data' => '0',
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^[0-9]{1,2}$/',
-                        'message' => 'Este valor debe ser numérico'
+                        'message' => $this->translator->trans('user.totalVacationDaysError')
                     ])
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
-                'label'=> 'Dar de Alta'
+                'label'=> $this->translator->trans('user.createUser')
             ])
         ;
     }

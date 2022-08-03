@@ -2,28 +2,25 @@
 
 namespace App\Form;
 
-use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SearchByDepartmentType extends AbstractType
 {
-    public function __construct(UserRepository $userRepository,
-    ) {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(private TranslatorInterface $translator) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'department',
-                ChoiceType::class, ['choices' => $options['data']]
-            );
+            ->add('department', ChoiceType::class, [
+                'choices' => $options['data'],
+                'label' => $this->translator->trans('calendarDashboard.department')
+            ]);
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
@@ -34,8 +31,9 @@ class SearchByDepartmentType extends AbstractType
                     'choices' => $usersName,
                     'attr' => [
                         'class' => 'form-control select2',
-                        'disabled' => 'disabled',
-                    ]
+                        'disabled' => 'disabled'
+                    ],
+                    'label' => $this->translator->trans('calendarDashboard.user')
                 ];
                 $form->add('user', ChoiceType::class, $formOptions);
             }

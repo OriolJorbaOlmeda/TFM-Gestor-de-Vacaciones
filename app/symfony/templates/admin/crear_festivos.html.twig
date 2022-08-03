@@ -19,7 +19,7 @@
         <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
             <div class="content-header">
                 <div class="container">
-                    <h1 class="m-0">Crear nuevo calendario vacacional</h1>
+                    <h1 class="m-0">{{ "createCalendar.title"|trans }}</h1>
                 </div>
             </div>
 
@@ -31,13 +31,13 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Datos del calendario</h3>
+                                    <h3 class="card-title">{{ "createCalendar.subtitle"|trans }}</h3>
                                 </div>
 
                                 {{ form_start(form) }}
                                 <div class="card-body">
-                                    <label>Añadir días festivos del calendario <span id="calendar_fecha_ini">{{ calendar.getInitialDate()|date("d/m/Y")}}</span> - <span id="calendar_fecha_fin">{{ calendar.getFinalDate()|date("d/m/Y")}}</span></label>
-                                    <p> Los sábados y domingos se agregan automáticamente como días libres </p>
+                                    <label>{{ "createFestive.addDays"|trans }} <span id="calendar_fecha_ini">{{ calendar.getInitialDate()|date("d/m/Y")}}</span> - <span id="calendar_fecha_fin">{{ calendar.getFinalDate()|date("d/m/Y")}}</span></label>
+                                    <p> {{ "createFestive.explication"|trans }} </p>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                   <a type="button" href="{{ path('app_admin_dashboard') }}" class="btn btn-primary"> Guardar </a>
+                                   <a type="button" href="{{ path('app_admin_dashboard') }}" class="btn btn-primary"> {{ "action.save"|trans }} </a>
                                 </div>
 
                                 {{ form_end(form) }}

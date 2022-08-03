@@ -34,7 +34,7 @@
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0"> Área personal</h1>
+                        <h1 class="m-0"> {{ "homeEmployee.title"|trans }} </h1>
                     </div>
                 </div>
             </div>
@@ -53,17 +53,17 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <h4 class="card-title">Período: {{ initial_date }} - {{ final_date }}</h4>
+                                            <h4 class="card-title">{{ "homeEmployee.period"|trans }}: {{ initial_date }} - {{ final_date }}</h4>
                                         </div>
                                         <div class="col-md-2">
                                             <a href="{{ path('app_employee_request-vacation') }}" type="button"
                                                class="btn btn-block btn-sm btn-primary"><i
-                                                        class="fa fa-plus"></i>Solicitar vacaciones</a>
+                                                        class="fa fa-plus"></i>{{ "navbarEmployee.requestVacation"|trans }}</a>
                                         </div>
                                         <div class="col-md-2">
                                             <a href="{{ path('app_employee_request-absence') }}" type="button"
                                                class="btn btn-block btn-sm btn-outline-primary"><i
-                                                        class="fa fa-plus"></i>Solicitar ausencia</a>
+                                                        class="fa fa-plus"></i>{{ "navbarEmployee.requestAbsence"|trans }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -71,10 +71,9 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-6 col-12">
                                             <div class="info-box m-0">
-                                                <span class="info-box-icon bg-info">{{ user_information.getTotalVacationDays }}
-</span>
+                                                <span class="info-box-icon bg-info">{{ user_information.getTotalVacationDays }}</span>
                                                 <div class="info-box-content">
-                                                    <span class="info-box-text">Días totales</span>
+                                                    <span class="info-box-text">{{ "homeEmployee.totalDays"|trans }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +81,7 @@
                                             <div class="info-box m-0">
                                                 <span class="info-box-icon bg-info">{{ user_information.getPendingVacationDays }}</span>
                                                 <div class="info-box-content">
-                                                    <span class="info-box-text">Días disponibles</span>
+                                                    <span class="info-box-text">{{ "homeEmployee.availableDays"|trans }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +89,7 @@
                                             <div class="info-box m-0">
                                                 <span class="info-box-icon bg-info">{{ days }}</span>
                                                 <div class="info-box-content">
-                                                    <span class="info-box-text">Días utilizados</span>
+                                                    <span class="info-box-text">{{ "homeEmployee.usedDays"|trans }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,32 +101,32 @@
 
 
                     <div class="col-sm-6">
-                        <h4> Calendario </h4>
+                        <h4> {{ "homeEmployee.calendar"|trans }} </h4>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Filtros</h4>
+                                    <h4 class="card-title">{{ "homeEmployee.filters"|trans }}</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="icheck-orange">
                                         <input type="checkbox" checked id="vacances">
                                         <label for="vacances">
-                                            Vacaciones
+                                            {{ "homeEmployee.vacations"|trans }}
                                         </label>
                                     </div>
                                     <div class="icheck-indigo">
                                         <input type="checkbox" checked id="absence">
                                         <label for="absence">
-                                            Ausencias
+                                            {{ "homeEmployee.absences"|trans }}
                                         </label>
                                     </div>
                                     <div class="icheck-olive">
                                         <input type="checkbox" checked id="festives">
                                         <label for="festives">
-                                            Días festivos
+                                            {{ "homeEmployee.festives"|trans }}
                                         </label>
                                     </div>
                                 </div>

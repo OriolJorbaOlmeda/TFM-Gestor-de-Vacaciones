@@ -21,7 +21,7 @@
             <div class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0"> Modificar usuario</h1>
+                        <h1 class="m-0"> {{ "modifyUser.title"|trans }}</h1>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                             <div class="col-md-12">
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h3 class="card-title">Datos personales</h3>
+                                        <h3 class="card-title">{{ "modifyUser.subtitle1"|trans }}</h3>
                                     </div>
                                     {{ form_start(form) }}
 
@@ -78,7 +78,6 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     {{ form_row(form.email) }}
-                                                    <span class="error invalid-feedback"> El email introducido no es válido </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -110,7 +109,7 @@
                                     </div>
                                     <div class="card-header"
                                          style="color: #fff; background-color: #007bff; border-top-right-radius: 0rem; border-top-left-radius: 0rem">
-                                        <h3 class="card-title">Datos de la empresa</h3>
+                                        <h3 class="card-title">{{ "modifyUser.subtitle2"|trans }}</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">

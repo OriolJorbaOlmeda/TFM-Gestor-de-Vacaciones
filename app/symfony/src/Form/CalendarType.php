@@ -11,33 +11,36 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use DateTime;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThan;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CalendarType extends AbstractType
 {
 
-    public function __construct(private Security $security){}
+    public function __construct(private Security $security, private TranslatorInterface $translator){}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('initial_date', DateType::class, [
-                'label' => 'Fecha inicio',
+                'label' => $this->translator->trans('createCalendar.initialDate'),
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'widget' => 'single_text',
                 'required' => true,
                 'data' => $this->getInitialDate()
-
             ])
             ->add('final_date', DateType::class, [
-                'label' => 'Fecha fin',
+                'label' => $this->translator->trans('createCalendar.finalDate'),
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'widget' => 'single_text',
                 'required' => true
             ])
             ->add('year', ChoiceType::class, [
-                'label' => 'Año laboral',
+                'label' => $this->translator->trans('createCalendar.year'),
                 'attr' => ['class' => 'form-control select2'],
                 'row_attr' => ['class' => 'form-group'],
                 'choices' => $this->getNextCalendarYear(),
@@ -45,7 +48,7 @@ class CalendarType extends AbstractType
             ])
             ->add('createCalendar', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
-                'label' => 'Crear calendario'
+                'label' => $this->translator->trans('createCalendar.createCalendar'),
             ])
         ;
     }
