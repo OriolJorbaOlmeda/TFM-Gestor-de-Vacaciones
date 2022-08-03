@@ -10,44 +10,46 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 class RequestVacationFormType extends AbstractType
 {
+    public function __construct(private TranslatorInterface $translator) {
+
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('initial_date', DateType::class, [
-                'label' => 'Fecha inicio periodo vacaciones',
+                'label' => $this->translator->trans('requestVacation.initialDate'),
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
-                //'invalid_message' => 'You entered an invalid value, it should include %num% letters',
             ])
             ->add('final_date', DateType::class, [
-                'label' => 'Fecha final periodo vacaciones',
+                'label' => $this->translator->trans('requestVacation.finalDate'),
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
-                //'invalid_message' => 'You entered an invalid value, it should include %num% letters',
             ])
             ->add('duration', TextType::class, [
-                'label' => 'Duración',
+                'label' => $this->translator->trans('petition.duration'),
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
             ])
             ->add('reason', TextareaType::class, [
-                'label' => 'Motivo',
+                'label' => $this->translator->trans('petition.reason'),
                 'attr' => ['class' => 'form-control', 'placeholder' => "Enter..."],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
             'attr' => ['class' => 'btn btn-primary'],
-            'label' => 'Solicitar'
+            'label' => $this->translator->trans('petition.request'),
             ])
         ;
 

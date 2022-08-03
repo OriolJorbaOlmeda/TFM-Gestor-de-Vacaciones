@@ -70,7 +70,6 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/modificar_usuario.html.twig', [
-            'controller_name' => 'AdminController',
             'depar' => $form->createView(),
             'departments' => $departments
 
@@ -102,7 +101,6 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/modificar_usuario.html.twig', [
-            'controller_name' => 'AdminController',
             'user' => $user,
             'form' => $form->createView()
 

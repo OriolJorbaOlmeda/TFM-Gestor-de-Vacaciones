@@ -35,7 +35,7 @@
             <section class="content-header">
                 <div class="container">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Calendario</h1>
+                        <h1 class="m-0"> {{ "calendarDashboard.title"|trans }} </h1>
                     </div>
                 </div>
             </section>
@@ -47,25 +47,25 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Filtros</h4>
+                                    <h4 class="card-title">{{ "calendarDashboard.filters"|trans }}</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="icheck-orange">
                                         <input type="checkbox" checked id="vacances">
                                         <label for="vacances">
-                                            Vacaciones
+                                            {{ "calendarDashboard.vacations"|trans }}
                                         </label>
                                     </div>
                                     <div class="icheck-indigo">
                                         <input type="checkbox" checked id="absence">
                                         <label for="absence">
-                                            Ausencias
+                                            {{ "calendarDashboard.absences"|trans }}
                                         </label>
                                     </div>
                                     <div class="icheck-olive">
                                         <input type="checkbox" checked id="festives">
                                         <label for="festives">
-                                            Días festivos
+                                            {{ "calendarDashboard.festives"|trans }}
                                         </label>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Búsqueda por departamentos</h4>
+                                    <h4 class="card-title">{{ "calendarDashboard.search"|trans }}</h4>
                                 </div>
                                 {{ form_start(formDepar) }}
                                 <div class="card-body">

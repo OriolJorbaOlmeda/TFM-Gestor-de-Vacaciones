@@ -14,74 +14,61 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RequestAbsenceFormType extends AbstractType
 {
+    public function __construct(private TranslatorInterface $translator){}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('initial_date', DateType::class, [
-                'label' => 'Fecha inicio periodo ausencia',
+                'label' => $this->translator->trans('requestAbsence.initialDate'),
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
-                //'invalid_message' => 'You entered an invalid value, it should include %num% letters',
             ])
             ->add('final_date', DateType::class, [
-                'label' => 'Fecha final periodo ausencia',
+                'label' => $this->translator->trans('requestAbsence.finalDate'),
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
-                //'invalid_message' => 'You entered an invalid value, it should include %num% letters',
             ])
             ->add('duration', TextType::class, [
-                'label' => 'Duración',
+                'label' => $this->translator->trans('petition.duration'),
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
             ])
             ->add('reason', ChoiceType::class, [
-                'label' => 'Motivo',
+                'label' => $this->translator->trans('petition.reason'),
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
-                'placeholder' => '-- Selecciona --',
+                'placeholder' => $this->translator->trans('action.select'),
                 'choices' => [
-                    'Baja por enfermedad' => 'Baja por enfermedad',
-                    'Traslado' => 'Traslado',
-                    'Fallecimiento de un familiar' => 'Fallecimiento de un familiar',
-                    'Otros' => 'Otros'
+                    $this->translator->trans('requestAbsence.reason1') => $this->translator->trans('requestAbsence.reason1'),
+                    $this->translator->trans('requestAbsence.reason2') => $this->translator->trans('requestAbsence.reason2'),
+                    $this->translator->trans('requestAbsence.reason3') => $this->translator->trans('requestAbsence.reason3'),
+                    $this->translator->trans('requestAbsence.reason4') => $this->translator->trans('requestAbsence.reason4')
                 ],
                 'required' => true,
             ])
             ->add('justify_content', FileType::class, [
-                'label' => 'Adjuntar justificante',
+                'label' => $this->translator->trans('petition.justify'),
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
-                'label' => 'Solicitar'
+                'label' => $this->translator->trans('petition.request'),
             ])
         ;
-
-        /*$builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $product = $event->getData();
-            var_dump($product);
-
-        });*/
-
-        $builder->get('initial_date')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $date = $event->getData();
-        });
     }
 
-
-    public function listener() {
-
-    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

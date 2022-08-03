@@ -13,29 +13,24 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SelectUserType extends AbstractType
 {
 
 
-    public function __construct(UserRepository $userRepository,
-    ) {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(private UserRepository $userRepository, private TranslatorInterface $translator) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'department',
-                ChoiceType::class,
-                [
-                    'choices' => $options['data']
-                ]
-            )
+            ->add('department', ChoiceType::class, [
+                'choices' => $options['data'],
+                'label'=> $this->translator->trans('user.department')
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
-                'label' => 'Buscar'
+                'label' => $this->translator->trans('action.search')
             ]);
 
         $builder->addEventListener(
@@ -53,7 +48,8 @@ class SelectUserType extends AbstractType
                     'attr' => [
                         'class' => 'form-control select2',
                     ],
-                        'placeholder'=>'--Selecciona---',
+                    'placeholder'=> $this->translator->trans('action.select'),
+                    'label' => $this->translator->trans('modifyUser.user')
 
                 ];
 
