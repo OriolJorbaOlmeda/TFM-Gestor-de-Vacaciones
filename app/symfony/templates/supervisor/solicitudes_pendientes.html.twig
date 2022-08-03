@@ -47,6 +47,7 @@
                                             <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
                                             <td> {{ petition.duration}}  </td>
 
+
                                             {% if petition.type == 'VACATION' %}
                                                 <td> {{ "petition.types.vacation"|trans }} </td>
                                             {% else %}
@@ -54,6 +55,16 @@
                                             {% endif %}
 
                                             <td> {{ petition.reason}}  </td>
+                                            <td>
+
+                                                {% if petition.type == 'ABSENCE' %}
+                                                    {% for justi in justify %}
+                                                        {% if petition.id == justi.petition.id %}
+                                                            <a  href="{{path('download_file',{filename: justi.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </td>
 
                                             <td>
                                                 <a type="button" href="/supervisor/accept_request?petitionId={{ petition.id }}"
@@ -63,6 +74,7 @@
                                                    style="text-decoration: none; color: #007bff" class="btn btn-outline-primary btn-xs">{{ "pendingRequests.deny"|trans }}
                                                 </a>
                                             </td>
+
                                         </tr>
                                     {% endfor %}
                                     </tbody>

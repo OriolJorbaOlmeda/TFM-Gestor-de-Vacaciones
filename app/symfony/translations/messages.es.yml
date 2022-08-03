@@ -82,6 +82,7 @@ petition:
     accepted: Aprobado
     pending: Pendiente
     denied: Denegado
+  download: Descargar
 calendarDashboard:
   title: Calendario
   filters: Filtros
