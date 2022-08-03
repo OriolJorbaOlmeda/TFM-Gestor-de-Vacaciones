@@ -1,0 +1,140 @@
+action:
+  save: Gorde
+  select: -- Aukeratu --
+  search: Bilatu
+general:
+  applicationTitle: GetYourVacations
+  logout: Saioa itxi
+roles:
+  admin: Administratzailea
+  supervisor: Gainbegiralea
+  employee: Langilea
+createCalendar:
+  initialDate: Hasiera data
+  finalDate: Amaiera data
+  year: Lan urtea
+  createCalendar: Egutegia sortu
+  title: Sortu opor egutegi berria
+  subtitle: Egutegiko datuak
+  initialDateError1: Hasiera data uneko data baino handiagoa edo berdina izan behar du
+  initialDateError2: Hasiera data amaiera data baino txikiagoa izan behar du
+  finalDateError1: Amaiera data uneko data baino handiagoa edo berdina izan behar du
+  finalDateError2: Amaiera data hasiera data baino handiagoa izan behar du
+createFestive:
+  name: Jai egunaren deskribapena
+  addFestive: Gehitu
+  addDays: Egutegiaren jai egunak gehitu
+  explication: Larunbatak eta igandeak automatikoki gehitzen dira jai egun gisa
+user:
+  name: Izena
+  lastname: Abizenak
+  email: Posta elektronikoa
+  password: Pasahitza
+  passwordError: Pasahitzak gutxienez 8 karaktere izan behar ditu maiuskula, minuskula eta zenbakiekin
+  direction: Helbidea
+  city: Hiria
+  province: Probintzia
+  postalCode: Posta kodea
+  postalCodeError: Posta kode okerra
+  department: Departamentua
+  supervisor: Gainbegiralea
+  role: Eginkizuna
+  totalVacationDays: Opor egun guztiak
+  totalVacationDaysError: Balio hau zenbakizkoa izan behar du
+  createUser: Erregistratu
+createUser:
+  title: Erabiltzailea erregistratu
+  subtitle1: Datu pertsonalak
+  subtitle2: Enpresaren datuak
+
+modifyUser:
+  title: Erabiltzailea aldatu
+  user: Erabiltzailea
+  subtitle1: Datu pertsonalak
+  subtitle2: Enpresaren datuak
+requestVacation:
+  initialDate: Oporraldiaren hasiera data
+  finalDate: Oporraldiaren amaiera data
+  title: Oporrak eskatu
+  subtitle: Eskaeraren datuak
+requestAbsence:
+  initialDate: Abstentzi denboraldiaren hasiera data
+  finalDate: Abstentzi denboraldiaren amaiera data
+  title: Abstentzi denboraldi justifikatua eskatu
+  subtitle: Eskaeraren datuak
+  reason1: Gaixotasun baja
+  reason2: Transferentzia
+  reason3: Familiako kide baten heriotza
+  reason4: Beste batzuk
+petition:
+  initialDate: Hasiera data
+  finalDate: Amaiera data
+  duration: Iraupena
+  reason: Arrazoia
+  state: Egoera
+  justify: Justifikantea erantsi
+  request: Eskatu
+  type: Eskaera era
+  types:
+    vacation: Oporrak
+    ausence: Abstentzia
+  states:
+    accepted: Onartuta
+    pending: Zain
+    denied: Ukatuta
+  download: Deskargatu
+calendarDashboard:
+  title: Egutegia
+  filters: Filtroak
+  search: Bilatu departamentuaren arabera
+  vacations: Oporrak
+  absences: Abstentziak
+  festives: Jai egunak
+  department: Departamentua
+  user: Erabiltzailea
+homeAdmin:
+  title: Etxea
+  createCalendar: Egutegi berria sortu
+  createUser: Erabiltzaile berria erregistratu
+  modifyUser: Erabiltzailea aldatu
+  go: Joan
+navbarAdmin:
+  createCalendar: Egutegia sortu
+  users: Erabiltzaileen kudeaketa
+  createUser: Erabiltzailea erregistratu
+  modifyUser: Erabiltzailea aldatu
+homeEmployee:
+  title: Area pertsonala
+  period: Denboraldia
+  totalDays: Egun guztiak
+  availableDays: Egun erabilgarriak
+  usedDays: Erabilitako egunak
+  calendar: Egutegia
+  filters: Filtroak
+  vacations: Oporrak
+  absences: Abstentziak
+  festives: Jai egunak
+navbarEmployee:
+  vacationList: Nire oporrak
+  calendar: Egutegia
+  request: Eskatu
+  requestVacation: Oporrak eskatu
+  requestAbsence: Abstentzia eskatu
+  pendingRequests: Zain dauden eskaerak
+vacationList:
+  title1: Nire oporrak
+  title2: Nire abstentziak
+supervisorPanel:
+  title: 3 opor-eskaera dituzu onarpenaren zain
+  requests: Eskaerak ikusi
+pendingRequests:
+  title: Opor eta abstentzi eskaerak
+  pendingRequests: Zain dauden eskaerak
+  employee: Langilea
+  accept: Onartu
+  deny: Ukatu
+login:
+  email: Posta elektronikoa
+  password: Pasahitza
+  access: Sartu
+  loginError: Posta edo pasahitza okerrak
