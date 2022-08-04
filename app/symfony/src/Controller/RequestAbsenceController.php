@@ -106,7 +106,7 @@ class RequestAbsenceController extends AbstractController
             }
 
             $this->petitionRepository->add($petition, true);
-            return $this->redirectToRoute('app_employee_vacation');
+            return $this->redirectToRoute('app_employee_vacation', ['pagVac' => 1, 'pagAbs' => 1]);
 
         }
 

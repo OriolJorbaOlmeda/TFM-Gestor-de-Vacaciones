@@ -17,7 +17,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ path('app_employee_vacation') }}" class="nav-link">{{ "navbarEmployee.vacationList"|trans }}</a>
+                    <a href="{{ path('app_employee_vacation', {pagVac: 1, pagAbs: 1}) }}" class="nav-link">{{ "navbarEmployee.vacationList"|trans }}</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ path('app_employee_calendar') }}" class="nav-link">{{ "navbarEmployee.calendar"|trans }}</a>

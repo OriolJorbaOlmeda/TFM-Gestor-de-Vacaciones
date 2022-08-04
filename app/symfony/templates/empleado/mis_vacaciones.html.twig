@@ -59,7 +59,7 @@
                                                     <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
                                                     <td>
                                                         <div class="btn-group-sm">
-                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}&pagVac={{ pagVac }}&pagAbs={{ pagAbs }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 {% elseif petition.state == denied %}
@@ -78,10 +78,17 @@
                     </div>
                     <div class="row" style="justify-content: right;">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            {% if pagVac == 1 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac - 1}}&pagAbs={{ pagAbs }}">&laquo;</a></li>
+                            {% endif %}
+
+                            {% if vacations|length < 5 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac + 1}}&pagAbs={{ pagAbs }}">&raquo;</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -135,7 +142,7 @@
                                                     <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
                                                     <td>
                                                         <div class="btn-group-sm">
-                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}&pagVac={{ pagVac }}&pagAbs={{ pagAbs }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 {% elseif petition.state == denied %}
@@ -152,10 +159,17 @@
                     </div>
                     <div class="row" style="justify-content: right;">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            {% if pagAbs == 1 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac}}&pagAbs={{ pagAbs - 1 }}">&laquo;</a></li>
+                            {% endif %}
+
+                            {% if absences|length < 5 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac}}&pagAbs={{ pagAbs + 1}}">&raquo;</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

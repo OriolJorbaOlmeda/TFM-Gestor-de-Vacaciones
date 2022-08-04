@@ -74,7 +74,7 @@ class RequestVacationController extends AbstractController
             }
             $petition->setCalendar($calendar);
             $this->petitionRepository->add($petition, true);
-            return $this->redirectToRoute('app_employee_vacation');
+            return $this->redirectToRoute('app_employee_vacation', ['pagVac' => 1, 'pagAbs' => 1]);
         }
 
         return $this->render('empleado/solicitar_vacaciones.html.twig', [

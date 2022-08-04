@@ -48,8 +48,11 @@ class PetitionRepository extends ServiceEntityRepository
     }
 
 
-    public function findVacationsByUserAndCalendar($user_id, $calendar_id): array
+    public function findVacationsByUserAndCalendar($user_id, $calendar_id, $pag): array
     {
+        $limit = 5;
+        $offset = $limit * (intval($pag) - 1);
+
         return $this->createQueryBuilder('i')
             ->andWhere('i.employee = :user_id')
             ->andWhere('i.calendar = :calendar_id')
@@ -57,13 +60,18 @@ class PetitionRepository extends ServiceEntityRepository
             ->setParameter('user_id', $user_id)
             ->setParameter('calendar_id', $calendar_id)
             ->setParameter('type', "VACATION")
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getResult()
             ;
     }
 
-    public function findAbsencesByUserAndCalendar($user_id, $calendar_id): array
+    public function findAbsencesByUserAndCalendar($user_id, $calendar_id, $pag): array
     {
+        $limit = 5;
+        $offset = $limit * (intval($pag) - 1);
+
         return $this->createQueryBuilder('i')
             ->andWhere('i.employee = :user_id')
             ->andWhere('i.calendar = :calendar_id')
@@ -71,6 +79,8 @@ class PetitionRepository extends ServiceEntityRepository
             ->setParameter('user_id', $user_id)
             ->setParameter('calendar_id', $calendar_id)
             ->setParameter('type', "ABSENCE")
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getResult()
             ;
