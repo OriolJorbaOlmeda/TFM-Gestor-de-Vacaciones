@@ -1,0 +1,142 @@
+action:
+  save: Save
+  select: -- Select --
+  search: Search
+general:
+  applicationTitle: GetYourVacations
+  logout: Log out
+roles:
+  admin: Admin
+  supervisor: Supervisor
+  employee: Employee
+createCalendar:
+  initialDate: Initial date
+  finalDate: Final fin
+  year: Working year
+  createCalendar: Create calendar
+  title: Create new vacation calendar
+  subtitle: Calendar data
+  initialDateError1: The start date must be greater than or equal to the current date
+  initialDateError2: The start date must be less than the end date
+  finalDateError1: The end date must be greater than or equal to the current date
+  finalDateError2: The end date must be greater than the start date
+createFestive:
+  name: Holiday description
+  addFestive: Add
+  addDays: Add holidays to the calendar
+  explication: Saturdays and Sundays are automatically added as holiday days
+user:
+  name: Name
+  lastname: Lastname
+  email: Email
+  password: Password
+  passwordError: The password must be at least 8 characters long with upper and lower case letters and numbers
+  direction: Direction
+  city: City
+  province: Province
+  postalCode: Postal code
+  postalCodeError: Incorrect postal code
+  department: Department
+  supervisor: Supervisor
+  role: Role
+  totalVacationDays: Total vacation days
+  totalVacationDaysError: This value must be numeric
+  createUser: Register
+createUser:
+  title: Register user
+  subtitle1: Personal data
+  subtitle2: Company data
+
+modifyUser:
+  title: Modify user
+  user: User
+  subtitle1: Personal data
+  subtitle2: Company data
+requestVacation:
+  initialDate: Vacation period start date
+  finalDate: Vacation period final date
+  title: Request vacations
+  subtitle: Request data
+requestAbsence:
+  initialDate: Absence period start date
+  finalDate: Absence period final date
+  title: Request excused absence
+  subtitle: Request data
+  reason1: Sick leave
+  reason2: Transfer
+  reason3: Death of a family member
+  reason4: Other
+petition:
+  initialDate: Initial date
+  finalDate: Final date
+  duration: Duration
+  reason: Reason
+  state: State
+  addJustify: Attach proof
+  request: Request
+  type: Type of request
+  types:
+    vacation: Vacations
+    ausence: Absence
+  states:
+    accepted: Accepted
+    pending: Pending
+    denied: Denied
+  download: Download
+  justify: Proof
+  incorrectCalendar: The selected dates do not correspond to the current calendar
+calendarDashboard:
+  title: Calendar
+  filters: Filters
+  search: search by department
+  vacations: Vacations
+  absences: Absence
+  festives: Holiday days
+  department: Department
+  user: User
+homeAdmin:
+  title: Home
+  createCalendar: Create new calendar
+  createUser: Register new user
+  modifyUser: Modify user
+  go: Go
+navbarAdmin:
+  createCalendar: Create calendar
+  users: User management
+  createUser: Register user
+  modifyUser: Modify user
+homeEmployee:
+  title: Personal area
+  period: Period
+  totalDays: Total days
+  availableDays: Available days
+  usedDays: Used days
+  calendar: Calendar
+  filters: Filters
+  vacations: Vacations
+  absences: Absences
+  festives: Holiday days
+navbarEmployee:
+  vacationList: My vacations
+  calendar: Calendar
+  request: Request
+  requestVacation: Request vacations
+  requestAbsence: Request absence
+  pendingRequests: Pending requests
+vacationList:
+  title1: My vacations
+  title2: My absences
+supervisorPanel:
+  title: You have %num_petitions% vacation requests pending approval
+  requests: View requests
+pendingRequests:
+  title: Vacation and absence requests
+  pendingRequests: Pending requests
+  employee: Employee
+  accept: Accept
+  deny: Deny
+login:
+  email: Email
+  password: Password
+  access: Access
+  loginError: Incorrect email or password
