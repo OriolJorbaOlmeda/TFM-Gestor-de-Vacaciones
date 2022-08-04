@@ -42,7 +42,8 @@ class UserModificationType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control'],
                 'label'=> $this->translator->trans('user.email'),
-                'required' => true
+                'required' => true,
+                'disabled' => true
             ])
             ->add('direction',TextType::class, [
                 'attr' => ['class' => 'form-control'],
