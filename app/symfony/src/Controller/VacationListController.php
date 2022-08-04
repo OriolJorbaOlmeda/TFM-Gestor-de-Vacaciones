@@ -26,18 +26,18 @@ class VacationListController extends AbstractController
 
         $absences = $this->petitionRepository->findAbsencesByUserAndCalendar($this->getUser()->getId(), $calendar_id);
 
+        $justify = [];
+        foreach ($absences as $petition) {
+            if($petition->getJustify()) {
+                $justify [] = $petition->getJustify();
+            }
+        }
+
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
         if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
             $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
             $num_petitions = count($petitions);
-            $justify =[];
-            foreach ($petitions as $petition) {
-                if($petition->getJustify()) {
-                    $justify [] = $petition->getJustify();
-                }
-
-            }
         }
 
 

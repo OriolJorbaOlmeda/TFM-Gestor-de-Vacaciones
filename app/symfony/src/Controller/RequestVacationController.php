@@ -5,13 +5,13 @@ namespace App\Controller;
 use App\Entity\Petition;
 use App\Form\RequestVacationFormType;
 use App\Repository\CalendarRepository;
-use App\Repository\FestiveRepository;
 use App\Repository\PetitionRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RequestVacationController extends AbstractController
 {
@@ -19,19 +19,19 @@ class RequestVacationController extends AbstractController
     public function __construct(
         private UserRepository $userRepository,
         private CalendarRepository $calendarRepository,
-        private PetitionRepository $petitionRepository) {}
+        private PetitionRepository $petitionRepository,
+        private TranslatorInterface $translator
+    ) {}
 
     #[Route('/employee/request-vacation', name: 'app_employee_request-vacation')]
-    public function requestVacation(Request $request, CalendarRepository $calendarRepository, FestiveRepository $festiveRepository): Response
+    public function requestVacation(Request $request): Response
     {
         $petition = new Petition();
         $form = $this->createForm(RequestVacationFormType::class, $petition);
         $form->handleRequest($request);
 
-        $user = $this->getUser();
-        $department = $user->getDepartment();
-        $company = $department->getCompany();
-        $calendar = $calendarRepository->findCurrentCalendar($company->getId());
+        $company = $this->getUser()->getDepartment()->getCompany();
+        $calendar = $this->calendarRepository->findCurrentCalendar($company->getId());
         $festives = $calendar->getFestives();
         $days = array();
         foreach ($festives as $festive) {
@@ -50,25 +50,27 @@ class RequestVacationController extends AbstractController
 
             // Ya están rellenos: initial_date, final_date, duration y reason
 
-            // Rellenar los datos que faltan: state, type, petition_date, employee y calendar
-            $petition->setState("PENDING");
+            // Rellenar los datos que faltan: state, type, petition_date, employee, calendar y supervisor
             $petition->setType("VACATION");
 
             // si es supervisor el supervisor será el mismo
             if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
-                $petition->setSupervisor($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
+                $user = $this->userRepository->findOneBy(['id' => $this->getUser()->getId()]);
+                $petition->setSupervisor($user);
+                $petition->setState("ACCEPTED");
+                $duration = $petition->getDuration();
+                $this->userRepository->updateVacationDays($user, $duration);
             } else {
                 $petition->setSupervisor($this->getUser()->getSupervisor());
+                $petition->setState("PENDING");
             }
-
 
             $petition->setPetitionDate(new \DateTime());
             $petition->setEmployee($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
-            // quizá haría falta añadir al supervisor
 
             $calendar = $this->calendarRepository->findCalendarByDates($petition->getInitialDate(), $petition->getFinalDate());
             if ($calendar == null) {
-                return new Response("Las fechas seleccionadas no corresponden al calendario actual.");
+                return new Response($this->translator->trans('petition.incorrectCalendar'));
             }
             $petition->setCalendar($calendar);
             $this->petitionRepository->add($petition, true);

@@ -41,7 +41,7 @@
                                             <th style="width: 50px">{{ "petition.duration"|trans }}</th>
                                             <th>{{ "petition.reason"|trans }}</th>
                                             <th style="width: 50px">{{ "petition.state"|trans }}</th>
-                                            <th style="width: 50px"></th>
+                                            <th style="width: 50px"></th> <!-- Botón borrar -->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -54,6 +54,7 @@
                                                 <td> {{ petition.reason}} </td>
                                                 {% if petition.state == 'ACCEPTED' %}
                                                     <td><span class="badge bg-success">Aprobado</span></td>
+                                                    <td></td>
                                                 {% elseif petition.state == 'PENDING' %}
                                                     <td><span class="badge bg-warning">Pendiente</span></td>
                                                     <td>
@@ -63,6 +64,7 @@
                                                     </td>
                                                 {% elseif petition.state == 'DENIED' %}
                                                     <td><span class="badge bg-danger">Denegado</span></td>
+                                                    <td></td>
                                                 {% endif %}
 
                                             </tr>
@@ -106,8 +108,9 @@
                                             <th>{{ "petition.finalDate"|trans }}</th>
                                             <th style="width: 50px">{{ "petition.duration"|trans }}</th>
                                             <th>{{ "petition.reason"|trans }}</th>
+                                            <th style="width: 20px"> {{ "petition.justify"|trans }} </th>
                                             <th style="width: 50px">{{ "petition.state"|trans }}</th>
-                                            <th style="width: 50px"></th>
+                                            <th style="width: 50px"></th> <!-- Botón borrar -->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -119,6 +122,13 @@
                                                 <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
                                                 <td> {{ petition.duration}} </td>
                                                 <td> {{ petition.reason}} </td>
+                                                <td>
+                                                    {% for justi in justify %}
+                                                        {% if petition.id == justi.petition.id %}
+                                                            <a  href="{{path('download_file',{filename: justi.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </td>
                                                 {% if petition.state == 'ACCEPTED' %}
                                                     <td><span class="badge bg-success">{{ "petition.states.accepted"|trans }}</span></td>
                                                 {% elseif petition.state == 'PENDING' %}
@@ -127,13 +137,6 @@
                                                         <div class="btn-group-sm">
                                                             <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                            {% for justi in justify %}
-                                                                {% if petition.id == justi.petition.id %}
-                                                                    <a  href="{{path('download_file',{filename: justi.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
-                                                                {% endif %}
-                                                            {% endfor %}
                                                     </td>
                                                 {% elseif petition.state == 'DENIED' %}
                                                     <td><span class="badge bg-danger">{{ "petition.states.denied"|trans }}</span></td>

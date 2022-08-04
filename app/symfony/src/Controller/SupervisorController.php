@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\PetitionRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SupervisorController extends AbstractController
 {
-    public function __construct(private PetitionRepository $petitionRepository) {}
+    public function __construct(
+        private PetitionRepository $petitionRepository,
+        private UserRepository $userRepository
+    ) {}
 
     #[Route('/supervisor/dashboard', name: 'app_supervisor_dashboard')]
     public function dashboard(): Response
@@ -49,6 +53,10 @@ class SupervisorController extends AbstractController
         $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
         $petition->setState("ACCEPTED");
         $this->petitionRepository->add($petition, true);
+
+        $duration = $petition->getDuration();
+        $user = $petition->getEmployee();
+        $this->userRepository->updateVacationDays($user, $duration);
 
         return $this->redirectToRoute("app_supervisor_pending_requests");
     }

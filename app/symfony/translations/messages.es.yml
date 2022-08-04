@@ -72,7 +72,7 @@ petition:
   duration: Duración
   reason: Motivo
   state: Estado
-  justify: Adjuntar justificante
+  addJustify: Adjuntar justificante
   request: Solicitar
   type: Tipo de solicitud
   types:
@@ -83,6 +83,8 @@ petition:
     pending: Pendiente
     denied: Denegado
   download: Descargar
+  justify: Justificante
+  incorrectCalendar: Las fechas seleccionadas no corresponden al calendario actual
 calendarDashboard:
   title: Calendario
   filters: Filtros

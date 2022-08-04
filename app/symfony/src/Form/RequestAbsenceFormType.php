@@ -58,8 +58,8 @@ class RequestAbsenceFormType extends AbstractType
                 'required' => true,
             ])
             ->add('justify_content', FileType::class, [
-                'label' => $this->translator->trans('petition.justify'),
-                'attr' => ['class' => 'form-control'],
+                'label' => $this->translator->trans('petition.addJustify'),
+                'attr' => ['class' => 'form-control', 'accept' => 'image/*, application/pdf'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
                 'constraints' => [

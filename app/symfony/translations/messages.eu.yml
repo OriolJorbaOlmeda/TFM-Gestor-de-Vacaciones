@@ -72,7 +72,7 @@ petition:
   duration: Iraupena
   reason: Arrazoia
   state: Egoera
-  justify: Justifikantea erantsi
+  addJustify: Justifikantea erantsi
   request: Eskatu
   type: Eskaera era
   types:
@@ -83,6 +83,8 @@ petition:
     pending: Zain
     denied: Ukatuta
   download: Deskargatu
+  justify: Justifikantea
+  incorrectCalendar: Aukeratutako datak ez datoz bat egungo egutegiarekin
 calendarDashboard:
   title: Egutegia
   filters: Filtroak
