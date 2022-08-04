@@ -94,6 +94,9 @@ class AdminController extends AbstractController
             // $pending_vacation_days = $form->get('total_vacation_days')->getData();
             // $user->setPassword($pass);
 
+            $roles = $form->get('roles')->getData();
+            $user->setRoles([$roles]);
+
 
             //$user->setPendingVacationDays($pending_vacation_days);
             $this->userRepository->add($user, true);
