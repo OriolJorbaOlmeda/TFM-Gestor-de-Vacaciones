@@ -5,7 +5,8 @@ action:
 general:
   applicationTitle: GetYourVacations
   logout: Cerrar sesión
-  passwordForgot: He olvidado mi contraseña
+  options: Opciones
+  changePass: Cambiar contraseña
 roles:
   admin: Admin
   supervisor: Supervisor
@@ -141,3 +142,4 @@ login:
   password: Contraseña
   access: Acceder
   loginError: Email o contraseña incorrectos
+  passwordForgot: He olvidado mi contraseña

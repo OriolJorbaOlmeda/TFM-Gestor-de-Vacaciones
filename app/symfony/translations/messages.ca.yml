@@ -5,7 +5,8 @@ action:
 general:
   applicationTitle: GetYourVacations
   logout: Tancar sessió
-  passwordForgot: He oblidat la meva contrasenya
+  options: Opcions
+  changePass: Canviar contrasenya
 roles:
   admin: Administrador
   supervisor: Supervisor
@@ -141,3 +142,4 @@ login:
   password: Contrasenya
   access: Accedir
   loginError: Email o contrasenya incorrecta
+  passwordForgot: He oblidat la meva contraseny+

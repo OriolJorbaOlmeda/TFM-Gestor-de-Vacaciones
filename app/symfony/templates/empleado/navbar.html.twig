@@ -40,12 +40,6 @@
         </div>
 
         <!-- Right navbar links -->
-        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-            {{ include('language.html.twig') }}
-
-            <li class="nav-item">
-                <a href="{{ path('app_logout') }}" class="nav-link">{{ "general.logout"|trans }}</a>
-            </li>
-        </ul>
+        {{ include('navbar_options.html.twig') }}
     </div>
 </nav>

@@ -5,7 +5,8 @@ action:
 general:
   applicationTitle: GetYourVacations
   logout: Saioa itxi
-  passwordForgot: Pasahitza ahaztu dut
+  options: Aukerak
+  changePass: Pasahitza aldatu
 roles:
   admin: Administratzailea
   supervisor: Gainbegiralea
@@ -141,3 +142,4 @@ login:
   password: Pasahitza
   access: Sartu
   loginError: Posta edo pasahitza okerrak
+  passwordForgot: Pasahitza ahaztu dut
