@@ -19,9 +19,9 @@ class DashboardController extends AbstractController
     public function index(): Response
     {
         $currentUser = $this->security->getUser();
-        if (in_array("ROLE_EMPLEADO", $currentUser->getRoles())) {
+        if (in_array($this->getParameter('role_employee'), $currentUser->getRoles())) {
             return $this->redirectToRoute('app_employee_dashboard');
-        } elseif (in_array("ROLE_SUPERVISOR", $currentUser->getRoles())) {
+        } elseif (in_array($this->getParameter('role_supervisor'), $currentUser->getRoles())) {
             return $this->redirectToRoute('app_supervisor_dashboard');
         }
             return $this->redirectToRoute('app_admin_dashboard');
