@@ -20,7 +20,7 @@ class UserRegisteredListener
         $email = (new Email())
             ->from(new Address($event->getAdmin()))
             ->to($event->getEmail())
-            ->subject('Your posts status has changed')
+            ->subject('Vacation App credentials for '. $event->getName())
             ->text('Hello ' . $event->getName() . '. Your account has been created. Your username is: ' . $event->getEmail() . ' , and your password: ' . $event->getPassword());
 
         $this->mailer->send($email);
