@@ -102,7 +102,7 @@ class UserRegistrationType extends AbstractType
                 'choice_value' => 'id',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control select2'],
-                'required' => false,
+                'required' => true,
                 'placeholder' => $this->translator->trans('action.select')
             ])
             ->add('roles', ChoiceType::class, [
@@ -121,7 +121,7 @@ class UserRegistrationType extends AbstractType
             ->add('total_vacation_days', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.totalVacationDays'),
-                'required' => false,
+                'required' => true,
                 'empty_data' => '0',
                 'constraints' => [
                     new Regex([

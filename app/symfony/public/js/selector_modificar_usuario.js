@@ -1,4 +1,7 @@
 const selector = document.getElementById("select_user_department");
+const user = document.getElementById("select_user_user");
+
+user.disabled = 'disabled';
 
 if(selector!=null) {
     selector.addEventListener("change", (e) => {

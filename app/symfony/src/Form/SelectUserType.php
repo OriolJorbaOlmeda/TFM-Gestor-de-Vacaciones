@@ -26,7 +26,8 @@ class SelectUserType extends AbstractType
         $builder
             ->add('department', ChoiceType::class, [
                 'choices' => $options['data'],
-                'label'=> $this->translator->trans('user.department')
+                'label'=> $this->translator->trans('user.department'),
+                'placeholder'=> $this->translator->trans('action.select')
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
