@@ -6,9 +6,9 @@
     <div class="wrapper">
 
         <!-- Navbar -->
-        {% if is_granted('ROLE_SUPERVISOR') %}
+        {% if is_granted(role_supervisor) %}
             {{ include('supervisor/navbar.html.twig') }}
-        {% elseif is_granted('ROLE_EMPLEADO')%}
+        {% elseif is_granted(role_employee)%}
             {{ include('empleado/navbar.html.twig') }}
         {% endif %}
 

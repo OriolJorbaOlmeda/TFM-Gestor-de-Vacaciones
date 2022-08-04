@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Repository\DepartmentRepository;
 use App\Repository\UserRepository;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,7 +25,8 @@ class UserModificationType extends AbstractType
         private DepartmentRepository $departmentRepository,
         private Security $security,
         private UserRepository $userRepository,
-        private TranslatorInterface $translator){}
+        private TranslatorInterface $translator,
+        private ContainerInterface $container){}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -93,9 +95,9 @@ class UserModificationType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    $this->translator->trans('roles.admin') => 'ROLE_ADMIN',
-                    $this->translator->trans('roles.supervisor') => 'ROLE_SUPERVISOR',
-                    $this->translator->trans('roles.employee') => 'ROLE_EMPLEADO',
+                    $this->translator->trans('roles.admin') => $this->container->getParameter('role_admin'),
+                    $this->translator->trans('roles.supervisor') => $this->container->getParameter('role_supervisor'),
+                    $this->translator->trans('roles.employee') => $this->container->getParameter('role_employee'),
                 ],
                 'attr' => ['class' => 'form-control select2'],
                 'label'=> $this->translator->trans('user.role'),
@@ -144,7 +146,7 @@ class UserModificationType extends AbstractType
        $users=  $this->userRepository->findAll();
        $supervisor=[];
        foreach ($users as $user){
-           if($user->getRoles()[0]=="ROLE_SUPERVISOR"){
+           if($user->getRoles()[0] == $this->container->getParameter('role_supervisor')){
                $supervisor[]=$user;
 
            }

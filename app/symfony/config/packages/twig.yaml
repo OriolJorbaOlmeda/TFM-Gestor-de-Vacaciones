@@ -1,5 +1,9 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals:
+        role_admin: '%role_admin%'
+        role_supervisor: '%role_supervisor%'
+        role_employee: '%role_employee%'
 
 when@test:
     twig:

@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +23,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     public const LOGIN_ROUTE = 'app_login';
 
     private UrlGeneratorInterface $urlGenerator;
+    private ContainerInterface $container;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, ContainerInterface $container)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->container = $container;
     }
 
     public function authenticate(Request $request): Passport
@@ -49,7 +52,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        if ('ROLE_ADMIN' === $token->getUser()->getRoles()[0]) {
+        if ($this->container->getParameter('role_admin') === $token->getUser()->getRoles()[0]) {
             // ! If is admin redirect to Company Management functionlity
             return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
         }

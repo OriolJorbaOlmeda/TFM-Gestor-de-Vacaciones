@@ -127,7 +127,7 @@ class AdminController extends AbstractController
         $users = $this->userRepository->findBy(['department' => $departmentId]);
         $result = [];
         foreach ($users as $user) {
-            if (in_array("ROLE_SUPERVISOR", $user->getRoles())) {
+            if (in_array($this->getParameter('role_supervisor'), $user->getRoles())) {
                 $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
             }
 

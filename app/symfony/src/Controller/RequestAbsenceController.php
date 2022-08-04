@@ -44,7 +44,7 @@ class RequestAbsenceController extends AbstractController
 
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
-        if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+        if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
             $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
             $num_petitions = count($petitions);
         }
@@ -57,7 +57,7 @@ class RequestAbsenceController extends AbstractController
             $petition->setType("ABSENCE");
 
             // si es supervisor el supervisor será el mismo
-            if (in_array("ROLE_SUPERVISOR", $this->getUser()->getRoles())) {
+            if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
                 $user = $this->userRepository->findOneBy(['id' => $this->getUser()->getId()]);
                 $petition->setSupervisor($user);
                 $petition->setState("ACCEPTED");
