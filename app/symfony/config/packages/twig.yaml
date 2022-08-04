@@ -4,6 +4,11 @@ twig:
         role_admin: '%role_admin%'
         role_supervisor: '%role_supervisor%'
         role_employee: '%role_employee%'
+        locales: '%app.locales%'
+        en: '%en%'
+        es: '%es%'
+        ca: '%ca%'
+        eu: '%eu%'
 
 when@test:
     twig:

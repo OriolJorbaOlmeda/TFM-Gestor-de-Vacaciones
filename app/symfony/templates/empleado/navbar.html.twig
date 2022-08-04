@@ -17,26 +17,33 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ path('app_employee_vacation') }}" class="nav-link">{{ "navbarEmployee.vacationList"|trans }}</a>
+                    <a href="{{ path('app_employee_vacation') }}"
+                       class="nav-link">{{ "navbarEmployee.vacationList"|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('app_employee_calendar') }}" class="nav-link">{{ "navbarEmployee.calendar"|trans }}</a>
+                    <a href="{{ path('app_employee_calendar') }}"
+                       class="nav-link">{{ "navbarEmployee.calendar"|trans }}</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false"
                        class="nav-link dropdown-toggle">{{ "navbarEmployee.request"|trans }}</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="{{ path('app_employee_request-vacation') }}" class="dropdown-item">{{ "navbarEmployee.requestVacation"|trans }}s </a>
+                        <li><a href="{{ path('app_employee_request-vacation') }}"
+                               class="dropdown-item">{{ "navbarEmployee.requestVacation"|trans }}s </a>
                         </li>
-                        <li><a href="{{ path('app_employee_request-absence') }}" class="dropdown-item">{{ "navbarEmployee.requestAbsence"|trans }}</a></li>
+                        <li><a href="{{ path('app_employee_request-absence') }}"
+                               class="dropdown-item">{{ "navbarEmployee.requestAbsence"|trans }}</a></li>
                     </ul>
                 </li>
+
             </ul>
         </div>
 
         <!-- Right navbar links -->
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+            {{ include('language.html.twig') }}
+
             <li class="nav-item">
                 <a href="{{ path('app_logout') }}" class="nav-link">{{ "general.logout"|trans }}</a>
             </li>

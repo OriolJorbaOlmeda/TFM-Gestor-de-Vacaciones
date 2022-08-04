@@ -8,6 +8,12 @@ parameters:
     role_admin: 'ROLE_ADMIN'
     role_supervisor: 'ROLE_SUPERVISOR'
     role_employee: 'ROLE_EMPLEADO'
+    app.locales: [ en, ca, eu, es ]
+    en: 'English'
+    ca: 'Catalan'
+    eu: 'Euskera'
+    es: 'Español'
+
 services:
     # default configuration for services in *this* file
     _defaults:

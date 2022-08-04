@@ -1,0 +1,29 @@
+<li class="nav-item dropdown">
+    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false"
+       class="nav-link dropdown-toggle">{{ app.request.locale }} </a>
+    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+        {% for locale in locales %}
+            {% if locale != app.request.locale %}
+                <li>
+                    {% if locale=='eu' %}
+                        <a class="dropdown-item"
+                           href="{{ path('change_locale', {'locale': locale}) }}">{{ eu }}</a>
+                    {% endif %}
+                    {% if locale=='es' %}
+                        <a class="dropdown-item"
+                           href="{{ path('change_locale', {'locale': locale}) }}">{{ es }}</a>
+                    {% endif %}
+                    {% if locale=='en' %}
+                        <a class="dropdown-item"
+                           href="{{ path('change_locale', {'locale': locale}) }}">{{ en }}</a>
+                    {% endif %}
+                    {% if locale=='ca' %}
+                        <a class="dropdown-item"
+                           href="{{ path('change_locale', {'locale': locale}) }}">{{ ca }}</a>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</li>
