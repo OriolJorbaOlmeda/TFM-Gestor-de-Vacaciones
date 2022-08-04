@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Events\UserRegistrationEvent;
 use App\Form\SelectUserType;
 use App\Form\UserModificationType;
 use App\Form\UserRegistrationType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +20,9 @@ class AdminController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private EventDispatcherInterface $dispatcher
+
     ) {}
 
     #[Route('/admin/crear_usuario', name: 'app_admin_create-user')]
@@ -38,6 +42,8 @@ class AdminController extends AbstractController
             $user->setRoles([$roles]);
 
             $this->userRepository->add($user, true);
+
+            $this->dispatcher->dispatch(new UserRegistrationEvent($this->getUser()->getEmail(),$user->getEmail(), $user->getName(), $user->getPassword() ));
             return $this->redirectToRoute('app_dashboard');
         }else {
             return $this->render('admin/crear_usuario.html.twig', [
