@@ -49,20 +49,6 @@ class UserRegistrationType extends AbstractType
                 'label'=> $this->translator->trans('user.email'),
                 'required' => true
             ])
-            ->add('password', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'label' => $this->translator->trans('user.password'),
-                'constraints' => [
-                    new Regex([
-                        'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/',
-                        'message' => $this->translator->trans('user.passwordError')
-                    ])
-                ],
-                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control'],
-                'required' => true
-            ])
             ->add('direction',TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.direction'),
