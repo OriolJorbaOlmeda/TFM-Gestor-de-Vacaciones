@@ -107,9 +107,9 @@ class UserRegistrationType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    $this->translator->trans('role.admin') => 'ROLE_ADMIN',
-                    $this->translator->trans('role.supervisor') => 'ROLE_SUPERVISOR',
-                    $this->translator->trans('role.employee') => 'ROLE_EMPLEADO',
+                    $this->translator->trans('roles.admin') => 'ROLE_ADMIN',
+                    $this->translator->trans('roles.supervisor') => 'ROLE_SUPERVISOR',
+                    $this->translator->trans('roles.employee') => 'ROLE_EMPLEADO',
                 ],
                 'attr' => ['class' => 'form-control select2'],
                 'label'=> $this->translator->trans('user.role'),

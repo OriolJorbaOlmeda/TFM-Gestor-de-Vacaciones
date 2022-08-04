@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserModificationType extends AbstractType
@@ -29,39 +30,45 @@ class UserModificationType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'name'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.name'),
                 'required' => true
             ])
             ->add('lastname', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'name'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.lastname'),
                 'required' => true
             ])
             ->add('email', EmailType::class, [
-                'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control', 'id' => 'email'],
+                'attr' => ['placeholder' => "mail@hotmail.com", 'class' => 'form-control'],
                 'label'=> $this->translator->trans('user.email'),
                 'required' => true
             ])
             ->add('direction',TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'direccion'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.direction'),
                 'required' => true
             ])
             ->add('city',TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'ciudad'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.city'),
                 'required' => true
             ])
             ->add('province',TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'provincia'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.province'),
                 'required' => true
             ])
             ->add('postalcode', TextType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'codigoPostal'],
                 'label'=> $this->translator->trans('user.postalCode'),
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/',
+                        'message' => $this->translator->trans('user.postalCodeError')
+                    ])
+                ],
              ])
 
             ->add('department', ChoiceType::class, [
@@ -97,10 +104,16 @@ class UserModificationType extends AbstractType
                 'data'=>$options['data']->getRoles()[0]
             ])
             ->add('total_vacation_days', NumberType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'diasVacaciones'],
+                'attr' => ['class' => 'form-control'],
                 'label'=> $this->translator->trans('user.totalVacationDays'),
                 'required' => true,
-                'invalid_message' => $this->translator->trans('user.totalVacationDaysError'),
+                'empty_data' => '0',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9]{1,2}$/',
+                        'message' => $this->translator->trans('user.totalVacationDaysError')
+                    ])
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
