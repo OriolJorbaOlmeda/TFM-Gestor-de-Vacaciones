@@ -5,6 +5,7 @@ action:
 general:
   applicationTitle: GetYourVacations
   logout: Log out
+  passwordForgot: I forgot my password
 roles:
   admin: Admin
   supervisor: Supervisor

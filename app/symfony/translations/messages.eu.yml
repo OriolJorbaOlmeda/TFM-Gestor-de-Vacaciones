@@ -5,6 +5,7 @@ action:
 general:
   applicationTitle: GetYourVacations
   logout: Saioa itxi
+  passwordForgot: Pasahitza ahaztu dut
 roles:
   admin: Administratzailea
   supervisor: Gainbegiralea

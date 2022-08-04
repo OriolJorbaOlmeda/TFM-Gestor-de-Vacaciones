@@ -5,6 +5,7 @@ action:
 general:
   applicationTitle: GetYourVacations
   logout: Tancar sessió
+  passwordForgot: He oblidat la meva contrasenya
 roles:
   admin: Administrador
   supervisor: Supervisor
