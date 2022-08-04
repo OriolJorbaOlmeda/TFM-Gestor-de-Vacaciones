@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 class AdminController extends AbstractController
 {
@@ -78,27 +77,17 @@ class AdminController extends AbstractController
 
 
     #[Route('/admin/modificar_usuario/{userid}', name: 'app_admin_edit-user')]
-    public function editUser(
-        string $userid,
-        Request $request,
-        Security $security,
-        UserPasswordHasherInterface $passwordHasher
-    ): Response {
+    public function editUser(string $userid, Request $request): Response
+    {
         $user = $this->userRepository->findOneBy(array('id' => $userid));
         $form = $this->createForm(UserModificationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$pass = $form->get('password')->getData();
-            //$user->setPassword($passwordHasher->hashPassword($user, $pass));
-            // $pending_vacation_days = $form->get('total_vacation_days')->getData();
-            // $user->setPassword($pass);
 
             $roles = $form->get('roles')->getData();
             $user->setRoles([$roles]);
 
-
-            //$user->setPendingVacationDays($pending_vacation_days);
             $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_dashboard');
         }
