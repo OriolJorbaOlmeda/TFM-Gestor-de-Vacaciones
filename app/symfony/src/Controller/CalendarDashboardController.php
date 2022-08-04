@@ -54,7 +54,7 @@ class CalendarDashboardController extends AbstractController
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
         if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
             $num_petitions = count($petitions);
         }
 
@@ -112,7 +112,7 @@ class CalendarDashboardController extends AbstractController
             ];
         }
         foreach ($festivos_usuario as $festivo_usuario) {
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == "ACCEPTED" && $festivo_usuario->getType()=="VACATION") {
+            if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter('accepted') && $festivo_usuario->getType() == $this->getParameter('vacation')) {
                 $vacation[$festivo_usuario->getId()] = [
                     "name" => $festivo_usuario->getReason(),
                     "date" => $festivo_usuario->getPetitionDate(),
@@ -120,7 +120,7 @@ class CalendarDashboardController extends AbstractController
                     "finaldate" => $festivo_usuario->getFinalDate(),
                 ];
             }
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == "ACCEPTED" && $festivo_usuario->getType()=="ABSENCE") {
+            if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter('accepted') && $festivo_usuario->getType() == $this->getParameter('absence')) {
                 $absence[$festivo_usuario->getId()] = [
                     "name" => $festivo_usuario->getReason(),
                     "date" => $festivo_usuario->getPetitionDate(),

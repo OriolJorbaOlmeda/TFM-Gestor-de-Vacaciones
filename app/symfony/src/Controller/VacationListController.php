@@ -17,14 +17,17 @@ class VacationListController extends AbstractController
     ){}
 
     #[Route('/employee/vacation', name: 'app_employee_vacation')]
-    public function vacation(): Response
+    public function vacation(Request $request): Response
     {
+        $pagVac = $request->get('pagVac');
+        $pagAbs = $request->get('pagAbs');
+
         $calendar = $this->calendarRepository->findCurrentCalendar($this->getUser()->getDepartment()->getCompany());
         $calendar_id = $calendar->getId();
 
-        $vacations = $this->petitionRepository->findVacationsByUserAndCalendar($this->getUser()->getId(), $calendar_id);
+        $vacations = $this->petitionRepository->findVacationsByUserAndCalendar($this->getUser()->getId(), $calendar_id, $pagVac);
 
-        $absences = $this->petitionRepository->findAbsencesByUserAndCalendar($this->getUser()->getId(), $calendar_id);
+        $absences = $this->petitionRepository->findAbsencesByUserAndCalendar($this->getUser()->getId(), $calendar_id, $pagAbs);
 
         $justify = [];
         foreach ($absences as $petition) {
@@ -36,7 +39,7 @@ class VacationListController extends AbstractController
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
         if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
             $num_petitions = count($petitions);
         }
 
@@ -46,6 +49,8 @@ class VacationListController extends AbstractController
             'absences' => $absences,
             'num_petitions' => $num_petitions,
             'justify' => $justify,
+            'pagVac' => $pagVac,
+            'pagAbs' => $pagAbs
         ]);
     }
 
@@ -53,9 +58,12 @@ class VacationListController extends AbstractController
     public function deletePetition(Request $request): Response
     {
         $petitionId = $request->get('petitionId');
+        $pagVac = $request->get('pagVac');
+        $pagAbs = $request->get('pagAbs');
+
         $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
         $this->petitionRepository->remove($petition, true);
 
-        return $this->redirectToRoute('app_employee_vacation');
+        return $this->redirectToRoute('app_employee_vacation', ['pagVac' => $pagVac, 'pagAbs' => $pagAbs]);
     }
 }

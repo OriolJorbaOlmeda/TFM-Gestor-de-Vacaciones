@@ -28,7 +28,7 @@ class SupervisorController extends AbstractController
     public function pendingRequests(): Response
     {
 
-        $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+        $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
         $num_petitions = count($petitions);
         $justify =[];
         foreach ($petitions as $petition) {
@@ -51,7 +51,7 @@ class SupervisorController extends AbstractController
 
         $petitionId = $request->get('petitionId');
         $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
-        $petition->setState("ACCEPTED");
+        $petition->setState($this->getParameter('accepted'));
         $this->petitionRepository->add($petition, true);
 
         $duration = $petition->getDuration();
@@ -67,7 +67,7 @@ class SupervisorController extends AbstractController
 
         $petitionId = $request->get('petitionId');
         $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
-        $petition->setState("DENIED");
+        $petition->setState($this->getParameter('denied'));
         $this->petitionRepository->add($petition, true);
 
         return $this->redirectToRoute("app_supervisor_pending_requests");

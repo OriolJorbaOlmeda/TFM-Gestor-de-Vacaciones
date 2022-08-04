@@ -9,6 +9,11 @@ twig:
         es: '%es%'
         ca: '%ca%'
         eu: '%eu%'
+        accepted: '%accepted%'
+        pending: '%pending%'
+        denied: '%denied%'
+        vacation: '%vacation%'
+        absence: '%absence%'
 
 when@test:
     twig:

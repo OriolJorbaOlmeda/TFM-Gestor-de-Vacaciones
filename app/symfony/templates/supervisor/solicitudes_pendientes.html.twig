@@ -49,7 +49,7 @@
                                             <td> {{ petition.duration}}  </td>
 
 
-                                            {% if petition.type == 'VACATION' %}
+                                            {% if petition.type == vacation %}
                                                 <td> {{ "petition.types.vacation"|trans }} </td>
                                             {% else %}
                                                 <td> {{ "petition.types.ausence"|trans }} </td>
@@ -58,7 +58,7 @@
                                             <td> {{ petition.reason}}  </td>
                                             <td>
 
-                                                {% if petition.type == 'ABSENCE' %}
+                                                {% if petition.type == absence %}
                                                     {% for justi in justify %}
                                                         {% if petition.id == justi.petition.id %}
                                                             <a  href="{{path('download_file',{filename: justi.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
