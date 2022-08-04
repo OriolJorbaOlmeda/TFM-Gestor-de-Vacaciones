@@ -1,11 +1,6 @@
 const fechaInicio = document.getElementById("fechaInicio");
 const fechaFin = document.getElementById("fechaFin");
 
-window.onload = function() {
-    comprobarFechaInicio();
-    comprobarFechaFin();
-};
-
 // COMPROBACIONES FECHA INICIO Y FECHA FIN
 fechaInicio.addEventListener("change", event => {
     comprobarFechaInicio()
@@ -17,14 +12,9 @@ fechaFin.addEventListener("change", event => {
 });
 
 function comprobarFechaInicio() {
-    let fecha = fechaInicio.value;
-    if (comprobarFechaMayorFechaActual(fecha)) {
-        if (comprobarFechaMayorFechaActual(fechaFin.value) && comprobarFechaMayor(fechaInicio.value, fechaFin.value)){
-            fechaInicio.classList.remove("is-invalid")
-            fechaFin.classList.remove("is-invalid")
-        } else {
-            fechaInicio.classList.add("is-invalid")
-        }
+    if (comprobarFechaMayorFechaActual(fechaFin.value) && comprobarFechaMayor(fechaInicio.value, fechaFin.value)){
+        fechaInicio.classList.remove("is-invalid")
+        fechaFin.classList.remove("is-invalid")
     } else {
         fechaInicio.classList.add("is-invalid")
     }
@@ -33,7 +23,7 @@ function comprobarFechaInicio() {
 function comprobarFechaFin() {
     let fecha = fechaFin.value;
     if (comprobarFechaMayorFechaActual(fecha)) {
-        if (comprobarFechaMayorFechaActual(fechaInicio.value) && comprobarFechaMayor(fechaInicio.value, fechaFin.value)){
+        if (comprobarFechaMayor(fechaInicio.value, fechaFin.value)){
             fechaInicio.classList.remove("is-invalid")
             fechaFin.classList.remove("is-invalid")
         } else {
