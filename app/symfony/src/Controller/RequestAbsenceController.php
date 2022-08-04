@@ -45,7 +45,7 @@ class RequestAbsenceController extends AbstractController
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
         if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
             $num_petitions = count($petitions);
         }
 
@@ -54,18 +54,18 @@ class RequestAbsenceController extends AbstractController
             // Ya están rellenos: initial_date, final_date, duration y reason
 
             // Rellenar los datos que faltan: state, type, petition_date, employee, calendar, justify y supervisor
-            $petition->setType("ABSENCE");
+            $petition->setType($this->getParameter('absence'));
 
             // si es supervisor el supervisor será el mismo
             if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
                 $user = $this->userRepository->findOneBy(['id' => $this->getUser()->getId()]);
                 $petition->setSupervisor($user);
-                $petition->setState("ACCEPTED");
+                $petition->setState($this->getParameter('accepted'));
                 $duration = $petition->getDuration();
                 $this->userRepository->updateVacationDays($user, $duration);
             } else {
                 $petition->setSupervisor($this->getUser()->getSupervisor());
-                $petition->setState("PENDING");
+                $petition->setState($this->getParameter('pending'));
             }
 
             $petition->setPetitionDate(new \DateTime());

@@ -8,6 +8,11 @@ parameters:
     role_admin: 'ROLE_ADMIN'
     role_supervisor: 'ROLE_SUPERVISOR'
     role_employee: 'ROLE_EMPLEADO'
+    accepted: 'ACCEPTED'
+    denied: 'DENIED'
+    pending: 'PENDING'
+    vacation: 'VACATION'
+    absence: 'ABSENCE'
 services:
     # default configuration for services in *this* file
     _defaults:

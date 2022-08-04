@@ -36,7 +36,7 @@ class VacationListController extends AbstractController
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = 0;
         if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => 'PENDING']);
+            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
             $num_petitions = count($petitions);
         }
 

@@ -52,18 +52,18 @@
                                                 <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
                                                 <td> {{ petition.duration}} </td>
                                                 <td> {{ petition.reason}} </td>
-                                                {% if petition.state == 'ACCEPTED' %}
-                                                    <td><span class="badge bg-success">Aprobado</span></td>
+                                                {% if petition.state == accepted %}
+                                                    <td><span class="badge bg-success">{{ "petition.states.accepted"|trans }}</span></td>
                                                     <td></td>
-                                                {% elseif petition.state == 'PENDING' %}
-                                                    <td><span class="badge bg-warning">Pendiente</span></td>
+                                                {% elseif petition.state == pending %}
+                                                    <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
                                                     <td>
                                                         <div class="btn-group-sm">
                                                             <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </td>
-                                                {% elseif petition.state == 'DENIED' %}
-                                                    <td><span class="badge bg-danger">Denegado</span></td>
+                                                {% elseif petition.state == denied %}
+                                                    <td><span class="badge bg-danger">{{ "petition.states.denied"|trans }}</span></td>
                                                     <td></td>
                                                 {% endif %}
 
@@ -129,16 +129,16 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                 </td>
-                                                {% if petition.state == 'ACCEPTED' %}
+                                                {% if petition.state == accepted %}
                                                     <td><span class="badge bg-success">{{ "petition.states.accepted"|trans }}</span></td>
-                                                {% elseif petition.state == 'PENDING' %}
+                                                {% elseif petition.state == pending %}
                                                     <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
                                                     <td>
                                                         <div class="btn-group-sm">
                                                             <a href="/employee/delete_petition?petitionId={{ petition.id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                         </div>
                                                     </td>
-                                                {% elseif petition.state == 'DENIED' %}
+                                                {% elseif petition.state == denied %}
                                                     <td><span class="badge bg-danger">{{ "petition.states.denied"|trans }}</span></td>
                                                 {% endif %}
                                             </tr>

@@ -4,6 +4,11 @@ twig:
         role_admin: '%role_admin%'
         role_supervisor: '%role_supervisor%'
         role_employee: '%role_employee%'
+        accepted: '%accepted%'
+        pending: '%pending%'
+        denied: '%denied%'
+        vacation: '%vacation%'
+        absence: '%absence%'
 
 when@test:
     twig:
