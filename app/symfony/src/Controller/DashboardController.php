@@ -35,4 +35,11 @@ class DashboardController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
+    #[Route('/home', name: 'app_home')]
+    public function home(Request $request): Response
+    {
+        return $this->render('home.html.twig');
+
+    }
+
 }

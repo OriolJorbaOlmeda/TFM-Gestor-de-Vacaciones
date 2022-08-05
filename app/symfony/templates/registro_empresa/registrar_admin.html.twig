@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/bs-stepper/css/bs-stepper.min.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: 100vh;">
+            <div class="content-header">
+                <div class="container">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"> Registro de la empresa</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container">
+
+
+                    <!-- STEPPER -->
+                    <div class="bs-stepper">
+                        <div class="bs-stepper-header">
+                            <div class="step">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle">1</span>
+                                    <span class="bs-stepper-label">Datos de la empresa</span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle">2</span>
+                                    <span class="bs-stepper-label">Datos de los departamentos</span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step active">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle">3</span>
+                                    <span class="bs-stepper-label" style="color: #007bff">Datos del administrador</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Datos del administrador</h3>
+                                </div>
+                                {{ form_start(form) }}
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {{ form_row(form.email) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ form_row(form.password) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        {{ form_row(form.submit) }}
+                                    </div>
+                                {{ form_start(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+{% endblock %}
