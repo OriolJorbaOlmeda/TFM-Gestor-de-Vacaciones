@@ -143,3 +143,8 @@ login:
   access: Sartu
   loginError: Posta edo pasahitza okerrak
   passwordForgot: Pasahitza ahaztu dut
+changePass:
+  pass: Pasahitza
+  newPass: Pasahitza berria
+  button: Pasahitza aldatu
+  login: Saio ireki

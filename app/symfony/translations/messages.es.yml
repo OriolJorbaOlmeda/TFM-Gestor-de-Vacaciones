@@ -143,3 +143,8 @@ login:
   access: Acceder
   loginError: Email o contraseña incorrectos
   passwordForgot: He olvidado mi contraseña
+changePass:
+  pass: Contraseña
+  newPass: Nueva contraseña
+  button: Cambiar contraseña
+  login: Iniciar sesión

@@ -5,7 +5,7 @@
            aria-expanded="false"
            class="nav-link dropdown-toggle">{{ "general.options"|trans }}</a>
         <ul aria-labelledby="dropdownPerfil" class="dropdown-menu border-0 shadow">
-            <li><a href="#" class="dropdown-item">{{ "general.changePass"|trans }}</a></li>
+            <li><a href="{{ path('app_change_password') }}" class="dropdown-item">{{ "general.changePass"|trans }}</a></li>
             <li><a href="{{ path('app_logout') }}" class="dropdown-item">{{ "general.logout"|trans }}</a></li>
         </ul>
     </li>

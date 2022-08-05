@@ -142,4 +142,9 @@ login:
   password: Contrasenya
   access: Accedir
   loginError: Email o contrasenya incorrecta
-  passwordForgot: He oblidat la meva contraseny+
+  passwordForgot: He oblidat la meva contrasenya
+changePass:
+    pass: contrasenya
+    newPass: Nova contrasenya
+    button: Canviar contrasenya
+    login: Iniciar sessió
