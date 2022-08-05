@@ -21,7 +21,16 @@ class Company
     #[ORM\Column(type: 'string', length: 255)]
     private $direction;
 
-    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Department::class)]
+    #[ORM\Column(type: 'string', length: 255)]
+    private $postalCode;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $cif;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $telefono;
+
+    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Department::class, cascade: ["persist"])]
     private $departments;
 
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Calendar::class)]
@@ -60,6 +69,36 @@ class Company
         $this->direction = $direction;
 
         return $this;
+    }
+
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode($postalCode): void
+    {
+        $this->postalCode = $postalCode;
+    }
+
+    public function getCif()
+    {
+        return $this->cif;
+    }
+
+    public function setCif($cif): void
+    {
+        $this->cif = $cif;
+    }
+
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono($telefono): void
+    {
+        $this->telefono = $telefono;
     }
 
     /**
