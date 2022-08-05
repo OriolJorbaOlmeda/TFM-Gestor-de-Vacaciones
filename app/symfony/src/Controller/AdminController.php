@@ -56,12 +56,13 @@ class AdminController extends AbstractController
 
             $this->dispatcher->dispatch(new UserRegistrationEvent($this->getUser()->getEmail(),$user->getEmail(), $user->getName(), $password ));
             return $this->redirectToRoute('app_dashboard');
-        }else {
-            return $this->render('admin/crear_usuario.html.twig', [
-                "form" => $form->createView(),
-                "error" => $form->getErrors(),
-            ]);
         }
+
+        return $this->render('admin/crear_usuario.html.twig', [
+            "form" => $form->createView(),
+            "error" => $form->getErrors(),
+        ]);
+
     }
 
 

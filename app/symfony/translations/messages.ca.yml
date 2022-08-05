@@ -32,7 +32,6 @@ user:
   lastname: Cognoms
   email: Email
   password: Password
-  passwordError: La contrasenya ha de tenir com a mínim 8 caràcters amb majúscules, minúscules i números
   direction: Direcció
   city: Ciutat
   province: Província
@@ -144,7 +143,11 @@ login:
   loginError: Email o contrasenya incorrecta
   passwordForgot: He oblidat la meva contrasenya
 changePass:
-    pass: contrasenya
+    title: Canviar contrasenya
+    pass: Contrasenya actual
     newPass: Nova contrasenya
     button: Canviar contrasenya
     login: Iniciar sessió
+    passIncorrect: Contrasenya actual incorrecta
+    newPassIncorrect: Nova contrasenya incorrecta
+    passHelp: La contrasenya ha de tenir com a mínim 8 caràcters amb majúscules, minúscules i números

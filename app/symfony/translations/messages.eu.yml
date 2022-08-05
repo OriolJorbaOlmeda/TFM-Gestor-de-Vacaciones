@@ -32,7 +32,6 @@ user:
   lastname: Abizenak
   email: Posta elektronikoa
   password: Pasahitza
-  passwordError: Pasahitzak gutxienez 8 karaktere izan behar ditu maiuskula, minuskula eta zenbakiekin
   direction: Helbidea
   city: Hiria
   province: Probintzia
@@ -144,7 +143,11 @@ login:
   loginError: Posta edo pasahitza okerrak
   passwordForgot: Pasahitza ahaztu dut
 changePass:
-  pass: Pasahitza
+  title: Pasahitza aldatu
+  pass: Uneko pasahitza
   newPass: Pasahitza berria
   button: Pasahitza aldatu
   login: Saio ireki
+  passIncorrect: Uneko pasahitz okerra
+  newPassIncorrect: Pasahitz berri okerra
+  passHelp: Pasahitzak gutxienez 8 karaktere izan behar ditu maiuskula, minuskula eta zenbakiekin

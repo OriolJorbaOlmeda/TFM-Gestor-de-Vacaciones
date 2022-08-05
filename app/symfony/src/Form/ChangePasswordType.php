@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -16,21 +17,19 @@ class ChangePasswordType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $actualPass = $options['data']['pass']; // Haseada
 
         $builder
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'mapped' => false,
+                //'mapped' => false,
                 'label' => $this->translator->trans('changePass.pass'),
                 'constraints' => [
-                    new Regex([
-                        'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/',
-                        'message' => $this->translator->trans('user.passwordError')
+                    new UserPassword([
+                        'message' => $this->translator->trans('changePass.passIncorrect')
                     ])
                 ],
-                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control'],
+                'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
                 'required' => true,
                 //'data' => $actualPass
@@ -38,15 +37,16 @@ class ChangePasswordType extends AbstractType
             ->add('new_password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'mapped' => false,
+                //'mapped' => false,
                 'label' => $this->translator->trans('changePass.newPass'),
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/',
-                        'message' => $this->translator->trans('user.passwordError')
+                        'message' => $this->translator->trans('changePass.newPassIncorrect')
                     ])
                 ],
-                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control'],
+                'help' => $this->translator->trans('changePass.passHelp'),
+                'attr' => [ 'class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'], 
                 'required' => true
             ])

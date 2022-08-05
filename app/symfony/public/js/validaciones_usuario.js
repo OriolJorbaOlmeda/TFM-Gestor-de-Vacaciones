@@ -1,7 +1,6 @@
 const email = document.getElementById("email");
 const diasVac = document.getElementById("diasVac");
 const postalCode = document.getElementById("postalCode");
-const password = document.getElementById("password");
 const role = document.getElementById("role");
 const department = document.getElementById("department");
 const supervisor = document.getElementById("supervisor");
@@ -58,22 +57,6 @@ if (postalCode != null) {
             postalCode.classList.add("is-invalid");
         }
     })
-}
-
-
-// VALIDAR PASSWORD - mínimo 8 caracteres, mayúsculas, minúsculas y números
-if (password != null) {
-    password.addEventListener("change", (event) => {
-        validarPassword(event.target.value)
-    });
-}
-
-function validarPassword(valor) {
-    if ( /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(valor)){
-        password.classList.remove("is-invalid");
-    } else {
-        password.classList.add("is-invalid");
-    }
 }
 
 

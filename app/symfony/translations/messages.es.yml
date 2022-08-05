@@ -32,7 +32,6 @@ user:
   lastname: Apellidos
   email: Email
   password: Password
-  passwordError: La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números
   direction: Dirección
   city: Ciudad
   province: Provincia
@@ -144,7 +143,11 @@ login:
   loginError: Email o contraseña incorrectos
   passwordForgot: He olvidado mi contraseña
 changePass:
-  pass: Contraseña
+  title: Cambiar contraseña
+  pass: Contraseña actual
   newPass: Nueva contraseña
   button: Cambiar contraseña
   login: Iniciar sesión
+  passIncorrect: Contraseña actual incorrecta
+  newPassIncorrect: Nueva contraseña incorrecta
+  passHelp: La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números

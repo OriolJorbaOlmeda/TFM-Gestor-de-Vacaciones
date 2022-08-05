@@ -32,7 +32,6 @@ user:
   lastname: Lastname
   email: Email
   password: Password
-  passwordError: The password must be at least 8 characters long with upper and lower case letters and numbers
   direction: Direction
   city: City
   province: Province
@@ -144,7 +143,11 @@ login:
   loginError: Incorrect email or password
   passwordForgot: I forgot my password
 changePass:
-  pass: Password
+  title: Change password
+  pass: Current password
   newPass: New password
   button: Change password
   login: Login
+  passIncorrect: Wrong current password
+  newPassIncorrect: Wrong new password
+  passHelp: The password must be at least 8 characters long with upper and lower case letters and numbers
