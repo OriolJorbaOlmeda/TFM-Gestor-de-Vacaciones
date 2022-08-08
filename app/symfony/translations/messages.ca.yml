@@ -117,6 +117,7 @@ homeEmployee:
   vacations: Vacances
   absences: Absències
   festives: Dies festius
+  notcalendar: No tens cap calendari actiu
 navbarEmployee:
   vacationList: Les meves vacances
   calendar: Calendari
@@ -151,3 +152,9 @@ changePass:
     passIncorrect: Contrasenya actual incorrecta
     newPassIncorrect: Nova contrasenya incorrecta
     passHelp: La contrasenya ha de tenir com a mínim 8 caràcters amb majúscules, minúscules i números
+error:
+    statuscode: Status Code
+    sorry: OPPSSS!!!! Ho sento ..
+    message1: Ho sentim, es denega el teu accés per motius de seguretat del nostre servidor i també de les nostres dades sensibles
+    message2: Torneu a la pàgina anterior per continuar navegant
+    goBack: Tornar

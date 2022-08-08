@@ -117,6 +117,7 @@ homeEmployee:
   vacations: Vacations
   absences: Absences
   festives: Holiday days
+  notcalendar: You don't have any active calendar
 navbarEmployee:
   vacationList: My vacations
   calendar: Calendar
@@ -151,3 +152,9 @@ changePass:
   passIncorrect: Wrong current password
   newPassIncorrect: Wrong new password
   passHelp: The password must be at least 8 characters long with upper and lower case letters and numbers
+error:
+  statuscode: Status Code
+  sorry: OPPSSS!!!! Sorry...
+  message1: Sorry, your access is refused due to security reasons of our server and also our sensitive data.
+  message2: Please go back to the previous page to continue browsing.
+  goBack: Go Back

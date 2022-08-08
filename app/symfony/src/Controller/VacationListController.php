@@ -23,24 +23,43 @@ class VacationListController extends AbstractController
         $pagAbs = $request->get('pagAbs');
 
         $calendar = $this->calendarRepository->findCurrentCalendar($this->getUser()->getDepartment()->getCompany());
-        $calendar_id = $calendar->getId();
+        if(is_null($calendar)){
+            $vacations=[];
+            $absences=[];
+            $num_petitions=0;
+            $justify=[];
 
-        $vacations = $this->petitionRepository->findVacationsByUserAndCalendar($this->getUser()->getId(), $calendar_id, $pagVac);
 
-        $absences = $this->petitionRepository->findAbsencesByUserAndCalendar($this->getUser()->getId(), $calendar_id, $pagAbs);
+        }else {
+            $calendar_id = $calendar->getId();
 
-        $justify = [];
-        foreach ($absences as $petition) {
-            if($petition->getJustify()) {
-                $justify [] = $petition->getJustify();
+            $vacations = $this->petitionRepository->findVacationsByUserAndCalendar(
+                $this->getUser()->getId(),
+                $calendar_id,
+                $pagVac
+            );
+
+            $absences = $this->petitionRepository->findAbsencesByUserAndCalendar(
+                $this->getUser()->getId(),
+                $calendar_id,
+                $pagAbs
+            );
+
+            $justify = [];
+            foreach ($absences as $petition) {
+                if ($petition->getJustify()) {
+                    $justify [] = $petition->getJustify();
+                }
             }
-        }
 
-        //Para el caso de SUPERVISOR para poner en el panel
-        $num_petitions = 0;
-        if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
-            $num_petitions = count($petitions);
+            //Para el caso de SUPERVISOR para poner en el panel
+            $num_petitions = 0;
+            if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
+                $petitions = $this->petitionRepository->findBy(
+                    ['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]
+                );
+                $num_petitions = count($petitions);
+            }
         }
 
 

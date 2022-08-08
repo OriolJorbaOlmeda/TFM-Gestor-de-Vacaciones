@@ -33,6 +33,8 @@
             </div>
 
             <!-- Main content -->
+            {% if form is defined %}
+
             <div class="content">
                 <div class="container">
                     <div class="row">
@@ -74,6 +76,16 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+                <section class="content-header">
+                    <div class="container">
+                        <div class="col-sm-6">
+                            <h4> {{ "homeEmployee.notcalendar"|trans }} </h4>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+
         </div>
     </div>
 

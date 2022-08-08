@@ -31,40 +31,52 @@ class CalendarDashboardController extends AbstractController
         foreach ($allDepartments as $department) {
             $result[$department->getName()] = $department->getId();
         }
-
+        $form = $this->createForm(SearchByDepartmentType::class, $result);
+        $form->handleRequest($request);
 
         //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findCurrentCalendar($companyId);
-        $festives = $calendar->getFestives();
-        $festives_company = [];
+        if (!is_null($calendar)) {
+            $festives = $calendar->getFestives();
+            $festives_company = [];
 
-        foreach ($festives as $festive) {
-            $festives_company[$festive->getId()] = [
-                "name" => $festive->getName(),
-                "date" => $festive->getDate(),
-                "initialdate" => $festive->getDate(),
-                "finaldate" => $festive->getDate(),
-            ];
+            foreach ($festives as $festive) {
+                $festives_company[$festive->getId()] = [
+                    "name" => $festive->getName(),
+                    "date" => $festive->getDate(),
+                    "initialdate" => $festive->getDate(),
+                    "finaldate" => $festive->getDate(),
+                ];
+            }
+
+
+            //Para el caso de SUPERVISOR para poner en el panel
+            $num_petitions = 0;
+            if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
+                $petitions = $this->petitionRepository->findBy(
+                    ['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]
+                );
+                $num_petitions = count($petitions);
+            }
+
+
+            return $this->render('empleado/calendario.html.twig', [
+                "calendar" => 1,
+                "departments" => $allDepartments,
+                "formDepar" => $form->createView(),
+                "festives" => $festives_company,
+                'num_petitions' => $num_petitions
+            ]);
+        } else {
+            return $this->render('empleado/calendario.html.twig', [
+                "calendar" => 0,
+                "departments" => $allDepartments,
+                "formDepar" => $form->createView(),
+                "festives" => [],
+                'num_petitions' => 0
+            ]);
         }
-
-        $form = $this->createForm(SearchByDepartmentType::class, $result);
-        $form->handleRequest($request);
-
-        //Para el caso de SUPERVISOR para poner en el panel
-        $num_petitions = 0;
-        if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]);
-            $num_petitions = count($petitions);
-        }
-
-
-        return $this->render('empleado/calendario.html.twig', [
-            "departments" => $allDepartments,
-            "formDepar" => $form->createView(),
-            "festives" => $festives_company,
-            'num_petitions' => $num_petitions
-        ]);
     }
 
     #[Route('/employee/getUsers', name: 'app_employee_get')]
@@ -87,17 +99,10 @@ class CalendarDashboardController extends AbstractController
     {
         //Pillamos la información del usuario seleccionado
         $userId = $request->request->get('id');
-        $user = $this->userRepository->findOneBy(['id' => $userId]);
-
-
-        $festivos_usuario = $user->getPetitions();
-
-
         //Pillamos la información de la compañia para recoger el calendario
         $companyId = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->calendarRepository->findCurrentCalendar($companyId);
         $festives = $calendar->getFestives();
-
         //Nos guardamos los festivos del calendario
 
         $festives_company = [];
@@ -111,27 +116,40 @@ class CalendarDashboardController extends AbstractController
                 "finaldate" => $festive->getDate(),
             ];
         }
-        foreach ($festivos_usuario as $festivo_usuario) {
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter('accepted') && $festivo_usuario->getType() == $this->getParameter('vacation')) {
-                $vacation[$festivo_usuario->getId()] = [
-                    "name" => $festivo_usuario->getReason(),
-                    "date" => $festivo_usuario->getPetitionDate(),
-                    "initialdate" => $festivo_usuario->getInitialDate(),
-                    "finaldate" => $festivo_usuario->getFinalDate(),
-                ];
-            }
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter('accepted') && $festivo_usuario->getType() == $this->getParameter('absence')) {
-                $absence[$festivo_usuario->getId()] = [
-                    "name" => $festivo_usuario->getReason(),
-                    "date" => $festivo_usuario->getPetitionDate(),
-                    "initialdate" => $festivo_usuario->getInitialDate(),
-                    "finaldate" => $festivo_usuario->getFinalDate(),
-                ];
+
+        if ($userId != 0) {
+            $user = $this->userRepository->findOneBy(['id' => $userId]);
+            $festivos_usuario = $user->getPetitions();
+
+
+            foreach ($festivos_usuario as $festivo_usuario) {
+                if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
+                        'accepted'
+                    ) && $festivo_usuario->getType() == $this->getParameter('vacation')) {
+                    $vacation[$festivo_usuario->getId()] = [
+                        "name" => $festivo_usuario->getReason(),
+                        "date" => $festivo_usuario->getPetitionDate(),
+                        "initialdate" => $festivo_usuario->getInitialDate(),
+                        "finaldate" => $festivo_usuario->getFinalDate(),
+                    ];
+                }
+                if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
+                        'accepted'
+                    ) && $festivo_usuario->getType() == $this->getParameter('absence')) {
+                    $absence[$festivo_usuario->getId()] = [
+                        "name" => $festivo_usuario->getReason(),
+                        "date" => $festivo_usuario->getPetitionDate(),
+                        "initialdate" => $festivo_usuario->getInitialDate(),
+                        "finaldate" => $festivo_usuario->getFinalDate(),
+                    ];
+                }
             }
         }
 
 
-        return new JsonResponse(["festivo_depar" => $festives_company,"festivo_usuario"=>$vacation,"absence_user"=>$absence]);
+        return new JsonResponse(
+            ["festivo_depar" => $festives_company, "festivo_usuario" => $vacation, "absence_user" => $absence]
+        );
     }
 
 }
