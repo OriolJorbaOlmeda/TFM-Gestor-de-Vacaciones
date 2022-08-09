@@ -1,5 +1,4 @@
-
-INSERT INTO company values (1, 'MPWAR', 'Bonanova, Barcelona');
+INSERT INTO company values (1, 'MPWAR', 'Bonanova, Barcelona',08780,213123,12323);
 
 INSERT INTO department (id, name, code, company_id)
 values (1, 'Departamento de admin', 'DEP-ADMIN', 1);
