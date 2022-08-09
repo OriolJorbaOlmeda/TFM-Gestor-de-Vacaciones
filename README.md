@@ -40,8 +40,6 @@ Una vez instalado se ha de inicializar el proyecto, para ello se tiene que levan
 - 
 
 
-## COSAS PENDIENTES  
-=======
 ## SOLICITUDES
 
 Estados: 
@@ -54,3 +52,8 @@ Tipos:
 - VACATION
 - ABSENCE
 
+## PERSISTIR LA CARPETA app/public/documents EN UN VOLUMEN DE DOCKER DE PHP
+
+He modificado docker-compose.yaml con la línea 31: ```- ./app/symfony/public/documents:/usr/src/app/documents```
+
+He modificado docker/php/Dockerfile con la línea 38: ```RUN mkdir -p /usr/src/app/documents```
