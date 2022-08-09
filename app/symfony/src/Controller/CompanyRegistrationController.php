@@ -14,6 +14,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CompanyRegistrationController extends AbstractController
@@ -22,7 +23,8 @@ class CompanyRegistrationController extends AbstractController
     public function __construct(
         private CompanyRepository $companyRepository,
         private DepartmentRepository $departmentRepository,
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private UserPasswordHasherInterface $passwordHasher
     ){}
 
     #[Route('/register_company', name: 'app_register_company')]
@@ -100,12 +102,10 @@ class CompanyRegistrationController extends AbstractController
         $company = $this->companyRepository->findOneBy(['id' => $companyId]);
         $adminDepartment = $company->getDepartments()[0];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            //var_dump($user->getEmail());
-
-            var_dump("aaaa");
+        if ($form->isSubmitted()) {
 
             // Rellenamos lo necesario
+            $user->setPassword($this->passwordHasher->hashPassword($user, $user->getPassword()));
             $user->setRoles([$this->getParameter('role_admin')]);
             $user->setDepartment($adminDepartment);
 
