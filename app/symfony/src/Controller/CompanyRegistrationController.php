@@ -101,8 +101,8 @@ class CompanyRegistrationController extends AbstractController
 
         $company = $this->companyRepository->findOneBy(['id' => $companyId]);
         $adminDepartment = $company->getDepartments()[0];
-
-        if ($form->isSubmitted()) {
+        
+        if ($form->isSubmitted() && $form->get('email')->isValid() && $form->get('password')->isValid()) {
 
             // Rellenamos lo necesario
             $user->setPassword($this->passwordHasher->hashPassword($user, $user->getPassword()));
