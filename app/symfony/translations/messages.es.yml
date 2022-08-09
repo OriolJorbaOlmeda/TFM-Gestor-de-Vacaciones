@@ -2,6 +2,9 @@ action:
   save: Guardar
   select: -- Selecciona --
   search: Buscar
+  next: Siguiente
+  add: Añadir
+  finish: Finalizar
 general:
   applicationTitle: GetYourVacations
   logout: Cerrar sesión
@@ -151,3 +154,25 @@ changePass:
   passIncorrect: Contraseña actual incorrecta
   newPassIncorrect: Nueva contraseña incorrecta
   passHelp: La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números
+companyRegistration:
+  title: Registro de la empresa
+  company:
+    title: Datos de la empresa
+    name: Nombre
+    cif: CIF
+    phone: Teléfono
+    direction: Dirección
+    postalCode: Código postal
+  departments:
+    title: Datos de los departamentos
+    addDepartments: Añadir departamentos
+    name: Nombre del departamento
+    code: Código del departamento
+  admin:
+    title: Datos del administrador
+    email: Email
+    password: Contraseña
+    passwordIncorrect: Contraseña incorrecta
+homePage:
+  login: Iniciar sesión
+  registerCompany: Registrar nueva empresa

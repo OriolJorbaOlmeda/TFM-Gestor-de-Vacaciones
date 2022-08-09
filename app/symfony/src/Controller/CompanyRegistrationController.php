@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Company;
 use App\Entity\Department;
+use App\Entity\User;
 use App\Form\CompanyType;
 use App\Form\CreateAdminType;
 use App\Form\DepartmentType;
 use App\Repository\CompanyRepository;
 use App\Repository\DepartmentRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +21,8 @@ class CompanyRegistrationController extends AbstractController
 
     public function __construct(
         private CompanyRepository $companyRepository,
-        private DepartmentRepository $departmentRepository
+        private DepartmentRepository $departmentRepository,
+        private UserRepository $userRepository
     ){}
 
     #[Route('/register_company', name: 'app_register_company')]
@@ -87,11 +90,40 @@ class CompanyRegistrationController extends AbstractController
         return $this->redirectToRoute('app_register_company_departments', ['companyId' => $companyId]);
     }
 
-    #[Route('/register_company/admin', name: 'app_register_company_admin')]
-    public function registerCompanyAdmin(Request $request): Response
+    #[Route('/register_company/admin/{companyId}', name: 'app_register_company_admin')]
+    public function registerCompanyAdmin(string $companyId, Request $request): Response
     {
-        $form = $this->createForm(CreateAdminType::class, []);
+        $user = new User();
+        $form = $this->createForm(CreateAdminType::class, $user);
         $form->handleRequest($request);
+
+        $company = $this->companyRepository->findOneBy(['id' => $companyId]);
+        $adminDepartment = $company->getDepartments()[0];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //var_dump($user->getEmail());
+
+            var_dump("aaaa");
+
+            // Rellenamos lo necesario
+            $user->setRoles([$this->getParameter('role_admin')]);
+            $user->setDepartment($adminDepartment);
+
+            // Rellenamos los demás datos vacíos
+            $user->setName("");
+            $user->setLastname("");
+            $user->setDirection("");
+            $user->setCity("");
+            $user->setProvince("");
+            $user->setPostalcode("");
+            $user->setTotalVacationDays(0);
+            $user->setPendingVacationDays(0);
+
+            $this->userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_login');
+
+        }
 
 
         return $this->render('registro_empresa/registrar_admin.html.twig', [

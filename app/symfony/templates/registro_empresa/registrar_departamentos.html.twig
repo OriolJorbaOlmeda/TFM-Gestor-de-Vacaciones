@@ -18,8 +18,15 @@
         <div class="content-wrapper" style="min-height: 100vh;">
             <div class="content-header">
                 <div class="container">
-                    <div class="col-sm-6">
-                        <h1 class="m-0"> Registro de la empresa</h1>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">{{ "companyRegistration.title"|trans }}</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="navbar-nav navbar-no-expand ml-auto" style="justify-content: flex-end">
+                                {{ include('language.html.twig') }}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -35,21 +42,21 @@
                             <div class="step">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">1</span>
-                                    <span class="bs-stepper-label">Datos de la empresa</span>
+                                    <span class="bs-stepper-label">{{ "companyRegistration.company.title"|trans }}</span>
                                 </button>
                             </div>
                             <div class="line"></div>
                             <div class="step active">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">2</span>
-                                    <span class="bs-stepper-label" style="color: #007bff">Datos de los departamentos</span>
+                                    <span class="bs-stepper-label" style="color: #007bff">{{ "companyRegistration.departments.title"|trans }}</span>
                                 </button>
                             </div>
                             <div class="line"></div>
                             <div class="step">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">3</span>
-                                    <span class="bs-stepper-label">Datos del administrador</span>
+                                    <span class="bs-stepper-label">{{ "companyRegistration.admin.title"|trans }}</span>
                                 </button>
                             </div>
                         </div>
@@ -60,13 +67,13 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Datos de los departamentos</h3>
+                                    <h3 class="card-title">{{ "companyRegistration.departments.title"|trans }}</h3>
                                 </div>
 
                                 {{ form_start(form) }}
                                 <div class="card-body">
                                     <div class="row">
-                                        <label class="col-md-4">Añadir departamentos</label>
+                                        <label class="col-md-4">{{ "companyRegistration.departments.addDepartments"|trans }}</label>
                                     </div>
                                     <div class="row">
                                         <p></p>
@@ -113,7 +120,7 @@
 
 
                                 <div class="card-footer">
-                                    <a href="{{ path('app_register_company_admin') }}" type="submit" class="btn btn-primary">Siguiente</a>
+                                    <a href="{{ path('app_register_company_admin', {companyId: companyId}) }}" type="submit" class="btn btn-primary">{{ "action.next"|trans }}</a>
                                 </div>
                                 {{ form_end(form) }}
 

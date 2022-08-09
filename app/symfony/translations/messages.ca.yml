@@ -151,3 +151,25 @@ changePass:
     passIncorrect: Contrasenya actual incorrecta
     newPassIncorrect: Nova contrasenya incorrecta
     passHelp: La contrasenya ha de tenir com a mínim 8 caràcters amb majúscules, minúscules i números
+companyRegistration:
+  title: Registre de l'empresa
+  company:
+    title: Dades de l'empresa
+    name: Nom
+    cif: CIF
+    phone: Telèfon
+    direction: Direcció
+    postalCode: Codi postal
+  departments:
+    title: Dades dels departaments
+    addDepartments: Afegir departaments
+    name: Nom del departament
+    code: Codi del departament
+  admin:
+    title: Dades de l'administrador
+    email: Email
+    password: Contrasenya
+    passwordIncorrect: Contrasenya incorrecta
+homePage:
+  login: Iniciar sessió
+  registerCompany: Registrar nova empresa

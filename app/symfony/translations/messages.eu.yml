@@ -147,7 +147,29 @@ changePass:
   pass: Uneko pasahitza
   newPass: Pasahitza berria
   button: Pasahitza aldatu
-  login: Saio ireki
+  login: Saioa ireki
   passIncorrect: Uneko pasahitz okerra
   newPassIncorrect: Pasahitz berri okerra
   passHelp: Pasahitzak gutxienez 8 karaktere izan behar ditu maiuskula, minuskula eta zenbakiekin
+companyRegistration:
+  title: Enpresaren erregistroa
+  company:
+    title: Enpresaren datuak
+    name: Izena
+    cif: CIF
+    phone: Telefonoa
+    direction: Helbidea
+    postalCode: Postal kodea
+  departments:
+    title: Departamentuen datuak
+    addDepartments: Departamentuak gehitu
+    name: Departamentuaren izena
+    code: Departamentuaren kodea
+  admin:
+    title: Administratzailearen datuak
+    email: Posta elektronikoa
+    password: Pasahitza
+    passwordIncorrect: Pasahitz okerra
+homePage:
+  login: Saioa ireki
+  registerCompany: Enpresa berria erregistratu

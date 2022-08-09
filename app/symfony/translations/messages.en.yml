@@ -151,3 +151,25 @@ changePass:
   passIncorrect: Wrong current password
   newPassIncorrect: Wrong new password
   passHelp: The password must be at least 8 characters long with upper and lower case letters and numbers
+companyRegistration:
+  title: Company registration
+  company:
+    title: Company data
+    name: Name
+    cif: CIF
+    phone: Telephone
+    direction: Direction
+    postalCode: Postal code
+  departments:
+    title: Departments data
+    addDepartments: Add departments
+    name: Department name
+    code: Department code
+  admin:
+    title: Admin data
+    email: Email
+    password: Password
+    passwordIncorrect: Wrong password
+homePage:
+  login: Log in
+  registerCompany: Register new company
