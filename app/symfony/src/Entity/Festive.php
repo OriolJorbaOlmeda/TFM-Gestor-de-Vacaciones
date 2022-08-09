@@ -21,7 +21,7 @@ class Festive
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\ManyToMany(targetEntity: Calendar::class, inversedBy: 'festives')]
+    #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'festives')]
     private $calendar;
 
     public function __construct()
