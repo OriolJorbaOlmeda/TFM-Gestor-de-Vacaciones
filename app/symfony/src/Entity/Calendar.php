@@ -32,7 +32,7 @@ class Calendar
     #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: Petition::class)]
     private $petitions;
 
-    #[ORM\ManyToMany(targetEntity: Festive::class, mappedBy: 'calendar',cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: Festive::class, cascade: ["persist"], fetch: "EAGER")]
     private $festives;
 
     #[ORM\Column(type: 'string', length: 255)]
