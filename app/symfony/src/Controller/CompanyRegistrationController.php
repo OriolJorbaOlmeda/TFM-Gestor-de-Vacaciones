@@ -96,13 +96,15 @@ class CompanyRegistrationController extends AbstractController
     public function registerCompanyAdmin(string $companyId, Request $request): Response
     {
         $user = new User();
-        $form = $this->createForm(CreateAdminType::class, $user);
+        $form = $this->createForm(CreateAdminType::class, $user,[
+            'csrf_protection' => false,
+        ]);
         $form->handleRequest($request);
 
         $company = $this->companyRepository->findOneBy(['id' => $companyId]);
         $adminDepartment = $company->getDepartments()[0];
         
-        if ($form->isSubmitted() && $form->get('email')->isValid() && $form->get('password')->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             // Rellenamos lo necesario
             $user->setPassword($this->passwordHasher->hashPassword($user, $user->getPassword()));
