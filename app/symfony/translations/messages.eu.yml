@@ -2,6 +2,9 @@ action:
   save: Gorde
   select: -- Aukeratu --
   search: Bilatu
+  next: Jarraitu
+  add: Gehitu
+  finish: Amaitu
 general:
   applicationTitle: GetYourVacations
   logout: Saioa itxi

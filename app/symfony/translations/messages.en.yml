@@ -2,6 +2,9 @@ action:
   save: Save
   select: -- Select --
   search: Search
+  next: Next
+  add: Add
+  finish: Finish
 general:
   applicationTitle: GetYourVacations
   logout: Log out

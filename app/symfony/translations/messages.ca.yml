@@ -2,6 +2,9 @@ action:
   save: Guardar
   select: -- Seleccionar --
   search: Cercar
+  next: Següent
+  add: Afegir
+  finish: Finalitzar
 general:
   applicationTitle: GetYourVacations
   logout: Tancar sessió
