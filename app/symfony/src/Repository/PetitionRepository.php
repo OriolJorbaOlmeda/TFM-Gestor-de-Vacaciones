@@ -62,6 +62,7 @@ class PetitionRepository extends ServiceEntityRepository
             ->setParameter('type', "VACATION")
             ->setMaxResults($limit)
             ->setFirstResult($offset)
+            ->orderBy('i.petition_date', 'DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -81,6 +82,7 @@ class PetitionRepository extends ServiceEntityRepository
             ->setParameter('type', "ABSENCE")
             ->setMaxResults($limit)
             ->setFirstResult($offset)
+            ->orderBy('i.petition_date', 'DESC')
             ->getQuery()
             ->getResult()
             ;

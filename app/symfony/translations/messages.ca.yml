@@ -2,6 +2,9 @@ action:
   save: Guardar
   select: -- Seleccionar --
   search: Cercar
+  next: Següent
+  add: Afegir
+  finish: Finalitzar
 general:
   applicationTitle: GetYourVacations
   logout: Tancar sessió
@@ -158,3 +161,25 @@ error:
     message1: Ho sentim, es denega el teu accés per motius de seguretat del nostre servidor i també de les nostres dades sensibles
     message2: Torneu a la pàgina anterior per continuar navegant
     goBack: Tornar
+companyRegistration:
+  title: Registre de l'empresa
+  company:
+    title: Dades de l'empresa
+    name: Nom
+    cif: CIF
+    phone: Telèfon
+    direction: Direcció
+    postalCode: Codi postal
+  departments:
+    title: Dades dels departaments
+    addDepartments: Afegir departaments
+    name: Nom del departament
+    code: Codi del departament
+  admin:
+    title: Dades de l'administrador
+    email: Email
+    password: Contrasenya
+    passwordIncorrect: Contrasenya incorrecta
+homePage:
+  login: Iniciar sessió
+  registerCompany: Registrar nova empresa

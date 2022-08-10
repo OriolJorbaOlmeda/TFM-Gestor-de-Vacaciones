@@ -2,6 +2,9 @@ action:
   save: Save
   select: -- Select --
   search: Search
+  next: Next
+  add: Add
+  finish: Finish
 general:
   applicationTitle: GetYourVacations
   logout: Log out
@@ -158,3 +161,25 @@ error:
   message1: Sorry, your access is refused due to security reasons of our server and also our sensitive data.
   message2: Please go back to the previous page to continue browsing.
   goBack: Go Back
+companyRegistration:
+  title: Company registration
+  company:
+    title: Company data
+    name: Name
+    cif: CIF
+    phone: Telephone
+    direction: Direction
+    postalCode: Postal code
+  departments:
+    title: Departments data
+    addDepartments: Add departments
+    name: Department name
+    code: Department code
+  admin:
+    title: Admin data
+    email: Email
+    password: Password
+    passwordIncorrect: Wrong password
+homePage:
+  login: Log in
+  registerCompany: Register new company
