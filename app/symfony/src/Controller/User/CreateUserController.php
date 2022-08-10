@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\User;
 use App\Events\UserRegistrationEvent;
 use App\Form\UserRegistrationType;
+use App\Modules\User\Application\CreateUser;
 use App\Modules\User\Infrastucture\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -17,8 +18,7 @@ class CreateUserController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository,
-        private EventDispatcherInterface $dispatcher
+        private CreateUser $createUser
 
     ) {}
 
@@ -30,17 +30,12 @@ class CreateUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$pass = $form->get('password')->getData();
+
             $password = $this->randomPassword();
-            $user->setPassword($passwordHasher->hashPassword($user, $password));
-            $user->setPendingVacationDays($user->getTotalVacationDays());
-
             $roles = $form->get('roles')->getData();
-            $user->setRoles([$roles]);
 
-            $this->userRepository->add($user, true);
+            $this->createUser->__invoke($user, $password, $roles);
 
-            $this->dispatcher->dispatch(new UserRegistrationEvent($this->getUser()->getEmail(),$user->getEmail(), $user->getName(), $password ));
             return $this->redirectToRoute('app_dashboard');
         }
 
