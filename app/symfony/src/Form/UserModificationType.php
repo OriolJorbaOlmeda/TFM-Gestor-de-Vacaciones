@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Modules\User\Infrastucture\UserRepository;
 use App\Repository\DepartmentRepository;
-use App\Repository\UserRepository;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

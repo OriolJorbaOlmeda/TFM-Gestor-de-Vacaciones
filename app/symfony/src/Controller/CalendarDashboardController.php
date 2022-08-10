@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Form\SearchByDepartmentType;
+use App\Modules\User\Infrastucture\UserRepository;
 use App\Repository\CalendarRepository;
 use App\Repository\PetitionRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,7 +2,8 @@
 
 namespace App\Modules\User\Application;
 
-use App\Repository\UserRepository;
+
+use App\Modules\User\Infrastucture\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
 

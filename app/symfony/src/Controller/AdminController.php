@@ -7,7 +7,7 @@ use App\Events\UserRegistrationEvent;
 use App\Form\SelectUserType;
 use App\Form\UserModificationType;
 use App\Form\UserRegistrationType;
-use App\Repository\UserRepository;
+use App\Modules\User\Infrastucture\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
