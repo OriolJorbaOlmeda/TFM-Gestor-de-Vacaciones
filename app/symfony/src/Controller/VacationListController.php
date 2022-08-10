@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Repository\CalendarRepository;
 use App\Repository\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,8 @@ class VacationListController extends AbstractController
 {
     public function __construct(
         private PetitionRepository $petitionRepository,
-        private CalendarRepository $calendarRepository
+        private CalendarRepository $calendarRepository,
+        private GetPendingPetitions $getPendingPetitions
     ){}
 
     #[Route('/employee/vacation', name: 'app_employee_vacation')]
@@ -53,13 +55,7 @@ class VacationListController extends AbstractController
             }
 
             //Para el caso de SUPERVISOR para poner en el panel
-            $num_petitions = 0;
-            if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-                $petitions = $this->petitionRepository->findBy(
-                    ['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]
-                );
-                $num_petitions = count($petitions);
-            }
+            $num_petitions = $this->getPendingPetitions->__invoke();
         }
 
 

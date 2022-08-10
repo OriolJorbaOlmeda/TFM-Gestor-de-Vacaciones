@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Repository\CalendarRepository;
-use App\Repository\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +13,7 @@ class EmployeeController extends AbstractController
 
     public function __construct(
         private CalendarRepository $calendarRepository,
-        private PetitionRepository $petitionRepository
+        private GetPendingPetitions $getPendingPetitions
     ) {}
 
     #[Route('/employee/dashboard', name: 'app_employee_dashboard')]
@@ -25,13 +25,7 @@ class EmployeeController extends AbstractController
         $user_information = $this->getUser();
         $dias_utilizados = $user_information->getTotalVacationDays() - $user_information->getPendingVacationDays();
         //Para el caso de SUPERVISOR para poner en el panel
-        $num_petitions = 0;
-        if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(
-                ['supervisor' => $this->getUser(), 'state' => $this->getParameter('pending')]
-            );
-            $num_petitions = count($petitions);
-        }
+        $num_petitions = $this->getPendingPetitions->__invoke();
 
             if (is_null($calendar)) {
                 return $this->render('empleado/home.html.twig', [
