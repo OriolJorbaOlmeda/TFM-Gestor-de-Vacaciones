@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Modules\Festive\Infrastucture;
 
 use App\Entity\Festive;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

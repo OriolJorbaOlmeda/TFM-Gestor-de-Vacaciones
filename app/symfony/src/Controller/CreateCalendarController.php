@@ -7,7 +7,7 @@ use App\Entity\Festive;
 use App\Modules\Calendar\Infrastucture\Form\CalendarType;
 use App\Modules\Festive\Infrastucture\Form\FestiveType;
 use App\Repository\CalendarRepository;
-use App\Repository\FestiveRepository;
+use App\Modules\Festive\Infrastucture\FestiveRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
