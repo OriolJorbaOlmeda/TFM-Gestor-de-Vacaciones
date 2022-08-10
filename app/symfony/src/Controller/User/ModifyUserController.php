@@ -4,6 +4,7 @@ namespace App\Controller\User;
 
 use App\Form\SelectUserType;
 use App\Form\UserModificationType;
+use App\Modules\User\Application\ModifyUser;
 use App\Modules\User\Infrastucture\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +15,12 @@ class ModifyUserController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository
+        private ModifyUser $modifyUser
 
     ) {}
 
     #[Route('/admin/modificar_usuario', name: 'app_admin_modify-user')]
-    public function modifyUser(
-        Request $request,
-    ): Response {
+    public function modifyUser(Request $request): Response {
         $departments = $this->getUser()->getDepartment()->getCompany()->getDepartments();
 
         $choices = [];
@@ -51,16 +50,17 @@ class ModifyUserController extends AbstractController
     #[Route('/admin/modificar_usuario/{userid}', name: 'app_admin_edit-user')]
     public function editUser(string $userid, Request $request): Response
     {
-        $user = $this->userRepository->findOneBy(array('id' => $userid));
+        $user = $this->modifyUser->getUserById($userid);
+
         $form = $this->createForm(UserModificationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $roles = $form->get('roles')->getData();
-            $user->setRoles([$roles]);
 
-            $this->userRepository->add($user, true);
+            $this->modifyUser->__invoke($user, $roles);
+
             return $this->redirectToRoute('app_dashboard');
         }
 
