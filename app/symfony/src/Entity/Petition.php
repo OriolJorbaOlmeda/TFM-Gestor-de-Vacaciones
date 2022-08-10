@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\PetitionRepository;
+use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

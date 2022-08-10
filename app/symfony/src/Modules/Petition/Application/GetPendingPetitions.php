@@ -2,7 +2,7 @@
 
 namespace App\Modules\Petition\Application;
 
-use App\Repository\PetitionRepository;
+use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Security;
 

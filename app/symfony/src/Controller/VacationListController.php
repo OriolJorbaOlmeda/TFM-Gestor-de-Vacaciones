@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Repository\CalendarRepository;
-use App\Repository\PetitionRepository;
+use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
