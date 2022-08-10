@@ -27,6 +27,12 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('app_admin_dashboard');
     }
 
+    #[Route('/admin/dashboard', name: 'app_admin_dashboard')]
+    public function dashboard(): Response
+    {
+        return $this->render('admin/home.html.twig');
+    }
+
 
     #[Route('/change_locale/{locale}', name: 'change_locale')]
     public function changeLocale($locale, Request $request)
