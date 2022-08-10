@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Modules\Calendar\Infrastucture\Form;
 
 use App\Entity\Calendar;
 use Symfony\Component\Form\AbstractType;
@@ -11,9 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use DateTime;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CalendarType extends AbstractType

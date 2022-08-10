@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Calendar;
 use App\Entity\Festive;
-use App\Form\CalendarType;
+use App\Modules\Calendar\Infrastucture\Form\CalendarType;
 use App\Modules\Festive\Infrastucture\Form\FestiveType;
 use App\Repository\CalendarRepository;
 use App\Repository\FestiveRepository;
