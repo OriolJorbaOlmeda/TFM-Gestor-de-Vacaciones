@@ -39,3 +39,7 @@ services:
     App\Listeners\UserRegisteredListener:
         tags:
             - { name: kernel.event_listener }
+
+    App\Listeners\ChangePasswordListener:
+        tags:
+            - { name: kernel.event_listener }

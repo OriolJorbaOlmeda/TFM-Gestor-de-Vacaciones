@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Events\ChangePasswordEvent;
+use App\Events\UserRegistrationEvent;
 use App\Form\ChangePasswordType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -16,7 +19,8 @@ class SecurityController extends AbstractController
 
     public function __construct(
         private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher,
+        private EventDispatcherInterface $dispatcher
     ) {}
 
     #[Route(path: '/login', name: 'app_login')]
@@ -51,6 +55,8 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ChangePasswordType::class, []);
         $form->handleRequest($request);
 
+        $userLogged = $this->getUser();
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -58,6 +64,8 @@ class SecurityController extends AbstractController
             $user = $this->userRepository->findOneBy(['id' => $this->getUser()->getId()]);
             $user->setPassword($this->passwordHasher->hashPassword($user, $newPass));
             $this->userRepository->add($user, true);
+
+            $this->dispatcher->dispatch(new ChangePasswordEvent($userLogged->getEmail(),$form->get('new_password')->getData()));
 
             return $this->redirectToRoute('app_login');
         }
