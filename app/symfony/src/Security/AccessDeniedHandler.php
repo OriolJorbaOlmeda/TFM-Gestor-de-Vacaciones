@@ -9,13 +9,27 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
 
+
+    protected $twig;
+    public function __construct( Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
 
-        return new Response("El usuario no puede acceder", 403);
+        $response = new Response($this->twig->render(
+            'security/error_access.html.twig'));
+        return $response;
     }
+
+
+
 }

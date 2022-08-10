@@ -74,7 +74,9 @@ class AdminController extends AbstractController
 
         $choices = [];
         foreach ($departments as $choice) {
+            if(!str_contains(strtolower($choice->getName()),'admin')){
             $choices[$choice->getName()] = $choice->getId();
+            }
         }
 
         $form = $this->createForm(SelectUserType::class, $choices);
@@ -131,7 +133,9 @@ class AdminController extends AbstractController
         $users = $this->userRepository->findBy(['department' => $departmentId]);
         $result = [];
         foreach ($users as $user) {
-            $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
+            if($user->getRoles()[0]!='ROLE_ADMIN') {
+                $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
+            }
 
         }
 

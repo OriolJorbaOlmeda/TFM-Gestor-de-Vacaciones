@@ -50,7 +50,6 @@ createUser:
   title: Dar de alta usuario
   subtitle1: Datos personales
   subtitle2: Datos de la empresa
-
 modifyUser:
   title: Modificar usuario
   user: Usuario
@@ -120,6 +119,7 @@ homeEmployee:
   vacations: Vacaciones
   absences: Ausencias
   festives: Días festivos
+  notcalendar: No tenies ningún calendario activo
 navbarEmployee:
   vacationList: Mis vacaciones
   calendar: Calendario
@@ -154,6 +154,12 @@ changePass:
   passIncorrect: Contraseña actual incorrecta
   newPassIncorrect: Nueva contraseña incorrecta
   passHelp: La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números
+error:
+  statuscode: Status Code
+  sorry: OPPSSS!!!! Lo siento...
+  message1: Lo sentimos, su acceso ha sido denegado por razones de seguridad de nuestro servidor y también de nuestros datos confidenciales.
+  message2: Vuelve a la página anterior para seguir navegando.
+  goBack: Volver
 companyRegistration:
   title: Registro de la empresa
   company:

@@ -120,6 +120,7 @@ homeEmployee:
   vacations: Oporrak
   absences: Abstentziak
   festives: Jai egunak
+  notcalendar: No tenies ningún calendario activo
 navbarEmployee:
   vacationList: Nire oporrak
   calendar: Egutegia
@@ -154,6 +155,12 @@ changePass:
   passIncorrect: Uneko pasahitz okerra
   newPassIncorrect: Pasahitz berri okerra
   passHelp: Pasahitzak gutxienez 8 karaktere izan behar ditu maiuskula, minuskula eta zenbakiekin
+error:
+  statuscode: Kodearen egoera
+  sorry: OPPSSS!!!! Parkatu...
+  message1: Sentitzen dugu, zure sarbidea ukatu dugu gure zerbitzariaren segurtasun arrazoiengatik eta baita gure datu konfidentzialengatik.
+  message2: Joan aurreko orrialdera nabigatzen jarraitzeko.
+  goBack: Itzuli
 companyRegistration:
   title: Enpresaren erregistroa
   company:

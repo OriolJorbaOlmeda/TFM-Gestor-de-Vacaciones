@@ -40,7 +40,9 @@ class SelectUserType extends AbstractType
                 $usersName = [];
                 $users = $this->userRepository->findAll();
                  foreach ($users as $user) {
-                     $usersName[$user->getName()] = $user->getId();
+                     if($user->getRoles()[0]!='ROLE_ADMIN') {
+                         $usersName[$user->getName()] = $user->getId();
+                     }
                  }
                 $form = $event->getForm();
 
