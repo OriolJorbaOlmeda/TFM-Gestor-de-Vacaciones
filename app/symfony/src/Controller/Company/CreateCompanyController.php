@@ -3,8 +3,8 @@
 namespace App\Controller\Company;
 
 use App\Entity\Company;
-use App\Form\CompanyType;
 use App\Modules\Company\Application\CreateCompany;
+use App\Modules\Company\Infrastucture\Form\CompanyType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

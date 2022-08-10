@@ -2,14 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
 use App\Entity\Department;
 use App\Entity\User;
-use App\Form\CompanyType;
 use App\Form\CreateAdminType;
 use App\Form\DepartmentType;
 use App\Modules\User\Infrastucture\UserRepository;
-use App\Repository\CompanyRepository;
+use App\Modules\Petition\Infrastucture\CompanyRepository;
 use App\Repository\DepartmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,32 +25,7 @@ class CompanyRegistrationController extends AbstractController
         private UserPasswordHasherInterface $passwordHasher
     ){}
 
-    #[Route('/register_company', name: 'app_register_company')]
-    public function registerCompany(Request $request): Response
-    {
 
-        $company = new Company();
-        $form = $this->createForm(CompanyType::class, $company);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // Le creamos el departamento de administradores por defecto
-            $department = new Department();
-            $department->setName("Admin department");
-            $department->setCode("DEP-01");
-            $company->addDepartment($department);
-
-            $this->companyRepository->add($company, true);
-
-            return $this->redirectToRoute('app_register_company_departments', ['companyId' => $company->getId()]);
-        }
-
-        return $this->render('registro_empresa/registrar_empresa.html.twig', [
-            "form" => $form->createView()
-        ]);
-
-    }
 
     #[Route('/register_company/departments/{companyId}', name: 'app_register_company_departments')]
     public function registerCompanyDepartments(string $companyId, Request $request): Response
