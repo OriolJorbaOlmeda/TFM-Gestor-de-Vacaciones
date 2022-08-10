@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Department;
 use App\Entity\User;
 use App\Form\CreateAdminType;
-use App\Form\DepartmentType;
 use App\Modules\User\Infrastucture\UserRepository;
 use App\Modules\Petition\Infrastucture\CompanyRepository;
 use App\Repository\DepartmentRepository;
@@ -24,32 +22,6 @@ class CompanyRegistrationController extends AbstractController
         private UserRepository $userRepository,
         private UserPasswordHasherInterface $passwordHasher
     ){}
-
-
-
-    #[Route('/register_company/departments/{companyId}', name: 'app_register_company_departments')]
-    public function registerCompanyDepartments(string $companyId, Request $request): Response
-    {
-        $company = $this->companyRepository->findOneBy(['id' => $companyId]);
-
-        $department = new Department();
-        $form = $this->createForm(DepartmentType::class, $department);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $company->addDepartment($department);
-            $this->companyRepository->add($company, true);
-
-            return $this->redirectToRoute('app_register_company_departments', ['companyId' => $companyId]);
-        }
-
-        return $this->render('registro_empresa/registrar_departamentos.html.twig', [
-            'form' => $form->createView(),
-            'companyId' => $companyId,
-            'departments' => $company->getDepartments()
-        ]);
-
-    }
 
 
     #[Route('/register_company/delete_department', name: 'app_delete_department')]
