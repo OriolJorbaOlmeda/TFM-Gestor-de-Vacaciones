@@ -96,9 +96,7 @@ class CompanyRegistrationController extends AbstractController
     public function registerCompanyAdmin(string $companyId, Request $request): Response
     {
         $user = new User();
-        $form = $this->createForm(CreateAdminType::class, $user,[
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(CreateAdminType::class, $user);
         $form->handleRequest($request);
 
         $company = $this->companyRepository->findOneBy(['id' => $companyId]);
