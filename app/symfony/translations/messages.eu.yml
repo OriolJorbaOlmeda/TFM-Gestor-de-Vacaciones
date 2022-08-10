@@ -153,8 +153,8 @@ changePass:
   newPassIncorrect: Pasahitz berri okerra
   passHelp: Pasahitzak gutxienez 8 karaktere izan behar ditu maiuskula, minuskula eta zenbakiekin
 error:
-  statuscode: Status Code
-  sorry: OPPSSS!!!! Lo siento...
-  message1: Lo sentimos, su acceso ha sido denegado por razones de seguridad de nuestro servidor y también de nuestros datos confidenciales.
-  message2: Vuelve a la página anterior para seguir navegando.
-  goBack: Volver
+  statuscode: Kodearen egoera
+  sorry: OPPSSS!!!! Parkatu...
+  message1: Sentitzen dugu, zure sarbidea ukatu dugu gure zerbitzariaren segurtasun arrazoiengatik eta baita gure datu konfidentzialengatik.
+  message2: Joan aurreko orrialdera nabigatzen jarraitzeko.
+  goBack: Itzuli
