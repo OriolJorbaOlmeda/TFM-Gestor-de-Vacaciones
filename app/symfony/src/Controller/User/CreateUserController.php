@@ -3,12 +3,9 @@
 namespace App\Controller\User;
 
 use App\Entity\User;
-use App\Events\UserRegistrationEvent;
-use App\Form\UserRegistrationType;
 use App\Modules\User\Application\CreateUser;
-use App\Modules\User\Infrastucture\UserRepository;
+use App\Modules\User\Infrastucture\Form\UserRegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
