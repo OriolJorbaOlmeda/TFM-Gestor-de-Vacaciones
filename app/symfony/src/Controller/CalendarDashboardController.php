@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\SearchByDepartmentType;
+use App\Modules\Calendar\Infrastucture\Form\SearchByDepartmentType;
 use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Modules\User\Infrastucture\UserRepository;
 use App\Modules\Calendar\Infrastucture\CalendarRepository;
