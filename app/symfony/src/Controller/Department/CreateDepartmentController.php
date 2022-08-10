@@ -5,7 +5,7 @@ namespace App\Controller\Department;
 use App\Entity\Department;
 use App\Form\DepartmentType;
 use App\Modules\Department\Application\CreateDepartment;
-use App\Modules\Petition\Infrastucture\CompanyRepository;
+use App\Modules\Company\Infrastucture\CompanyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

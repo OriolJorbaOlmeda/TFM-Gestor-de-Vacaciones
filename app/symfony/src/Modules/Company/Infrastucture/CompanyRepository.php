@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Petition\Infrastucture;
+namespace App\Modules\Company\Infrastucture;
 
 use App\Entity\Company;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

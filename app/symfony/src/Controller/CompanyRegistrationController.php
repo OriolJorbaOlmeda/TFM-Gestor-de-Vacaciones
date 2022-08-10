@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\CreateAdminType;
 use App\Modules\User\Infrastucture\UserRepository;
-use App\Modules\Petition\Infrastucture\CompanyRepository;
+use App\Modules\Company\Infrastucture\CompanyRepository;
 use App\Repository\DepartmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

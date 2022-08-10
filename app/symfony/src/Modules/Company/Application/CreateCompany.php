@@ -3,7 +3,7 @@
 namespace App\Modules\Company\Application;
 
 use App\Entity\Department;
-use App\Modules\Petition\Infrastucture\CompanyRepository;
+use App\Modules\Company\Infrastucture\CompanyRepository;
 
 class CreateCompany
 {

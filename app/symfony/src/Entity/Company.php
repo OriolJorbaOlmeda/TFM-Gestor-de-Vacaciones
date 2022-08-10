@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Modules\Petition\Infrastucture\CompanyRepository;
+use App\Modules\Company\Infrastucture\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
