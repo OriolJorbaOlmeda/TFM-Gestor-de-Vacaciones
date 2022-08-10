@@ -2,10 +2,9 @@
 
 namespace App\Controller\User;
 
-use App\Form\SelectUserType;
-use App\Form\UserModificationType;
 use App\Modules\User\Application\ModifyUser;
-use App\Modules\User\Infrastucture\UserRepository;
+use App\Modules\User\Infrastucture\Form\SelectUserType;
+use App\Modules\User\Infrastucture\Form\UserModificationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

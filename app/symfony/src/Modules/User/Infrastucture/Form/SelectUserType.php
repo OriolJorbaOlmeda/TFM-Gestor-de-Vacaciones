@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Modules\User\Infrastucture\Form;
 
 use App\Modules\User\Infrastucture\UserRepository;
 use Symfony\Component\Form\AbstractType;
