@@ -6,7 +6,7 @@ use App\Entity\Petition;
 use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Modules\Petition\Infrastucture\Form\RequestVacationFormType;
 use App\Modules\User\Infrastucture\UserRepository;
-use App\Repository\CalendarRepository;
+use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

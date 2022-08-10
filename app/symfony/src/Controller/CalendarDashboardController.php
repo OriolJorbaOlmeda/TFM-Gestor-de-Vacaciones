@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Form\SearchByDepartmentType;
 use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Modules\User\Infrastucture\UserRepository;
-use App\Repository\CalendarRepository;
+use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
