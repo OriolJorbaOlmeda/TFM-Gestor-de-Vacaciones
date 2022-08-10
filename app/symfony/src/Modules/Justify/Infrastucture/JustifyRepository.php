@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Modules\Justify\Infrastucture;
 
 use App\Entity\Justify;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
