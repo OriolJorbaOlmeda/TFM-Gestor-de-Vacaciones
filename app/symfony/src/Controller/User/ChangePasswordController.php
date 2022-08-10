@@ -3,9 +3,8 @@
 namespace App\Controller\User;
 
 use App\Form\ChangePasswordType;
-use App\Repository\UserRepository;
+use App\Modules\User\Application\ChangePassword;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,8 +13,7 @@ class ChangePasswordController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher
+        private ChangePassword $changePassword
     ) {}
 
     #[Route('/change_password', name: 'app_change_password')]
@@ -28,9 +26,8 @@ class ChangePasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $newPass = $form->get('new_password')->getData();
-            $user = $this->userRepository->findOneBy(['id' => $this->getUser()->getId()]);
-            $user->setPassword($this->passwordHasher->hashPassword($user, $newPass));
-            $this->userRepository->add($user, true);
+
+            $this->changePassword->__invoke($newPass);
 
             return $this->redirectToRoute('app_login');
         }
