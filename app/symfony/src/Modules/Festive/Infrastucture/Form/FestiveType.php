@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Modules\Festive\Infrastucture\Form;
 
 use App\Entity\Festive;
 use Symfony\Component\Form\AbstractType;

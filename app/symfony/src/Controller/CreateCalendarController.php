@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Calendar;
 use App\Entity\Festive;
 use App\Form\CalendarType;
-use App\Form\FestiveType;
+use App\Modules\Festive\Infrastucture\Form\FestiveType;
 use App\Repository\CalendarRepository;
 use App\Repository\FestiveRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
