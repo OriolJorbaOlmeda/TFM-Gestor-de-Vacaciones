@@ -4,7 +4,7 @@ namespace App\Modules\User\Infrastucture\Form;
 
 use App\Entity\User;
 use App\Modules\User\Infrastucture\UserRepository;
-use App\Repository\DepartmentRepository;
+use App\Modules\Department\Infrastucture\DepartmentRepository;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

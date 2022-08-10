@@ -4,7 +4,7 @@ namespace App\Modules\Department\Application;
 
 use App\Entity\Company;
 use App\Entity\Department;
-use App\Repository\DepartmentRepository;
+use App\Modules\Department\Infrastucture\DepartmentRepository;
 
 class CreateDepartment
 {
