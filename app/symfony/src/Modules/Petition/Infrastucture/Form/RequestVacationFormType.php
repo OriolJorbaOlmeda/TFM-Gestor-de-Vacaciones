@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Modules\Petition\Infrastucture\Form;
 
 use App\Entity\Petition;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

@@ -4,8 +4,8 @@ namespace App\Controller\Petition;
 
 use App\Entity\Justify;
 use App\Entity\Petition;
-use App\Form\RequestAbsenceFormType;
 use App\Modules\Petition\Application\GetPendingPetitions;
+use App\Modules\Petition\Infrastucture\Form\RequestAbsenceFormType;
 use App\Modules\User\Infrastucture\UserRepository;
 use App\Repository\CalendarRepository;
 use App\Repository\PetitionRepository;
