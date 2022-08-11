@@ -24,18 +24,7 @@ class CompanyRegistrationController extends AbstractController
     ){}
 
 
-    #[Route('/register_company/delete_department', name: 'app_delete_department')]
-    public function deleteDepartment(Request $request): Response
-    {
-        $companyId = $request->get('companyId');
-        $departmentId = $request->get('departmentId');
 
-        $department = $this->departmentRepository->findOneBy(['id' => $departmentId]);
-
-        $this->departmentRepository->remove($department, true);
-
-        return $this->redirectToRoute('app_register_company_departments', ['companyId' => $companyId]);
-    }
 
     #[Route('/register_company/admin/{companyId}', name: 'app_register_company_admin')]
     public function registerCompanyAdmin(string $companyId, Request $request): Response
