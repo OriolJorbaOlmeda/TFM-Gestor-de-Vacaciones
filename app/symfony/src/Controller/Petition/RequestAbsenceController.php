@@ -2,16 +2,14 @@
 
 namespace App\Controller\Petition;
 
-use App\Entity\Justify;
 use App\Entity\Petition;
 use App\Modules\Calendar\Application\GetCalendarByDates;
 use App\Modules\Calendar\Application\GetCurrentCalendar;
+use App\Modules\Justify\Application\CreateJustify;
 use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Modules\Petition\Application\RequestAbsence;
 use App\Modules\Petition\Infrastucture\Form\RequestAbsenceFormType;
-use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,12 +19,12 @@ class RequestAbsenceController extends AbstractController
 {
 
     public function __construct(
-        private PetitionRepository $petitionRepository,
         private TranslatorInterface $translator,
         private GetPendingPetitions $getPendingPetitions,
         private GetCurrentCalendar $getCurrentCalendar,
         private GetCalendarByDates $getCalendarByDates,
-        private RequestAbsence $requestAbsence
+        private RequestAbsence $requestAbsence,
+        private CreateJustify $createJustify
     ){}
 
 
@@ -63,30 +61,8 @@ class RequestAbsenceController extends AbstractController
 
                 $updatedFile = $form->get('justify_content')->getData();
 
-                if ($updatedFile) {
-                    $originalFilename = $updatedFile->getClientOriginalName();
-                    $destination = $this->getParameter('documents');
-                    $RandomAccountNumber = uniqid();
-                    $fileSaveName = $RandomAccountNumber . '_' . $originalFilename;
+                $this->createJustify->createJustify($updatedFile, $petition);
 
-                    try {
-                        $updatedFile->move(
-                            $destination,
-                            $fileSaveName
-                        );
-                        $file = $form->get('justify_content')->getData();
-
-                        $justify = new Justify();
-                        $justify->setTitle($fileSaveName);
-                        $justify->setContent($file);
-
-                        $petition->setJustify($justify);
-                    } catch (FileException $e) {
-                        return new Response($e->getMessage());
-                    }
-                }
-
-                $this->petitionRepository->add($petition, true);
                 return $this->redirectToRoute('app_employee_vacation', ['pagVac' => 1, 'pagAbs' => 1]);
             }
 
