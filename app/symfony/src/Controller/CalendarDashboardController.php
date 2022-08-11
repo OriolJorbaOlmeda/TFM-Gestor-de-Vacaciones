@@ -76,19 +76,7 @@ class CalendarDashboardController extends AbstractController
 
     }
 
-    #[Route('/employee/getUsers', name: 'app_employee_get')]
-    public function getUsers(Request $request): Response
-    {
-        $departmentId = $request->request->get('id');
-        $users = $this->userRepository->findBy(['department' => $departmentId]);
-        $result = [];
-        foreach ($users as $user) {
-            $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
-        }
 
-
-        return new JsonResponse(["users" => $result]);
-    }
 
 
 

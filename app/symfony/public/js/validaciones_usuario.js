@@ -108,7 +108,7 @@ if (department != null) {
 function addSupervisors(departmentId) {
     $.ajax({
         type: 'POST',
-        url: '/admin/get_supervisors',
+        url: '/getSupervisors',
         async: true,
         data: ({department_id: departmentId}),
         datatype: 'json',

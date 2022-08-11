@@ -17,22 +17,32 @@ class UserAPIController extends AbstractController
     ) {}
 
 
-    #[Route('/admin/getUsers', name: 'app_admin_prueba')]
-    public function getUsers(Request $request): Response
+    #[Route('/getEmployees', name: 'app_get_employees')]
+    public function getEmployees(Request $request): Response
     {
         $departmentId = $request->request->get('id');
 
-        $result = $this->searchUser->searchUsersByDepartment($departmentId);
+        $result = $this->searchUser->searchEmployeesByDepartment($departmentId);
 
         return new JsonResponse(["users" => $result]);
     }
 
-    #[Route('/admin/get_supervisors', name: 'app_admin_get_supervisors')]
+    #[Route('/getSupervisors', name: 'app_get_supervisors')]
     public function getSupervisors(Request $request): Response
     {
         $departmentId = $request->request->get('department_id');
 
         $result = $this->searchUser->searchSupervisorsByDepartment($departmentId);
+
+        return new JsonResponse(["users" => $result]);
+    }
+
+    #[Route('/getUsers', name: 'app_get_users')]
+    public function getUsers(Request $request): Response
+    {
+        $departmentId = $request->request->get('id');
+
+        $result = $this->searchUser->searchUsersByDepartment($departmentId);
 
         return new JsonResponse(["users" => $result]);
     }

@@ -1,7 +1,9 @@
 const selector = document.getElementById("select_user_department");
 const user = document.getElementById("select_user_user");
 
-user.disabled = 'disabled';
+if (user != null){
+    user.disabled = 'disabled';
+}
 
 if(selector!=null) {
     selector.addEventListener("change", (e) => {
@@ -15,7 +17,7 @@ function addSelectUser(departmentId) {
 
     $.ajax({
         type: 'POST',
-        url: '/admin/getUsers',
+        url: '/getEmployees',
         async: true,
         data: ({id: departmentId}),
         datatype: 'json',

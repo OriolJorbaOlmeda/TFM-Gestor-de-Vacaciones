@@ -12,7 +12,7 @@ class SearchUser
         private ContainerInterface $container
     ) {}
 
-    public function searchUsersByDepartment(string $departmentId): array
+    public function searchEmployeesByDepartment(string $departmentId): array
     {
         $users = $this->userRepository->findBy(['department' => $departmentId]);
         $result = [];
@@ -34,6 +34,16 @@ class SearchUser
                 $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
             }
 
+        }
+        return $result;
+    }
+
+    public function searchUsersByDepartment(string $departmentId): array
+    {
+        $users = $this->userRepository->findBy(['department' => $departmentId]);
+        $result = [];
+        foreach ($users as $user) {
+            $result[$user->getId()] = $user->getName() . " " . $user->getLastname();
         }
         return $result;
     }
