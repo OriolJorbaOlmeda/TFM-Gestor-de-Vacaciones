@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Modules\Calendar\Application\GetCurrentCalendar;
 use App\Modules\Calendar\Infrastucture\Form\SearchByDepartmentType;
 use App\Modules\Festive\Application\GetFestivesJSON;
 use App\Modules\Petition\Application\GetPendingPetitions;
-use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,32 +15,24 @@ class CalendarDashboardController extends AbstractController
 {
 
     public function __construct(
-        private CalendarRepository $calendarRepository,
         private GetPendingPetitions $getPendingPetitions,
-        private GetFestivesJSON $getFestivesJSON
+        private GetFestivesJSON $getFestivesJSON,
+        private GetCurrentCalendar $getCurrentCalendar
     ) {}
 
     #[Route('/employee/calendar', name: 'app_employee_calendar')]
     public function calendar(Request $request): Response
     {
-        //Cogemos todos los departamentos de una compañia para mostrarlos en el select
-        $allDepartments = $this->getUser()->getDepartment()->getCompany()->getDepartments();
-        $result = [];
-        foreach ($allDepartments as $department) {
-            $result[$department->getName()] = $department->getId();
-        }
-        $form = $this->createForm(SearchByDepartmentType::class, $result);
+        $form = $this->createForm(SearchByDepartmentType::class, []);
         $form->handleRequest($request);
 
-        //Pillamos la información de la compañia para recoger el calendario
-        $companyId = $this->getUser()->getDepartment()->getCompany();
-        $calendar = $this->calendarRepository->findCurrentCalendar($companyId);
+        //Pillamos el calendario
+        $calendar = $this->getCurrentCalendar->getCurrentCalendar($this->getUser()->getDepartment()->getCompany());
 
 
         if (is_null($calendar)){
             return $this->render('empleado/calendario.html.twig', [
                 "calendar" => 0,
-                "departments" => $allDepartments,
                 "formDepar" => $form->createView(),
                 "festives" => [],
                 'num_petitions' => 0
@@ -48,7 +40,7 @@ class CalendarDashboardController extends AbstractController
         }
 
         $festives = $calendar->getFestives();
-        $festives_company = $this->getFestivesJSON->getFestivesJSON($festives);
+        $festives_json = $this->getFestivesJSON->getFestivesJSON($festives);
 
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
@@ -56,9 +48,8 @@ class CalendarDashboardController extends AbstractController
 
         return $this->render('empleado/calendario.html.twig', [
             "calendar" => 1,
-            "departments" => $allDepartments,
             "formDepar" => $form->createView(),
-            "festives" => $festives_company,
+            "festives" => $festives_json,
             'num_petitions' => $num_petitions
         ]);
 

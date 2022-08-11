@@ -8,17 +8,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SearchByDepartmentType extends AbstractType
 {
-    public function __construct(private TranslatorInterface $translator) {}
+    public function __construct(
+        private TranslatorInterface $translator,
+        private Security $security
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('department', ChoiceType::class, [
-                'choices' => $options['data'],
+                'choices' => $this->getDepartments(),
                 'label' => $this->translator->trans('calendarDashboard.department')
             ]);
 
@@ -45,5 +49,14 @@ class SearchByDepartmentType extends AbstractType
         $resolver->setDefaults([
             // Configure your form options here
         ]);
+    }
+
+    private function getDepartments(): array {
+        $allDepartments = $this->security->getUser()->getDepartment()->getCompany()->getDepartments();
+        $result = [];
+        foreach ($allDepartments as $department) {
+            $result[$department->getName()] = $department->getId();
+        }
+        return $result;
     }
 }
