@@ -68,17 +68,4 @@ class VacationListController extends AbstractController
             'pagAbs' => $pagAbs
         ]);
     }
-
-    #[Route('/employee/delete_petition', name: 'app_employee_delete_petition')]
-    public function deletePetition(Request $request): Response
-    {
-        $petitionId = $request->get('petitionId');
-        $pagVac = $request->get('pagVac');
-        $pagAbs = $request->get('pagAbs');
-
-        $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
-        $this->petitionRepository->remove($petition, true);
-
-        return $this->redirectToRoute('app_employee_vacation', ['pagVac' => $pagVac, 'pagAbs' => $pagAbs]);
-    }
 }
