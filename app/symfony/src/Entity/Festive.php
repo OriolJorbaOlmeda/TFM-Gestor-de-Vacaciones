@@ -24,10 +24,6 @@ class Festive
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'festives')]
     private $calendar;
 
-    public function __construct()
-    {
-        $this->calendar = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -58,26 +54,14 @@ class Festive
         return $this;
     }
 
-    /**
-     * @return Collection<int, Calendar>
-     */
-    public function getCalendar(): Collection
+    public function getCalendar(): ?Calendar
     {
         return $this->calendar;
     }
 
-    public function addCalendar(Calendar $calendar): self
+    public function setCalendar(?Calendar $calendar): self
     {
-        if (!$this->calendar->contains($calendar)) {
-            $this->calendar[] = $calendar;
-        }
-
-        return $this;
-    }
-
-    public function removeCalendar(Calendar $calendar): self
-    {
-        $this->calendar->removeElement($calendar);
+        $this->calendar = $calendar;
 
         return $this;
     }
