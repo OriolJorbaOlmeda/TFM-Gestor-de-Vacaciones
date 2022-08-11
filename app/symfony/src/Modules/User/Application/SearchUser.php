@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Application;
 
+use App\Entity\User;
 use App\Modules\User\Infrastucture\UserRepository;
 use Psr\Container\ContainerInterface;
 
@@ -11,6 +12,11 @@ class SearchUser
         private UserRepository $userRepository,
         private ContainerInterface $container
     ) {}
+
+    public function searchUserById(string $userId): User
+    {
+        return $this->userRepository->findOneBy(['id' => $userId]);
+    }
 
     public function searchEmployeesByDepartment(string $departmentId): array
     {
