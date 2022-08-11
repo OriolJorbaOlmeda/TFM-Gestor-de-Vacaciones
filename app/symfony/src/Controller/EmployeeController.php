@@ -34,44 +34,45 @@ class EmployeeController extends AbstractController
                     "days" => $dias_utilizados,
                     "num_petitions" => $num_petitions
                 ]);
-            } else {
-                $festives = $calendar->getFestives();
-                $festivos_usuario = $this->getUser()->getPetitions();
+            }
 
-                $festives_company = [];
-                $vacation = [];
-                $absence = [];
+            $festives = $calendar->getFestives();
+            $festivos_usuario = $this->getUser()->getPetitions();
 
-                foreach ($festives as $festive) {
-                    $festives_company[$festive->getId()] = [
-                        "name" => $festive->getName(),
-                        "date" => $festive->getDate(),
-                        "initialdate" => $festive->getDate(),
-                        "finaldate" => $festive->getDate(),
+            $festives_company = [];
+            $vacation = [];
+            $absence = [];
+
+            foreach ($festives as $festive) {
+                $festives_company[$festive->getId()] = [
+                    "name" => $festive->getName(),
+                    "date" => $festive->getDate(),
+                    "initialdate" => $festive->getDate(),
+                    "finaldate" => $festive->getDate(),
+                ];
+            }
+            foreach ($festivos_usuario as $festivo_usuario) {
+                if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
+                        'accepted'
+                    ) && $festivo_usuario->getType() == $this->getParameter('vacation')) {
+                    $vacation[$festivo_usuario->getId()] = [
+                        "name" => $festivo_usuario->getReason(),
+                        "date" => $festivo_usuario->getPetitionDate(),
+                        "initialdate" => $festivo_usuario->getInitialDate(),
+                        "finaldate" => $festivo_usuario->getFinalDate(),
                     ];
                 }
-                foreach ($festivos_usuario as $festivo_usuario) {
-                    if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
-                            'accepted'
-                        ) && $festivo_usuario->getType() == $this->getParameter('vacation')) {
-                        $vacation[$festivo_usuario->getId()] = [
-                            "name" => $festivo_usuario->getReason(),
-                            "date" => $festivo_usuario->getPetitionDate(),
-                            "initialdate" => $festivo_usuario->getInitialDate(),
-                            "finaldate" => $festivo_usuario->getFinalDate(),
-                        ];
-                    }
-                    if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
-                            'accepted'
-                        ) && $festivo_usuario->getType() == $this->getParameter('absence')) {
-                        $absence[$festivo_usuario->getId()] = [
-                            "name" => $festivo_usuario->getReason(),
-                            "date" => $festivo_usuario->getPetitionDate(),
-                            "initialdate" => $festivo_usuario->getInitialDate(),
-                            "finaldate" => $festivo_usuario->getFinalDate(),
-                        ];
-                    }
+                if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
+                        'accepted'
+                    ) && $festivo_usuario->getType() == $this->getParameter('absence')) {
+                    $absence[$festivo_usuario->getId()] = [
+                        "name" => $festivo_usuario->getReason(),
+                        "date" => $festivo_usuario->getPetitionDate(),
+                        "initialdate" => $festivo_usuario->getInitialDate(),
+                        "finaldate" => $festivo_usuario->getFinalDate(),
+                    ];
                 }
+
             }
 
 
