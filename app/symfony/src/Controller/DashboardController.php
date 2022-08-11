@@ -28,9 +28,15 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/admin/dashboard', name: 'app_admin_dashboard')]
-    public function dashboard(): Response
+    public function dashboardAdmin(): Response
     {
         return $this->render('admin/home.html.twig');
+    }
+
+    #[Route('/supervisor/dashboard', name: 'app_supervisor_dashboard')]
+    public function dashboardSupervisor(): Response
+    {
+        return $this->redirectToRoute("app_employee_dashboard");
     }
 
 

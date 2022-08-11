@@ -18,11 +18,6 @@ class SupervisorController extends AbstractController
         private UserRepository $userRepository
     ) {}
 
-    #[Route('/supervisor/dashboard', name: 'app_supervisor_dashboard')]
-    public function dashboard(): Response
-    {
-        return $this->redirectToRoute("app_employee_dashboard");
-    }
 
     #[Route('/supervisor/pending_requests', name: 'app_supervisor_pending_requests')]
     public function pendingRequests(): Response
@@ -45,21 +40,6 @@ class SupervisorController extends AbstractController
         ]);
     }
 
-    #[Route('/supervisor/accept_request', name: 'app_supervisor_accept_request')]
-    public function acceptRequest(Request $request): Response
-    {
-
-        $petitionId = $request->get('petitionId');
-        $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
-        $petition->setState($this->getParameter('accepted'));
-        $this->petitionRepository->add($petition, true);
-
-        $duration = $petition->getDuration();
-        $user = $petition->getEmployee();
-        $this->userRepository->updateVacationDays($user, $duration);
-
-        return $this->redirectToRoute("app_supervisor_pending_requests");
-    }
 
     #[Route('/supervisor/deny_request', name: 'app_supervisor_deny_request')]
     public function denyRequest(Request $request): Response
