@@ -46,7 +46,7 @@ class RequestAbsenceController extends AbstractController
             }
 
             //Para el caso de SUPERVISOR para poner en el panel
-            $num_petitions = $this->getPendingPetitions->__invoke();
+            $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // Ya están rellenos: initial_date, final_date, duration y reason

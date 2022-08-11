@@ -16,16 +16,9 @@ class GetPendingPetitions
         private Security $security
     ){}
 
-    public function __invoke(): int
+    public function getPendingPetitions(): array
     {
-        $num_petitions = 0;
-        if (in_array($this->container->getParameter('role_supervisor'), $this->security->getUser()->getRoles())) {
-            $petitions = $this->petitionRepository->findBy(
-                ['supervisor' => $this->security->getUser(), 'state' => $this->container->getParameter('pending')]
-            );
-            $num_petitions = count($petitions);
-        }
-        return $num_petitions;
+        return $this->petitionRepository->findBy(['supervisor' => $this->security->getUser(), 'state' => $this->container->getParameter('pending')]);
 
     }
 

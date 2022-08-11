@@ -25,7 +25,7 @@ class EmployeeController extends AbstractController
         $user_information = $this->getUser();
         $dias_utilizados = $user_information->getTotalVacationDays() - $user_information->getPendingVacationDays();
         //Para el caso de SUPERVISOR para poner en el panel
-        $num_petitions = $this->getPendingPetitions->__invoke();
+        $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
 
             if (is_null($calendar)) {
                 return $this->render('empleado/home.html.twig', [

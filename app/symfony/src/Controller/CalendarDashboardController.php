@@ -52,7 +52,7 @@ class CalendarDashboardController extends AbstractController
 
 
             //Para el caso de SUPERVISOR para poner en el panel
-            $num_petitions = $this->getPendingPetitions->__invoke();
+            $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
 
 
             return $this->render('empleado/calendario.html.twig', [

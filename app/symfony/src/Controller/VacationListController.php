@@ -55,7 +55,7 @@ class VacationListController extends AbstractController
             }
 
             //Para el caso de SUPERVISOR para poner en el panel
-            $num_petitions = $this->getPendingPetitions->__invoke();
+            $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
         }
 
 
