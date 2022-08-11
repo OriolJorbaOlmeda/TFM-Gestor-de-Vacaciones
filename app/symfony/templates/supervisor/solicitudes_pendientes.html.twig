@@ -57,13 +57,8 @@
 
                                             <td> {{ petition.reason}}  </td>
                                             <td>
-
-                                                {% if petition.type == absence %}
-                                                    {% for justi in justify %}
-                                                        {% if petition.id == justi.petition.id %}
-                                                            <a  href="{{path('download_file',{filename: justi.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                {% if petition.justify %}
+                                                    <a  href="{{path('download_file',{filename: petition.justify.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
                                                 {% endif %}
                                             </td>
 
