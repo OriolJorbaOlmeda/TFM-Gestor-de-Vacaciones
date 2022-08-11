@@ -3,7 +3,7 @@
 namespace App\Modules\User\Application;
 
 use App\Entity\User;
-use App\Events\UserRegistrationEvent;
+use App\Modules\User\Domain\UserRegistrationEvent;
 use App\Modules\User\Infrastucture\UserRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
