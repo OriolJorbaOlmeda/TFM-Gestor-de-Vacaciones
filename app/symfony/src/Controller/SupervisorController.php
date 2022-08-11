@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Modules\User\Infrastucture\UserRepository;
 use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,8 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SupervisorController extends AbstractController
 {
     public function __construct(
-        private PetitionRepository $petitionRepository,
-        private UserRepository $userRepository
+        private PetitionRepository $petitionRepository
     ) {}
 
 
@@ -40,18 +37,6 @@ class SupervisorController extends AbstractController
         ]);
     }
 
-
-    #[Route('/supervisor/deny_request', name: 'app_supervisor_deny_request')]
-    public function denyRequest(Request $request): Response
-    {
-
-        $petitionId = $request->get('petitionId');
-        $petition = $this->petitionRepository->findOneBy(['id' => $petitionId]);
-        $petition->setState($this->getParameter('denied'));
-        $this->petitionRepository->add($petition, true);
-
-        return $this->redirectToRoute("app_supervisor_pending_requests");
-    }
 
     /**
      * @Route("/download/{filename}", name="download_file")
