@@ -12,7 +12,6 @@ class UpdateVacationDays
 
     public function updateVacationDays(User $employee, int $duration)
     {
-
         $this->userRepository->updateVacationDays($employee, $duration);
     }
 }

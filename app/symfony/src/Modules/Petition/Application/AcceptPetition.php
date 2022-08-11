@@ -11,7 +11,8 @@ class AcceptPetition
 
     public function __construct(
         private PetitionRepository $petitionRepository,
-        private ContainerInterface $container){}
+        private ContainerInterface $container
+    ){}
 
     public function acceptPetition(string $petitionId): Petition
     {
@@ -20,6 +21,5 @@ class AcceptPetition
         $this->petitionRepository->add($petition, true);
 
         return $petition;
-
     }
 }

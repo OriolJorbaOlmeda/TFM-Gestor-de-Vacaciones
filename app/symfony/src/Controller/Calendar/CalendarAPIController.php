@@ -32,14 +32,13 @@ class CalendarAPIController extends AbstractController
         $company = $this->getUser()->getDepartment()->getCompany();
         $calendar = $this->getCurrentCalendar->getCurrentCalendar($company);
 
-
         //Nos guardamos los festivos del calendario
         $festives_company = $this->getFestivesJSON->getFestivesJSON($calendar->getFestives());
 
         $vacation = [];
         $absence = [];
 
-
+        // Si elige un usuario del select buscamos sus petitions
         if ($userId != 0) {
             $user = $this->searchUser->searchUserById($userId);
 
@@ -48,9 +47,7 @@ class CalendarAPIController extends AbstractController
             $vacation = $this->getPetitionsJSON->getAcceptedVacationsJSON($userPetitions);
 
             $absence = $this->getPetitionsJSON->getAcceptedAbsencesJSON($userPetitions);
-
         }
-
 
         return new JsonResponse(
             ["festivo_depar" => $festives_company, "festivo_usuario" => $vacation, "absence_user" => $absence]

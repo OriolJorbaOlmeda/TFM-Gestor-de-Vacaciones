@@ -7,13 +7,10 @@ use App\Modules\Company\Infrastucture\CompanyRepository;
 
 class CreateCompany
 {
+    public function __construct(private CompanyRepository $companyRepository){}
 
-    public function __construct(
-        private CompanyRepository $companyRepository
-    ){}
-
-    public function createCompany($company) {
-
+    public function createCompany($company)
+    {
         // Le creamos el departamento de administradores por defecto
         $department = new Department();
         $department->setName("Admin department");

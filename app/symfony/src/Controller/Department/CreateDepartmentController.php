@@ -3,8 +3,8 @@
 namespace App\Controller\Department;
 
 use App\Entity\Department;
+use App\Modules\Company\Application\GetCompanyById;
 use App\Modules\Department\Application\CreateDepartment;
-use App\Modules\Company\Infrastucture\CompanyRepository;
 use App\Modules\Department\Infrastucture\Form\DepartmentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class CreateDepartmentController extends AbstractController
 {
     public function __construct(
-        private CompanyRepository $companyRepository,
-        private CreateDepartment $createDepartment
+        private CreateDepartment $createDepartment,
+        private GetCompanyById $getCompanyById
     ){}
 
     #[Route('/register_company/departments/{companyId}', name: 'app_register_company_departments')]
     public function registerCompanyDepartments(string $companyId, Request $request): Response
     {
-        $company = $this->companyRepository->findOneBy(['id' => $companyId]);
+        $company = $this->getCompanyById->getCompanyById($companyId);
 
         $department = new Department();
         $form = $this->createForm(DepartmentType::class, $department);

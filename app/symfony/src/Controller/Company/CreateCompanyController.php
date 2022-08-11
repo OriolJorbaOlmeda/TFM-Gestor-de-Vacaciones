@@ -13,14 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CreateCompanyController extends AbstractController
 {
 
-    public function __construct(
-        private CreateCompany $createCompany
-    ){}
+    public function __construct(private CreateCompany $createCompany){}
 
     #[Route('/register_company', name: 'app_register_company')]
     public function registerCompany(Request $request): Response
     {
-
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);

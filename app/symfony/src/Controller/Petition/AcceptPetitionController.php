@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AcceptPetitionController extends AbstractController
 {
-
     public function __construct(
         private AcceptPetition $acceptPetition,
         private UpdateVacationDays $updateVacationDays
@@ -20,7 +19,6 @@ class AcceptPetitionController extends AbstractController
     #[Route('/supervisor/accept_request', name: 'app_supervisor_accept_request')]
     public function acceptRequest(Request $request): Response
     {
-
         $petitionId = $request->get('petitionId');
 
         $petition = $this->acceptPetition->acceptPetition($petitionId);
