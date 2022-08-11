@@ -26,7 +26,6 @@ class Calendar
     private $final_date;
 
     #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'calendars')]
-    #[ORM\JoinColumn(nullable: false)]
     private $company;
 
     #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: Petition::class)]

@@ -25,7 +25,6 @@ class Department
     private $users;
 
     #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'departments')]
-    #[ORM\JoinColumn(nullable: false)]
     private $company;
 
     public function __construct()

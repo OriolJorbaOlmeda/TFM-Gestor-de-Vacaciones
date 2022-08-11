@@ -55,7 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
     private $department;
 
     #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
@@ -65,7 +64,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $supervisor_petitions;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: true)]
     private $supervisor;
 
     #[ORM\OneToMany(mappedBy: 'supervisor', targetEntity: self::class)]
