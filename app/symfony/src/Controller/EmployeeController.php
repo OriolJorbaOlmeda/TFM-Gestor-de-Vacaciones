@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Modules\Festive\Application\GetFestivesJSON;
 use App\Modules\Petition\Application\GetPendingPetitions;
 use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,8 @@ class EmployeeController extends AbstractController
 
     public function __construct(
         private CalendarRepository $calendarRepository,
-        private GetPendingPetitions $getPendingPetitions
+        private GetPendingPetitions $getPendingPetitions,
+        private GetFestivesJSON $getFestivesJSON
     ) {}
 
     #[Route('/employee/dashboard', name: 'app_employee_dashboard')]
@@ -39,18 +41,11 @@ class EmployeeController extends AbstractController
             $festives = $calendar->getFestives();
             $festivos_usuario = $this->getUser()->getPetitions();
 
-            $festives_company = [];
             $vacation = [];
             $absence = [];
 
-            foreach ($festives as $festive) {
-                $festives_company[$festive->getId()] = [
-                    "name" => $festive->getName(),
-                    "date" => $festive->getDate(),
-                    "initialdate" => $festive->getDate(),
-                    "finaldate" => $festive->getDate(),
-                ];
-            }
+            $festives_company = $this->getFestivesJSON->getFestivesJSON($festives);
+
             foreach ($festivos_usuario as $festivo_usuario) {
                 if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
                         'accepted'

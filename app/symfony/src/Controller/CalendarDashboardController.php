@@ -3,11 +3,10 @@
 namespace App\Controller;
 
 use App\Modules\Calendar\Infrastucture\Form\SearchByDepartmentType;
+use App\Modules\Festive\Application\GetFestivesJSON;
 use App\Modules\Petition\Application\GetPendingPetitions;
-use App\Modules\User\Infrastucture\UserRepository;
 use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +15,9 @@ class CalendarDashboardController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository,
         private CalendarRepository $calendarRepository,
-        private GetPendingPetitions $getPendingPetitions
+        private GetPendingPetitions $getPendingPetitions,
+        private GetFestivesJSON $getFestivesJSON
     ) {}
 
     #[Route('/employee/calendar', name: 'app_employee_calendar')]
@@ -49,17 +48,7 @@ class CalendarDashboardController extends AbstractController
         }
 
         $festives = $calendar->getFestives();
-        $festives_company = [];
-
-        foreach ($festives as $festive) {
-            $festives_company[$festive->getId()] = [
-                "name" => $festive->getName(),
-                "date" => $festive->getDate(),
-                "initialdate" => $festive->getDate(),
-                "finaldate" => $festive->getDate(),
-            ];
-        }
-
+        $festives_company = $this->getFestivesJSON->getFestivesJSON($festives);
 
         //Para el caso de SUPERVISOR para poner en el panel
         $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
