@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Modules\Calendar\Application\GetCurrentCalendar;
 use App\Modules\Festive\Application\GetFestivesJSON;
 use App\Modules\Petition\Application\GetPendingPetitions;
+use App\Modules\Petition\Application\GetPetitionsJSON;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,8 @@ class EmployeeController extends AbstractController
     public function __construct(
         private GetPendingPetitions $getPendingPetitions,
         private GetFestivesJSON $getFestivesJSON,
-        private GetCurrentCalendar $getCurrentCalendar
+        private GetCurrentCalendar $getCurrentCalendar,
+        private GetPetitionsJSON $getPetitionsJSON
     ) {}
 
     #[Route('/employee/dashboard', name: 'app_employee_dashboard')]
@@ -39,44 +41,20 @@ class EmployeeController extends AbstractController
             ]);
         }
 
-        $festives = $calendar->getFestives();
-        $festivos_usuario = $this->getUser()->getPetitions();
+        $userPetitions = $this->getUser()->getPetitions();
 
-        $vacation = [];
-        $absence = [];
+        $festives_company = $this->getFestivesJSON->getFestivesJSON($calendar->getFestives());
 
-        $festives_company = $this->getFestivesJSON->getFestivesJSON($festives);
+        $vacations = $this->getPetitionsJSON->getAcceptedVacationsJSON($userPetitions);
 
-        foreach ($festivos_usuario as $festivo_usuario) {
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
-                    'accepted'
-                ) && $festivo_usuario->getType() == $this->getParameter('vacation')) {
-                $vacation[$festivo_usuario->getId()] = [
-                    "name" => $festivo_usuario->getReason(),
-                    "date" => $festivo_usuario->getPetitionDate(),
-                    "initialdate" => $festivo_usuario->getInitialDate(),
-                    "finaldate" => $festivo_usuario->getFinalDate(),
-                ];
-            }
-            if (!empty($festivo_usuario) && $festivo_usuario->getState() == $this->getParameter(
-                    'accepted'
-                ) && $festivo_usuario->getType() == $this->getParameter('absence')) {
-                $absence[$festivo_usuario->getId()] = [
-                    "name" => $festivo_usuario->getReason(),
-                    "date" => $festivo_usuario->getPetitionDate(),
-                    "initialdate" => $festivo_usuario->getInitialDate(),
-                    "finaldate" => $festivo_usuario->getFinalDate(),
-                ];
-            }
-
-        }
+        $absences = $this->getPetitionsJSON->getAcceptedAbsencesJSON($userPetitions);
 
 
         return $this->render('empleado/home.html.twig', [
             "calendar" => 1,
             "festivo_depar" => $festives_company,
-            "festivo_usuario" => $vacation,
-            "absence_usuario" => $absence,
+            "festivo_usuario" => $vacations,
+            "absence_usuario" => $absences,
             "user_information" => $this->getUser(),
             "days" => $dias_utilizados,
             "initial_date" => $calendar->getInitialDate()->format('d/m/Y'),
