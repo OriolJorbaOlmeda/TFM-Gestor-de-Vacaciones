@@ -4,10 +4,11 @@ namespace App\Controller\Petition;
 
 use App\Entity\Justify;
 use App\Entity\Petition;
+use App\Modules\Calendar\Application\GetCalendarByDates;
+use App\Modules\Calendar\Application\GetCurrentCalendar;
 use App\Modules\Petition\Application\GetPendingPetitions;
+use App\Modules\Petition\Application\RequestAbsence;
 use App\Modules\Petition\Infrastucture\Form\RequestAbsenceFormType;
-use App\Modules\User\Infrastucture\UserRepository;
-use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -20,11 +21,12 @@ class RequestAbsenceController extends AbstractController
 {
 
     public function __construct(
-        private UserRepository $userRepository,
-        private CalendarRepository $calendarRepository,
         private PetitionRepository $petitionRepository,
         private TranslatorInterface $translator,
-        private GetPendingPetitions $getPendingPetitions
+        private GetPendingPetitions $getPendingPetitions,
+        private GetCurrentCalendar $getCurrentCalendar,
+        private GetCalendarByDates $getCalendarByDates,
+        private RequestAbsence $requestAbsence
     ){}
 
 
@@ -36,7 +38,7 @@ class RequestAbsenceController extends AbstractController
         $form->handleRequest($request);
 
         $company = $this->getUser()->getDepartment()->getCompany();
-        $calendar = $this->calendarRepository->findCurrentCalendar($company->getId());
+        $calendar = $this->getCurrentCalendar->getCurrentCalendar($company);
         if(!is_null($calendar)) {
             $festives = $calendar->getFestives();
             $days = array();
@@ -49,35 +51,15 @@ class RequestAbsenceController extends AbstractController
             $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
 
             if ($form->isSubmitted() && $form->isValid()) {
-                // Ya están rellenos: initial_date, final_date, duration y reason
 
-                // Rellenar los datos que faltan: state, type, petition_date, employee, calendar, justify y supervisor
-                $petition->setType($this->getParameter('absence'));
+                // Cogemos el calendar al que pertenece según las fechas
+                $calendar = $this->getCalendarByDates->getCalendarByDates($petition->getInitialDate(), $petition->getFinalDate());
 
-                // si es supervisor el supervisor será el mismo
-                if (in_array($this->getParameter('role_supervisor'), $this->getUser()->getRoles())) {
-                    $user = $this->userRepository->findOneBy(['id' => $this->getUser()->getId()]);
-                    $petition->setSupervisor($user);
-                    $petition->setState($this->getParameter('accepted'));
-                    $duration = $petition->getDuration();
-                    $this->userRepository->updateVacationDays($user, $duration);
-                } else {
-                    $petition->setSupervisor($this->getUser()->getSupervisor());
-                    $petition->setState($this->getParameter('pending'));
-                }
-
-                $petition->setPetitionDate(new \DateTime());
-                $petition->setEmployee($this->userRepository->findOneBy(['id' => $this->getUser()->getId()]));
-
-                $calendar = $this->calendarRepository->findCalendarByDates(
-                    $petition->getInitialDate(),
-                    $petition->getFinalDate()
-                );
                 if ($calendar == null) {
                     return new Response($this->translator->trans('petition.incorrectCalendar'));
                 }
-                $petition->setCalendar($calendar);
-                $this->petitionRepository->add($petition, true);
+
+                $this->requestAbsence->requestVacation($petition, $calendar);
 
                 $updatedFile = $form->get('justify_content')->getData();
 
