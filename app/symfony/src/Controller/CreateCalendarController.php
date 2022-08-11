@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Calendar;
 use App\Entity\Festive;
-use App\Modules\Calendar\Infrastucture\Form\CalendarType;
 use App\Modules\Festive\Infrastucture\Form\FestiveType;
 use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use App\Modules\Festive\Infrastucture\FestiveRepository;
@@ -20,29 +18,6 @@ class CreateCalendarController extends AbstractController
         private CalendarRepository $calendarRepository,
         private FestiveRepository $festiveRepository
     ) {}
-
-    #[Route('/admin/create_calendar', name: 'app_create_calendar')]
-    public function createCalendar(Request $request): Response
-    {
-        $calendar = new Calendar();
-        $form = $this->createForm(CalendarType::class, $calendar);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // setear los campos que faltan
-            $calendar->setCompany($this->getUser()->getDepartment()->getCompany());
-
-            $this->calendarRepository->add($calendar);
-
-            return $this->redirectToRoute('app_create_festives', ['calendarId' => $calendar->getId()]);
-
-        }
-
-        return $this->render('admin/crear_calendario.html.twig', [
-            'form' => $form->createView()
-        ]);
-
-    }
 
 
     #[Route('/admin/create_festives/{calendarId}', name: 'app_create_festives')]
