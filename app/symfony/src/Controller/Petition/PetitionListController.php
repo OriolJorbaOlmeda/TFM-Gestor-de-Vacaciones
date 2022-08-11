@@ -40,7 +40,7 @@ class PetitionListController extends AbstractController
             $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
         }
 
-        return $this->render('empleado/mis_vacaciones.html.twig', [
+        return $this->render('empleado/vacation_list.html.twig', [
             'vacations' => $vacations,
             'absences' => $absences,
             'num_petitions' => $num_petitions,

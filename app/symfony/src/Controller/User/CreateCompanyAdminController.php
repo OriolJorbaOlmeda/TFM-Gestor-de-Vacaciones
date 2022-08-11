@@ -37,7 +37,7 @@ class CreateCompanyAdminController extends AbstractController
 
         }
 
-        return $this->render('registro_empresa/registrar_admin.html.twig', [
+        return $this->render('registro_empresa/register_admin.html.twig', [
             'form' => $form->createView()
         ]);
     }

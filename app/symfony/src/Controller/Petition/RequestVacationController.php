@@ -79,13 +79,13 @@ class RequestVacationController extends AbstractController
             }
 
 
-            return $this->render('empleado/solicitar_vacaciones.html.twig', [
+            return $this->render('empleado/request_vacation.html.twig', [
                 'form' => $form->createView(),
                 'festives' => $days,
                 'num_petitions' => $num_petitions
             ]);
         } else {
-            return $this->render('empleado/solicitar_vacaciones.html.twig', [
+            return $this->render('empleado/request_vacation.html.twig', [
                 'festives' => [],
                 'num_petitions' => 0
             ]);

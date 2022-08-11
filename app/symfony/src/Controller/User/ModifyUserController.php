@@ -29,7 +29,7 @@ class ModifyUserController extends AbstractController
             return $this->redirectToRoute('app_admin_edit-user', ['userid' => $userid]);
         }
 
-        return $this->render('admin/modificar_usuario.html.twig', [
+        return $this->render('admin/modify_user.html.twig', [
             'depar' => $form->createView()
         ]);
     }
@@ -51,7 +51,7 @@ class ModifyUserController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
 
-        return $this->render('admin/modificar_usuario.html.twig', [
+        return $this->render('admin/modify_user.html.twig', [
             'user' => $user,
             'form' => $form->createView()
 

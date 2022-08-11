@@ -31,7 +31,7 @@ class CalendarDashboardController extends AbstractController
 
 
         if (is_null($calendar)){
-            return $this->render('empleado/calendario.html.twig', [
+            return $this->render('empleado/calendar.html.twig', [
                 "calendar" => 0,
                 "formDepar" => $form->createView(),
                 "festives" => [],
@@ -46,7 +46,7 @@ class CalendarDashboardController extends AbstractController
         $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
 
 
-        return $this->render('empleado/calendario.html.twig', [
+        return $this->render('empleado/calendar.html.twig', [
             "calendar" => 1,
             "formDepar" => $form->createView(),
             "festives" => $festives_json,

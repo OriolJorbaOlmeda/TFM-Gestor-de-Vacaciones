@@ -34,7 +34,7 @@ class CreateDepartmentController extends AbstractController
             return $this->redirectToRoute('app_register_company_departments', ['companyId' => $companyId]);
         }
 
-        return $this->render('registro_empresa/registrar_departamentos.html.twig', [
+        return $this->render('registro_empresa/register_departments.html.twig', [
             'form' => $form->createView(),
             'companyId' => $companyId,
             'departments' => $company->getDepartments()

@@ -32,7 +32,7 @@ class CreateUserController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
 
-        return $this->render('admin/crear_usuario.html.twig', [
+        return $this->render('admin/create_user.html.twig', [
             "form" => $form->createView(),
             "error" => $form->getErrors(),
         ]);

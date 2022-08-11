@@ -108,13 +108,13 @@ class RequestAbsenceController extends AbstractController
                 return $this->redirectToRoute('app_employee_vacation', ['pagVac' => 1, 'pagAbs' => 1]);
             }
 
-            return $this->render('empleado/solicitar_ausencia.html.twig', [
+            return $this->render('empleado/request_absence.html.twig', [
                 'form' => $form->createView(),
                 'festives' => $days,
                 'num_petitions' => $num_petitions
             ]);
         }else{
-            return $this->render('empleado/solicitar_ausencia.html.twig', [
+            return $this->render('empleado/request_absence.html.twig', [
                 'festives' => 0,
                 'num_petitions' => 0
             ]);

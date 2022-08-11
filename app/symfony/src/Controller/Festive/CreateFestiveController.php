@@ -35,7 +35,7 @@ class CreateFestiveController extends AbstractController
 
         }
 
-        return $this->render('admin/crear_festivos.html.twig', [
+        return $this->render('admin/create_festives.html.twig', [
             'calendar' => $calendar,
             'form' => $form->createView(),
             'festives' => $calendar->getFestives()

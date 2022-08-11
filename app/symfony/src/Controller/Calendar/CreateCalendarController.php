@@ -29,7 +29,7 @@ class CreateCalendarController extends AbstractController
 
         }
 
-        return $this->render('admin/crear_calendario.html.twig', [
+        return $this->render('admin/create_calendar.html.twig', [
             'form' => $form->createView()
         ]);
 

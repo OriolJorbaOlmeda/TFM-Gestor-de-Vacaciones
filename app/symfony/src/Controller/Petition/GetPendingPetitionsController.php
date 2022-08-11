@@ -17,7 +17,7 @@ class GetPendingPetitionsController extends AbstractController
         $petitions = $this->getPendingPetitions->getPendingPetitions();
         $num_petitions = count($petitions);
 
-        return $this->render('supervisor/solicitudes_pendientes.html.twig', [
+        return $this->render('supervisor/pending_petitions.html.twig', [
             'petitions' => $petitions,
             'num_petitions' => $num_petitions
         ]);
