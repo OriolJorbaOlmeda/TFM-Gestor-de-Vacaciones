@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Petition;
 
+use App\Modules\Calendar\Application\GetCurrentCalendar;
 use App\Modules\Petition\Application\GetPendingPetitions;
-use App\Modules\Calendar\Infrastucture\CalendarRepository;
-use App\Modules\Petition\Infrastucture\PetitionRepository;
+use App\Modules\Petition\Application\GetUserPetitions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class VacationListController extends AbstractController
+class PetitionListController extends AbstractController
 {
     public function __construct(
-        private PetitionRepository $petitionRepository,
-        private CalendarRepository $calendarRepository,
-        private GetPendingPetitions $getPendingPetitions
+        private GetPendingPetitions $getPendingPetitions,
+        private GetCurrentCalendar $getCurrentCalendar,
+        private GetUserPetitions $getUserPetitions
     ){}
 
     #[Route('/employee/vacation', name: 'app_employee_vacation')]
@@ -24,7 +24,8 @@ class VacationListController extends AbstractController
         $pagVac = $request->get('pagVac');
         $pagAbs = $request->get('pagAbs');
 
-        $calendar = $this->calendarRepository->findCurrentCalendar($this->getUser()->getDepartment()->getCompany());
+        $calendar = $this->getCurrentCalendar->getCurrentCalendar($this->getUser()->getDepartment()->getCompany());
+
         if(is_null($calendar)){
             $vacations=[];
             $absences=[];
@@ -33,19 +34,11 @@ class VacationListController extends AbstractController
 
 
         }else {
-            $calendar_id = $calendar->getId();
 
-            $vacations = $this->petitionRepository->findVacationsByUserAndCalendar(
-                $this->getUser()->getId(),
-                $calendar_id,
-                $pagVac
-            );
+            $vacations = $this->getUserPetitions->getUserVacations($this->getUser()->getId(), $calendar, $pagVac);
 
-            $absences = $this->petitionRepository->findAbsencesByUserAndCalendar(
-                $this->getUser()->getId(),
-                $calendar_id,
-                $pagAbs
-            );
+            $absences = $this->getUserPetitions->getUserAbsences($this->getUser()->getId(), $calendar, $pagAbs);
+
 
             $justify = [];
             foreach ($absences as $petition) {

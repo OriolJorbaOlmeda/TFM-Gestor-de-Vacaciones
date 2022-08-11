@@ -62,7 +62,7 @@ class CalendarRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findCurrentCalendar($company_id): ?Calendar {
+    public function findCurrentCalendar($company): ?Calendar {
         $actual_date = new DateTime();
         $actual_date = $actual_date->format('Y-m-d');
 
@@ -71,7 +71,7 @@ class CalendarRepository extends ServiceEntityRepository
             ->andWhere('i.final_date > :actual_date OR i.initial_date = :actual_date')
             ->andWhere('i.company = :company_id')
             ->setParameter('actual_date', $actual_date)
-            ->setParameter('company_id', $company_id)
+            ->setParameter('company_id', $company)
             ->getQuery()
             ->getOneOrNullResult()
             ;
