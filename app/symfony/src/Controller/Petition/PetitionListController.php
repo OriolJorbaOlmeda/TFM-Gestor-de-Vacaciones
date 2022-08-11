@@ -30,33 +30,20 @@ class PetitionListController extends AbstractController
             $vacations=[];
             $absences=[];
             $num_petitions=0;
-            $justify=[];
-
 
         }else {
-
             $vacations = $this->getUserPetitions->getUserVacations($this->getUser()->getId(), $calendar, $pagVac);
 
             $absences = $this->getUserPetitions->getUserAbsences($this->getUser()->getId(), $calendar, $pagAbs);
-
-
-            $justify = [];
-            foreach ($absences as $petition) {
-                if ($petition->getJustify()) {
-                    $justify [] = $petition->getJustify();
-                }
-            }
 
             //Para el caso de SUPERVISOR para poner en el panel
             $num_petitions = count($this->getPendingPetitions->getPendingPetitions());
         }
 
-
         return $this->render('empleado/mis_vacaciones.html.twig', [
             'vacations' => $vacations,
             'absences' => $absences,
             'num_petitions' => $num_petitions,
-            'justify' => $justify,
             'pagVac' => $pagVac,
             'pagAbs' => $pagAbs
         ]);
