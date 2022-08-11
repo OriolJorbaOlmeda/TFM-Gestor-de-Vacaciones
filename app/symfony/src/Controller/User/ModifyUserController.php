@@ -3,6 +3,7 @@
 namespace App\Controller\User;
 
 use App\Modules\User\Application\ModifyUser;
+use App\Modules\User\Application\SearchUser;
 use App\Modules\User\Infrastucture\Form\SelectUserType;
 use App\Modules\User\Infrastucture\Form\UserModificationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,24 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ModifyUserController extends AbstractController
 {
-
     public function __construct(
-        private ModifyUser $modifyUser
-
-    ) {}
+        private ModifyUser $modifyUser,
+        private SearchUser $searchUser) {}
 
     #[Route('/admin/modificar_usuario', name: 'app_admin_modify-user')]
     public function modifyUser(Request $request): Response {
-        $departments = $this->getUser()->getDepartment()->getCompany()->getDepartments();
 
-        $choices = [];
-        foreach ($departments as $choice) {
-            if(!str_contains(strtolower($choice->getName()),'admin')){
-                $choices[$choice->getName()] = $choice->getId();
-            }
-        }
-
-        $form = $this->createForm(SelectUserType::class, $choices);
+        $form = $this->createForm(SelectUserType::class, []);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,9 +30,7 @@ class ModifyUserController extends AbstractController
         }
 
         return $this->render('admin/modificar_usuario.html.twig', [
-            'depar' => $form->createView(),
-            'departments' => $departments
-
+            'depar' => $form->createView()
         ]);
     }
 
@@ -49,8 +38,7 @@ class ModifyUserController extends AbstractController
     #[Route('/admin/modificar_usuario/{userid}', name: 'app_admin_edit-user')]
     public function editUser(string $userid, Request $request): Response
     {
-        $user = $this->modifyUser->getUserById($userid);
-
+        $user = $this->searchUser->searchUserById($userid);
         $form = $this->createForm(UserModificationType::class, $user);
         $form->handleRequest($request);
 
@@ -58,7 +46,7 @@ class ModifyUserController extends AbstractController
 
             $roles = $form->get('roles')->getData();
 
-            $this->modifyUser->__invoke($user, $roles);
+            $this->modifyUser->modifyUser($user, $roles);
 
             return $this->redirectToRoute('app_dashboard');
         }

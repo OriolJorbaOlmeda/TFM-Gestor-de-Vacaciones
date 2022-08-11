@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserAPIController extends AbstractController
 {
 
-    public function __construct(
-        private SearchUser $searchUser
-    ) {}
+    public function __construct(private SearchUser $searchUser) {}
 
 
     #[Route('/getEmployees', name: 'app_get_employees')]

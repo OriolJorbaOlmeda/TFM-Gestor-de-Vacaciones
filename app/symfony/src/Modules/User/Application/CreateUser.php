@@ -18,8 +18,8 @@ class CreateUser
         private Security $security
     ){}
 
-    public function __invoke(User $user, string $password, string $roles) {
-
+    public function createUser(User $user, string $password, string $roles)
+    {
         $user->setPassword($this->passwordHasher->hashPassword($user, $password));
         $user->setPendingVacationDays($user->getTotalVacationDays());
         $user->setRoles([$roles]);

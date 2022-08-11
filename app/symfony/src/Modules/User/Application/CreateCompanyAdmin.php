@@ -13,7 +13,8 @@ class CreateCompanyAdmin
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,
         private ContainerInterface $container,
-        private UserRepository $userRepository){}
+        private UserRepository $userRepository
+    ){}
 
     public function createCompanyAdmin(User $user, Department $adminDepartment)
     {

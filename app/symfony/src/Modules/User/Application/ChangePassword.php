@@ -15,12 +15,11 @@ class ChangePassword
         private UserPasswordHasherInterface $passwordHasher
     ){}
 
-    public function __invoke($newPass){
-
+    public function changePassword($newPass)
+    {
         $user = $this->userRepository->findOneBy(['id' => $this->security->getUser()->getId()]);
         $user->setPassword($this->passwordHasher->hashPassword($user, $newPass));
         $this->userRepository->add($user, true);
-
     }
 
 }
