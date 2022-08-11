@@ -40,7 +40,7 @@ class Petition
     private $petition_date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'petitions')]
-    #[ORM\JoinColumn(name: 'employee_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(nullable: false)]
     private $employee;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'supervisor_petitions')]
@@ -48,6 +48,7 @@ class Petition
     private $supervisor;
 
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]
+    #[ORM\JoinColumn(nullable: false)]
     private $calendar;
 
     #[ORM\OneToOne(mappedBy: 'petition', targetEntity: Justify::class, cascade: ['persist', 'remove'])]
