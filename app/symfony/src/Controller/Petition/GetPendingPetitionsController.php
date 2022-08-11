@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Petition;
 
 use App\Modules\Petition\Application\GetPendingPetitions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
