@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Modules\User\Infrastucture\Security;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
