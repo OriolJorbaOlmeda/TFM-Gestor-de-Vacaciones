@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/calendar_dates_control.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        {{ include('admin/navbar.html.twig') }}
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+            <div class="content-header">
+                <div class="container">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">{{ "createCalendar.title"|trans }}</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Main content 1 -->
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ "createCalendar.subtitle"|trans }}</h3>
+                                </div>
+
+                                {{ form_start(form) }}
+                                {{ form_errors(form) }}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            {{ form_row(form.year) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_label(form.initial_date) }}
+                                            {{ form_widget(form.initial_date, { 'id': 'fechaInicio' }) }}
+                                            <span style="color: red">{{ form_errors(form.initial_date) }}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form_label(form.final_date) }}
+                                            {{ form_widget(form.final_date, { 'id': 'fechaFin' }) }}
+                                            <span style="color: red">{{ form_errors(form.final_date) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    {{ form_row(form.createCalendar) }}
+                                </div>
+
+                                {{ form_end(form) }}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+{% endblock %}

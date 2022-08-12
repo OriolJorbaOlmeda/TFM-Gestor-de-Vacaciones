@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+
+use App\Modules\User\Infrastucture\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -54,7 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
     private $department;
 
     #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]

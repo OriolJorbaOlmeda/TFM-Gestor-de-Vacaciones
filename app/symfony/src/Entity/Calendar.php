@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\CalendarRepository;
+use App\Modules\Calendar\Infrastucture\CalendarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +26,6 @@ class Calendar
     private $final_date;
 
     #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'calendars')]
-    #[ORM\JoinColumn(nullable: false)]
     private $company;
 
     #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: Petition::class)]

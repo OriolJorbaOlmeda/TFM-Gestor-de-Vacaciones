@@ -22,7 +22,7 @@ function addSelectUser(departmentId) {
 
     $.ajax({
         type: 'POST',
-        url: '/employee/getUsers',
+        url: '/getUsers',
         async: true,
         data: ({id: departmentId}),
         datatype: 'json',
@@ -69,7 +69,6 @@ function addSelectCalendar(userId) {
                 for (var key in data['festivo_depar']) {
 
                     var value = data['festivo_depar'][key];
-                    console.log(value['initialdate'].date);
                     event.push({
                         id: 'festives',
                         groupId: 'festives',

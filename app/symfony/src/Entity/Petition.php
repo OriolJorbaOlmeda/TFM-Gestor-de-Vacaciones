@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\PetitionRepository;
+use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,11 +40,9 @@ class Petition
     private $petition_date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'petitions')]
-    #[ORM\JoinColumn(name: 'employee_id', referencedColumnName: 'id', nullable: false)]
     private $employee;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'supervisor_petitions')]
-    #[ORM\JoinColumn(nullable: false)]
     private $supervisor;
 
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]

@@ -6,12 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class DashboardController extends AbstractController
 {
 
     public function __construct(
-        private SecurityController $security) {}
+        private Security $security) {}
 
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(): Response
@@ -24,6 +25,18 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('app_supervisor_dashboard');
         }
             return $this->redirectToRoute('app_admin_dashboard');
+    }
+
+    #[Route('/admin/dashboard', name: 'app_admin_dashboard')]
+    public function dashboardAdmin(): Response
+    {
+        return $this->render('admin/home.html.twig');
+    }
+
+    #[Route('/supervisor/dashboard', name: 'app_supervisor_dashboard')]
+    public function dashboardSupervisor(): Response
+    {
+        return $this->redirectToRoute("app_employee_dashboard");
     }
 
 
