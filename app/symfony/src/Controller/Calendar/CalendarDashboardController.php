@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Calendar;
 
 use App\Modules\Calendar\Application\GetCurrentCalendar;
 use App\Modules\Calendar\Infrastucture\Form\SearchByDepartmentType;

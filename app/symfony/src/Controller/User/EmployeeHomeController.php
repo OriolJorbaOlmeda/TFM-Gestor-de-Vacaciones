@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use App\Modules\Calendar\Application\GetCurrentCalendar;
 use App\Modules\Festive\Application\GetFestivesJSON;
