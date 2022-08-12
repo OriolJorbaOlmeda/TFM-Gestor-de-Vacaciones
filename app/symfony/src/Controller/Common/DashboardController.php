@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Shared;
+namespace App\Controller\Common;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
