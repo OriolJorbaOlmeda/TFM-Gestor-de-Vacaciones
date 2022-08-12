@@ -40,6 +40,6 @@ services:
         tags:
             - { name: kernel.event_listener }
 
-    App\Listeners\ChangePasswordListener:
+    App\Modules\User\Application\ChangePasswordListener:
         tags:
             - { name: kernel.event_listener }

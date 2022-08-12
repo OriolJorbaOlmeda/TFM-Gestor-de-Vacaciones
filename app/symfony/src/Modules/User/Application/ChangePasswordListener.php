@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Modules\User\Application;
 
 use App\Events\ChangePasswordEvent;
 use Symfony\Component\Mailer\MailerInterface;
