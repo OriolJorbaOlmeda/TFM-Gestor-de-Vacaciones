@@ -2,19 +2,19 @@
 
 namespace App\Modules\Company\Application;
 
-use App\Entity\Department;
 use App\Modules\Company\Infrastucture\CompanyRepository;
+use App\Modules\Department\Application\CreateAdminDepartment;
 
 class CreateCompany
 {
-    public function __construct(private CompanyRepository $companyRepository){}
+    public function __construct(
+        private CompanyRepository $companyRepository,
+        private CreateAdminDepartment $createAdminDepartment
+    ){}
 
     public function createCompany($company)
     {
-        // Le creamos el departamento de administradores por defecto
-        $department = new Department();
-        $department->setName("Admin department");
-        $department->setCode("DEP-01");
+        $department = $this->createAdminDepartment->createAdminDepartment();
         $company->addDepartment($department);
 
         $this->companyRepository->add($company, true);
