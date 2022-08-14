@@ -2,5 +2,5 @@
 .idea
 .vscode
 docker-compose.yml
-
+node_modules
 ###< Other files and folders ###
