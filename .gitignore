@@ -4,3 +4,4 @@
 docker-compose.yml
 
 ###< Other files and folders ###
+node_modules
