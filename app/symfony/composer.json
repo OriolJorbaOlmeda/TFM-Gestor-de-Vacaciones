@@ -28,7 +28,9 @@
         "symfony/yaml": "5.4.*"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.41"
+        "phpunit/phpunit": "^9.5",
+        "symfony/maker-bundle": "^1.41",
+        "symfony/phpunit-bridge": "^6.1"
     },
     "config": {
         "allow-plugins": {
