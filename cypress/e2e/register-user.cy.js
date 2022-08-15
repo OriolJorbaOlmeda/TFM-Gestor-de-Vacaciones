@@ -1,5 +1,5 @@
-describe('Calendar creation', () => {
-    it('is successfully created', () => {
+describe('The user registration', () => {
+    it('is successfully registrated', () => {
         cy.visit('http://localhost:1000/login')
         cy.get('input[name=email]').type('mire@gmail.com')
         cy.get('input[name=password]').type('orioloriol')
