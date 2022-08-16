@@ -24,6 +24,9 @@ Una vez instalado se ha de inicializar el proyecto, para ello se tiene que levan
         composer install
     * Nos conectamos a la base de datos Acordaros que el puerto es el 10000 y para actualizar cualquier cambio de la BD  
         bin/console doctrine:schema:update --force
+    * Ejecutar el test
+        php bin/phpunit tests/UserTest.php
+
 
 
 ##APARTADOS
