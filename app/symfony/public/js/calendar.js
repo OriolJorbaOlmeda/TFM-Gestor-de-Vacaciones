@@ -75,8 +75,8 @@ function addSelectCalendar(userId) {
                         title: value['name'],
                         start: value['initialdate'].date,
                         end: value['finaldate'].date,
-                        backgroundColor: "#5F9D72", //orange
-                        borderColor: "#5F9D72", //orange
+                        backgroundColor: "#3d9970", //olive
+                        borderColor: "#3d9970", //olive
                         allDay: true
                     })
 
@@ -91,8 +91,8 @@ function addSelectCalendar(userId) {
                         title: value['name'],
                         start: value['initialdate'].date,
                         end: value['finaldate'].date,
-                        backgroundColor: "#ECB011",
-                        borderColor: "#ECB011", //orange
+                        backgroundColor: "#ff851b", //orange
+                        borderColor: "#ff851b", //orange
                         allDay: true
                     })
 
@@ -105,8 +105,8 @@ function addSelectCalendar(userId) {
                         title: value['name'],
                         start: value['initialdate'].date,
                         end: value['finaldate'].date,
-                        backgroundColor: "#1111EC",
-                        borderColor: "#1111EC", //orange
+                        backgroundColor: "#6610f2", //indigo
+                        borderColor: "#6610f2", //indigo
                         allDay: true
                     })
 
