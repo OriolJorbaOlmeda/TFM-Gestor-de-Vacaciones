@@ -191,6 +191,8 @@
 
             {% for festive in festivo_usuario %}
 
+
+
             event.push({
                 id: 'vacances',
                 groupId: 'vacances', // recurrent events in this group move together
@@ -199,7 +201,7 @@
                 end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
                 backgroundColor: "#ff851b", //orange
                 borderColor: "#ff851b", //orange
-                allDay: true
+                allDay: false,
             })
             {% endfor %}
             {% endif %}
@@ -216,7 +218,7 @@
                 end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
                 backgroundColor: "#6610f2", //indigo
                 borderColor: "#6610f2", //indigo
-                allDay: true
+                allDay: false
             })
             {% endfor %}
             {% endif %}
@@ -231,11 +233,9 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 themeSystem: 'bootstrap',
-
-                //Random default events
+                displayEventTime: false,
                 events: event,
                 editable: true,
-                droppable: true // this allows things to be dropped onto the calendar !!!
             });
 
             const checkeBox = document.querySelectorAll("input[type=checkbox]");
