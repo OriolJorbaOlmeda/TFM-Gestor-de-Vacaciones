@@ -1,6 +1,5 @@
 <?php
 
-use App\Entity\Festive;
 use App\Entity\User;
 use App\Modules\User\Domain\UserExample;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -23,7 +22,6 @@ class UserRepositoryTest extends KernelTestCase
     public function testUpdateVacationDays(){
 
         $newUser = $this->user->random();
-
 
         $this->entityManager
             ->getRepository(User::class)

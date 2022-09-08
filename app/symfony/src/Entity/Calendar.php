@@ -77,7 +77,7 @@ class Calendar
         return $this->company;
     }
 
-    public function setCompany(?Company $company): self
+    public function setCompany($company): self
     {
         $this->company = $company;
 
