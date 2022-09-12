@@ -40,24 +40,6 @@ class UserRepositoryTest extends KernelTestCase
         $this->assertEquals(21, $user->getPendingVacationDays());
     }
 
-    /*public function testSearchByName()
-    {
-        $newUser = $this->user->random();
-
-
-        $this->entityManager
-            ->getRepository(User::class)
-            ->add($newUser, true)
-        ;
-
-        $user = $this->entityManager
-            ->getRepository(User::class)
-            ->findOneBy(['name' => 'Mireia'])
-        ;
-
-        $this->assertEquals('Pepazo', $user->getLastname());
-    }*/
-
     protected function tearDown(): void
     {
         parent::tearDown();

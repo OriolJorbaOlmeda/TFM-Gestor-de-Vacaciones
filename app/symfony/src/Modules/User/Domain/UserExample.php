@@ -17,7 +17,7 @@ class UserExample
         $user->setPostalcode('Pepazo');
         $user->setTotalVacationDays(23);
         $user->setPendingVacationDays(23);
-        $user->setEmail('Pepazo35@gmail.com');
+        $user->setEmail('Pepazo43@gmail.com');
         $user->setPassword('vgyuoberijlfbeijrbfijenfje');
 
         return $user;
