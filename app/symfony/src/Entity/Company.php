@@ -33,7 +33,7 @@ class Company
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Department::class, cascade: ["persist"])]
     private $departments;
 
-    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Calendar::class)]
+    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Calendar::class, cascade: ["persist"], fetch: "EAGER")]
     private $calendars;
 
     public function __construct()

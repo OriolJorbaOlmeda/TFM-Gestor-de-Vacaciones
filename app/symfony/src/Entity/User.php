@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -72,6 +73,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->employees = new ArrayCollection();
+
+    }
+
+    public static function registerUser(User $user, $roles): User
+    {
+        $user->setPendingVacationDays($user->getTotalVacationDays());
+        $user->setRoles([$roles]);
+        return $user;
     }
 
     public function getName()
