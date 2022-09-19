@@ -75,8 +75,8 @@ function addSelectCalendar(userId) {
                         title: value['name'],
                         start: value['initialdate'].date,
                         end: value['finaldate'].date,
-                        backgroundColor: "#5F9D72", //orange
-                        borderColor: "#5F9D72", //orange
+                        backgroundColor: "#3d9970", //olive
+                        borderColor: "#3d9970", //olive
                         allDay: true
                     })
 
@@ -85,45 +85,53 @@ function addSelectCalendar(userId) {
                 for (var key in data['festivo_usuario']) {
 
                     var value = data['festivo_usuario'][key];
+                    var finalDate = new Date(value['finaldate'].date)
+                    finalDate.setHours(20, 21, 22);
+
                     event.push({
                         id: 'vacances',
                         groupId: 'vacances', // recurrent events in this group move together
                         title: value['name'],
                         start: value['initialdate'].date,
-                        end: value['finaldate'].date,
-                        backgroundColor: "#ECB011",
-                        borderColor: "#ECB011", //orange
-                        allDay: true
+                        end: finalDate,
+                        backgroundColor: "#ff851b", //orange
+                        borderColor: "#ff851b", //orange
+                        allDay: false
                     })
 
                 }
                 for (var key in data['absence_user']) {
                     var value = data['absence_user'][key];
+                    var finalDate = new Date(value['finaldate'].date)
+                    finalDate.setHours(20, 21, 22);
                     event.push({
                         id: 'absence',
                         groupId: 'absence', // recurrent events in this group move together
                         title: value['name'],
                         start: value['initialdate'].date,
-                        end: value['finaldate'].date,
-                        backgroundColor: "#1111EC",
-                        borderColor: "#1111EC", //orange
-                        allDay: true
+                        end: finalDate,
+                        backgroundColor: "#6610f2", //indigo
+                        borderColor: "#6610f2", //indigo
+                        allDay: false
                     })
 
                 }
+
+
                 var calendar = new Calendar(calendarEl, {
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
+                    nextDayThreshold: '00:00:00',
                     themeSystem: 'bootstrap',
-                    //Random default events
                     events: event,
                     editable: true,
-                    droppable: true // this allows things to be dropped onto the calendar !!!
-                });
+                    displayEventTime: false,
 
+
+                });
                 const checkeBox = document.querySelectorAll("input[type=checkbox]");
                 checkeBox.forEach(function (checkbox) {
                     checkbox.checked = true;

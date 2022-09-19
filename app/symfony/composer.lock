@@ -335,6 +335,7 @@
         },
         {
             "name": "doctrine/dbal",
+
             "version": "3.4.3",
             "source": {
                 "type": "git",
@@ -345,6 +346,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/a24b89d663d8f261199bc0a91c48016042ebda85",
                 "reference": "a24b89d663d8f261199bc0a91c48016042ebda85",
+
                 "shasum": ""
             },
             "require": {
@@ -426,7 +428,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
+
                 "source": "https://github.com/doctrine/dbal/tree/3.4.3"
+
             },
             "funding": [
                 {
@@ -442,6 +446,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2022-08-28T17:26:36+00:00"
         },
         {

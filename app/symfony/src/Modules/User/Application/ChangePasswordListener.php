@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\Application;
 
-use App\Events\ChangePasswordEvent;
+use App\Modules\User\Domain\ChangePasswordEvent;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
