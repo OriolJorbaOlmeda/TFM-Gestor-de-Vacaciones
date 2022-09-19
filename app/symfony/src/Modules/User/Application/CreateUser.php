@@ -21,10 +21,9 @@ class CreateUser
     public function createUser(User $user, string $password, string $roles)
     {
         $user->setPassword($this->passwordHasher->hashPassword($user, $password));
-        $user->setPendingVacationDays($user->getTotalVacationDays());
-        $user->setRoles([$roles]);
-        $this->userRepository->add($user, true);
-        $this->dispatcher->dispatch(new UserRegistrationEvent($this->security->getUser()->getEmail(),$user->getEmail(), $user->getName(), $password ));
+        $newUser = User::registerUser($user, $roles);
+        $this->userRepository->add($newUser, true);
+        $this->dispatcher->dispatch(new UserRegistrationEvent($this->security->getUser()->getEmail(),$newUser->getEmail(), $newUser->getName(), $password ));
 
     }
 
