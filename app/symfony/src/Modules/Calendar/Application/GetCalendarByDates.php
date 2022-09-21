@@ -9,8 +9,8 @@ class GetCalendarByDates
 {
     public function __construct(private CalendarRepository $calendarRepository){}
 
-    public function getCalendarByDates($initialDate, $finalDate): ?Calendar
+    public function getCalendarByDates($initialDate, $finalDate, $company): ?Calendar
     {
-        return $this->calendarRepository->findCalendarByDates($initialDate, $finalDate);
+        return $this->calendarRepository->findCalendarByDates($initialDate, $finalDate, $company);
     }
 }
