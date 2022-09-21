@@ -29,7 +29,7 @@ class CreateUserController extends AbstractController
 
             $this->createUser->createUser($user, $password, $roles);
 
-            return $this->redirectToRoute('app_dashboard');
+            return $this->redirectToRoute('app_admin_dashboard');
         }
 
         return $this->render('admin/create_user.html.twig', [
