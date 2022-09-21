@@ -48,7 +48,7 @@ class ModifyUserController extends AbstractController
 
             $this->modifyUser->modifyUser($user, $roles);
 
-            return $this->redirectToRoute('app_dashboard');
+            return $this->redirectToRoute('app_admin_dashboard');
         }
 
         return $this->render('admin/modify_user.html.twig', [
