@@ -51,7 +51,7 @@ class RequestAbsenceController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
 
                 // Cogemos el calendar al que pertenece según las fechas
-                $calendar = $this->getCalendarByDates->getCalendarByDates($petition->getInitialDate(), $petition->getFinalDate());
+                $calendar = $this->getCalendarByDates->getCalendarByDates($petition->getInitialDate(), $petition->getFinalDate(), $company);
 
                 if ($calendar == null) {
                     return new Response($this->translator->trans('petition.incorrectCalendar'));

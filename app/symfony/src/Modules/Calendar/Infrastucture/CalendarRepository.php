@@ -49,13 +49,15 @@ class CalendarRepository extends ServiceEntityRepository
     }
 
 
-    public function findCalendarByDates($initial_date, $final_date): ?Calendar
+    public function findCalendarByDates($initial_date, $final_date, $company): ?Calendar
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.initial_date < :ini OR i.initial_date = :ini')
             ->andWhere('i.final_date > :fin OR i.final_date = :fin')
+            ->andWhere('i.company = :company_id')
             ->setParameter('ini', $initial_date)
             ->setParameter('fin', $final_date)
+            ->setParameter('company_id', $company->getId())
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
