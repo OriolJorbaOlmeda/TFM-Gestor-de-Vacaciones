@@ -4,7 +4,20 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    documents: '%kernel.project_dir%/public/documents'
+    role_admin: 'ROLE_ADMIN'
+    role_supervisor: 'ROLE_SUPERVISOR'
+    role_employee: 'ROLE_EMPLEADO'
+    app.locales: [ en, ca, eu, es ]
+    en: 'English'
+    ca: 'Catalan'
+    eu: 'Euskera'
+    es: 'Español'
+    accepted: 'ACCEPTED'
+    denied: 'DENIED'
+    pending: 'PENDING'
+    vacation: 'VACATION'
+    absence: 'ABSENCE'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -22,3 +35,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Modules\User\Application\UserRegisteredListener:
+        tags:
+            - { name: kernel.event_listener }
+
+    App\Modules\User\Application\ChangePasswordListener:
+        tags:
+            - { name: kernel.event_listener }

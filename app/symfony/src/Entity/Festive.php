@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\FestiveRepository;
+use App\Modules\Festive\Infrastucture\FestiveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,13 +21,9 @@ class Festive
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\ManyToMany(targetEntity: Calendar::class, inversedBy: 'festives')]
+    #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'festives')]
     private $calendar;
 
-    public function __construct()
-    {
-        $this->calendar = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -58,26 +54,14 @@ class Festive
         return $this;
     }
 
-    /**
-     * @return Collection<int, Calendar>
-     */
-    public function getCalendar(): Collection
+    public function getCalendar(): ?Calendar
     {
         return $this->calendar;
     }
 
-    public function addCalendar(Calendar $calendar): self
+    public function setCalendar(?Calendar $calendar): self
     {
-        if (!$this->calendar->contains($calendar)) {
-            $this->calendar[] = $calendar;
-        }
-
-        return $this;
-    }
-
-    public function removeCalendar(Calendar $calendar): self
-    {
-        $this->calendar->removeElement($calendar);
+        $this->calendar = $calendar;
 
         return $this;
     }

@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!------------ CALENDAR ------------>
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.css') }}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}" defer></script>
+
+    <!------------ CALENDAR ------------>
+    <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/fullcalendar/main.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        {% if is_granted(role_supervisor) %}
+            {{ include('supervisor/navbar.html.twig') }}
+        {% elseif is_granted(role_employee) %}
+            {{ include('empleado/navbar.html.twig') }}
+        {% endif %}
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+            <section class="content-header">
+                <div class="container">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"> {{ "calendarDashboard.title"|trans }} </h1>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main content -->
+            {% if calendar==1 %}
+
+            <section class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">{{ "calendarDashboard.filters"|trans }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="icheck-orange">
+                                        <input type="checkbox" checked id="vacances">
+                                        <label for="vacances">
+                                            {{ "calendarDashboard.vacations"|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="icheck-indigo">
+                                        <input type="checkbox" checked id="absence">
+                                        <label for="absence">
+                                            {{ "calendarDashboard.absences"|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="icheck-olive">
+                                        <input type="checkbox" checked id="festives">
+                                        <label for="festives">
+                                            {{ "calendarDashboard.festives"|trans }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">{{ "calendarDashboard.search"|trans }}</h4>
+                                </div>
+                                {{ form_start(formDepar) }}
+                                <div class="card-body">
+                                    <div class="icheck-success d-inline">
+                                        <div class="form-group">
+                                            {{ form_row(formDepar.department,{'attr': {'class': 'form-control select2','id':'select_user_department'}}) }}
+
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(formDepar.user,{'class': 'form-control select2', 'id':'selector' }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_end(formDepar) }}
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card card-primary">
+                                <div class="card-body p-0">
+                                    <!-- THE CALENDAR -->
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                            <section class="content-header">
+                                <div class="container">
+                                    <div class="col-sm-6">
+                                        <h4> {{ "homeEmployee.notcalendar"|trans }} </h4>
+                                    </div>
+                                </div>
+                            </section>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <script>
+            $(function () {
+
+                /* initialize the calendar
+                 -----------------------------------------------------------------*/
+                var Calendar = FullCalendar.Calendar;
+
+                var calendarEl = document.getElementById('calendar');
+
+                var event = [];
+
+                {% if festives|length > 0 %}
+                {% for festive in festives %}
+
+                event.push({
+                    id: 'festives',
+                    groupId: 'festives',
+                    title: '{{ festive.name }}',
+                    start: new Date('{{ festive.initialdate|date('Y-m-d') }}'),
+                    end: new Date('{{ festive.finaldate|date('Y-m-d') }}'),
+                    backgroundColor: "#3d9970", //olive
+                    borderColor: "#3d9970", //olive
+                    allDay: true
+                })
+                {% endfor %}
+                {% endif %}
+
+
+
+
+                var calendar = new Calendar(calendarEl, {
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    themeSystem: 'bootstrap',
+                    //Random default events
+                    displayEventTime: false,
+                    events: event,
+                    editable: true,
+                    droppable: true // this allows things to be dropped onto the calendar !!!
+                });
+                const checkeBox = document.querySelectorAll("input[type=checkbox]");
+                checkeBox.forEach(function (checkbox) {
+                    checkbox.addEventListener("click", (e) => {
+                        var target = e.target.id;
+                        console.log(target)
+                        var event = calendar.getEventById(target);
+                        console.log(event)
+                        if (checkbox.checked) {
+                            event.setProp('display', 'auto') // return to normal
+                        } else {
+                            event.setProp("display", "none")
+                        }
+                    });
+                });
+                calendar.render();
+                // $('#calendar').fullCalendar()
+            })
+        </script>
+    </div>
+    </body>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{%  block javascripts %}
+    {{ parent() }}
+    <!-- bs-custom-file-input -->
+    <script type="text/javascript" src="{{ asset('bootstrap_adminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+     <script type="text/javascript" src="{{ asset('js/petition_dates_control.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/utils.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="js-data-festive" data-festives="{{ festives|json_encode}}">
+        <!-- ... -->
+    </div>
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        {% if is_granted(role_supervisor) %}
+            {{ include('supervisor/navbar.html.twig') }}
+        {% elseif is_granted(role_employee)%}
+            {{ include('empleado/navbar.html.twig') }}
+        {% endif %}
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+            <div class="content-header">
+                <div class="container">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"> {{ "requestAbsence.title"|trans }} </h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            {% if form is defined %}
+
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ "requestAbsence.subtitle"|trans }}</h3>
+                                </div>
+                                {{ form_start(form) }}
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                {{ form_label(form.initial_date) }}
+                                                {{ form_widget(form.initial_date, { 'id': 'fechaInicio' }) }}
+                                                <span style="color: red">{{ form_errors(form.initial_date) }}</span>
+                                            </div>
+                                            <div class="col-md-5">
+                                                {{ form_label(form.final_date) }}
+                                                {{ form_widget(form.final_date, { 'id': 'fechaFin' }) }}
+                                                <span style="color: red">{{ form_errors(form.final_date) }}</span>
+                                            </div>
+                                            <div class="col-md-2">
+                                                {{ form_row(form.duration, { 'id': 'duracion' }) }}
+                                            </div>
+                                        </div>
+
+
+                                        {{ form_row(form.reason) }}
+
+                                        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+                                        {{ form_row(form.justify_content) }}
+
+
+                                    </div>
+                                    <div class="card-footer">
+                                        {{ form_row(form.save) }}
+                                    </div>
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <section class="content-header">
+                    <div class="container">
+                        <div class="col-sm-6">
+                            <h4> {{ "homeEmployee.notcalendar"|trans }} </h4>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        </div>
+    </div>
+    </body>
+
+{% endblock %}

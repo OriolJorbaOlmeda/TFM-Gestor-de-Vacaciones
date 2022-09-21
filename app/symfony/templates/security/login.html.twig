@@ -5,7 +5,7 @@
     <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <b>GetYourVacations</b>
+            <b>{{ "general.applicationTitle"|trans }}</b>
         </div>
 
         <div class="card">
@@ -13,11 +13,11 @@
                 <form action="#" method="post">
 
                     {% if error %}
-                        <div id='error' class='error' style="color: darkred">Email o contraseña incorrectos</div>
+                        <div id='error' class='error' style="color: darkred">{{ "login.loginError"|trans }}</div>
                     {% endif %}
 
                     <div class="input-group mb-3">
-                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email"
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder={{ "login.email"|trans }}
                                autocomplete="email" required autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" id="inputPassword" class="form-control"
-                               placeholder="Password" autocomplete="current-password" required>
+                               placeholder={{ "login.password"|trans }} autocomplete="current-password" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <i class="fas fa-lock"></i>
@@ -49,13 +49,10 @@
                     #}
                     <div class="row" style="justify-content: right;">
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Acceder</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ "login.access"|trans }}</button>
                         </div>
                     </div>
                 </form>
-                <p class="mb-1">
-                    <a href="#">He olvidado mi contraseña</a>
-                </p>
             </div>
         </div>
     </div>

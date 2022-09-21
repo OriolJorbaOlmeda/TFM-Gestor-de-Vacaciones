@@ -1,0 +1,185 @@
+action:
+  save: Guardar
+  select: -- Seleccionar --
+  search: Cercar
+  next: Següent
+  add: Afegir
+  finish: Finalitzar
+general:
+  applicationTitle: GetYourVacations
+  logout: Tancar sessió
+  options: Opcions
+  changePass: Canviar contrasenya
+roles:
+  admin: Administrador
+  supervisor: Supervisor
+  employee: Empleat
+createCalendar:
+  initialDate: Data inici
+  finalDate: Data fi
+  year: Any laboral
+  createCalendar: Crear calendari
+  title: Crear nou calendari de vacances
+  subtitle: Dades del calendari
+  initialDateError1: La data d'inici ha de ser més gran o igual a la data actual
+  initialDateError2: La data d'inici ha de ser inferior a la data de fi
+  finalDateError1: La data final ha de ser més gran o igual a la data actual
+  finalDateError2: La data de finalització ha de ser superior a la data d'inici
+createFestive:
+  name: Descripció dia festiu
+  addFestive: Afegir
+  addDays: Afegir dies festius al calendari
+  explication: Els dissabtes i diumenges s'afegeixen automàticament com a dies lliures
+user:
+  name: Nom
+  lastname: Cognoms
+  email: Email
+  password: Password
+  direction: Direcció
+  city: Ciutat
+  province: Província
+  postalCode: Codi postal
+  postalCodeError: Codi postal incorrecte
+  department: Departament
+  supervisor: Supervisor
+  role: Rol
+  totalVacationDays: Dies totals de vacances
+  totalVacationDaysError: Aquest valor ha de ser numèric
+  createUser: Donar d’alta
+createUser:
+  title: Donar d'alta usuari
+  subtitle1: Dades personals
+  subtitle2: Dades de l'empresa
+
+modifyUser:
+  title: Modificar usuari
+  user: Usuari
+  subtitle1: Dades personals
+  subtitle2: Dades de l'empresa
+requestVacation:
+  initialDate: Data inici període vacances
+  finalDate: Data fi període vacances
+  title: Sol·licitar vacances
+  subtitle: Dades de la sol·licitud
+requestAbsence:
+  initialDate: Data inici període absència
+  finalDate: Data fi període absència
+  title: Sol·licitar absència justificada
+  subtitle: Dades de la sol·licitud
+  reason1: Baixa per malaltia
+  reason2: Trasllat
+  reason3: Defunció d'un familiar
+  reason4: Altres
+petition:
+  initialDate: Data inici
+  finalDate: Data fi
+  duration: Duració
+  reason: Motiu
+  state: Estat
+  addJustify: Adjuntar justificant
+  request: Sol·licitar
+  type: Tipus de sol·licitud
+  types:
+    vacation: Vacances
+    ausence: Absència
+  states:
+    accepted: Aprovat
+    pending: Pendent
+    denied: Denegat
+  download: Descargar
+  justify: Justificant
+  incorrectCalendar: Les dates seleccionades no corresponen al calendari actual
+calendarDashboard:
+  title: Calendari
+  filters: Filtres
+  search: Cerca per departament
+  vacations: Vacances
+  absences: Absències
+  festives: Dies festius
+  department: Departament
+  user: Usuari
+homeAdmin:
+  title: Home
+  createCalendar: Crear un nou calendari
+  createUser: Registrar nou usuari
+  modifyUser: Modificar usuari
+  go: Anar
+navbarAdmin:
+  createCalendar: Crear calendari
+  users: Gestió usuaris
+  createUser: Registrar usuari
+  modifyUser: Modificar usuari
+homeEmployee:
+  title: Àrea personal
+  period: Període
+  totalDays: Dies totals
+  availableDays: Dies disponibles
+  usedDays: Dies utilitzats
+  calendar: Calendari
+  filters: Filtres
+  vacations: Vacances
+  absences: Absències
+  festives: Dies festius
+  notcalendar: No tens cap calendari actiu
+navbarEmployee:
+  vacationList: Les meves vacances
+  calendar: Calendari
+  request: Sol·licitar
+  requestVacation: Sol·licitar vacances
+  requestAbsence: Sol·licitar absènciac
+  pendingRequests: Sol·licituds pendents
+vacationList:
+  title1: Les meves vacances
+  title2: Les meves absències
+supervisorPanel:
+  title: Tens %num_petitions% sol·licituds de vacances pendents d'aprovar
+  requests: Veure sol·licituds
+pendingRequests:
+  title: Sol·licituds de vacances i absències
+  pendingRequests: Sol·licituds pendents
+  employee: Empleat
+  accept: Aprovar
+  deny: Denegar
+login:
+  email: Email
+  password: Contrasenya
+  access: Accedir
+  loginError: Email o contrasenya incorrecta
+  passwordForgot: He oblidat la meva contrasenya
+changePass:
+    title: Canviar contrasenya
+    pass: Contrasenya actual
+    newPass: Nova contrasenya
+    button: Canviar contrasenya
+    login: Iniciar sessió
+    passIncorrect: Contrasenya actual incorrecta
+    newPassIncorrect: Nova contrasenya incorrecta
+    passHelp: La contrasenya ha de tenir com a mínim 8 caràcters amb majúscules, minúscules i números
+error:
+    statuscode: Status Code
+    sorry: OPPSSS!!!! Ho sento ..
+    message1: Ho sentim, es denega el teu accés per motius de seguretat del nostre servidor i també de les nostres dades sensibles
+    message2: Torneu a la pàgina anterior per continuar navegant
+    goBack: Tornar
+companyRegistration:
+  title: Registre de l'empresa
+  company:
+    title: Dades de l'empresa
+    name: Nom
+    cif: CIF
+    phone: Telèfon
+    direction: Direcció
+    postalCode: Codi postal
+  departments:
+    title: Dades dels departaments
+    addDepartments: Afegir departaments
+    name: Nom del departament
+    code: Codi del departament
+  admin:
+    title: Dades de l'administrador
+    email: Email
+    password: Contrasenya
+    passwordIncorrect: Contrasenya incorrecta
+homePage:
+  login: Iniciar sessió
+  registerCompany: Registrar nova empresa

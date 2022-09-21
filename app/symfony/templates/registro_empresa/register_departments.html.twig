@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="{{ asset('bootstrap_adminLTE/plugins/bs-stepper/css/bs-stepper.min.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: 100vh;">
+            <div class="content-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">{{ "companyRegistration.title"|trans }}</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="navbar-nav navbar-no-expand ml-auto" style="justify-content: flex-end">
+                                {{ include('language.html.twig') }}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container">
+
+
+                    <!-- STEPPER -->
+                    <div class="bs-stepper">
+                        <div class="bs-stepper-header">
+                            <div class="step">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle">1</span>
+                                    <span class="bs-stepper-label">{{ "companyRegistration.company.title"|trans }}</span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step active">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle">2</span>
+                                    <span class="bs-stepper-label" style="color: #007bff">{{ "companyRegistration.departments.title"|trans }}</span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle">3</span>
+                                    <span class="bs-stepper-label">{{ "companyRegistration.admin.title"|trans }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ "companyRegistration.departments.title"|trans }}</h3>
+                                </div>
+
+                                {{ form_start(form) }}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <label class="col-md-4">{{ "companyRegistration.departments.addDepartments"|trans }}</label>
+                                    </div>
+                                    <div class="row">
+                                        <p></p>
+                                        <div class="col-md-5 pr-0">
+                                            <div class="form-group">
+                                                {{ form_row(form.name) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 pl-0 pr-0">
+                                            <div class="form-group">
+                                                {{ form_row(form.code) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 pl-0">
+                                            <div class="form-group">
+                                                {{ form_row(form.addDepartment) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <ul id="listaFestivos" class="list-group">
+                                                {% for department in departments %}
+
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        {{ department.name }} - {{ department.code }}
+
+                                                        {% if department.code != 'DEP-01' %}
+                                                            <a class="eliminar-festivo" href="/register_company/delete_department?companyId={{ companyId }}&&departmentId={{ department.id }}" type="button">
+                                                                <span class="badge badge-primary badge-pill"><i class="bi bi-x-lg"></i></span>
+                                                            </a>
+                                                        {% endif %}
+
+                                                    </li>
+
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="card-footer">
+                                    <a href="{{ path('app_register_company_admin', {companyId: companyId}) }}" type="submit" class="btn btn-primary">{{ "action.next"|trans }}</a>
+                                </div>
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+{% endblock %}

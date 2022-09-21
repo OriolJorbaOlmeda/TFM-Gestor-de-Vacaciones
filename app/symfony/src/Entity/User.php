@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+
+use App\Modules\User\Infrastucture\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -54,11 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
     private $department;
 
-    #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class)]
+    #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Petition::class, cascade: ['persist', 'remove'])]
     private $petitions;
+
+    #[ORM\OneToMany(mappedBy: 'supervisor', targetEntity: Petition::class)]
+    private $supervisor_petitions;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
     private $supervisor;
@@ -69,6 +73,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->employees = new ArrayCollection();
+
+    }
+
+    public static function registerUser(User $user, $roles): User
+    {
+        $user->setPendingVacationDays($user->getTotalVacationDays());
+        $user->setRoles([$roles]);
+        return $user;
     }
 
     public function getName()
@@ -226,7 +238,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_EMPLEADO';
 
         return array_unique($roles);
     }
@@ -285,19 +297,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPetition(): ?Petition
+    /**
+     * @return Collection<int, self>
+     */
+    public function getPetitions(): Collection
     {
-        return $this->petition;
+        return $this->petitions;
     }
 
-    public function setPetition(Petition $petition): self
+    public function addPetition(Petition $petition): self
     {
-        // set the owning side of the relation if necessary
-        if ($petition->getEmployee() !== $this) {
+        if (!$this->petitions->contains($petition)) {
+            $this->petitions[] = $petition;
             $petition->setEmployee($this);
         }
 
-        $this->petition = $petition;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSupervisorPetitions(): Collection
+    {
+        return $this->supervisor_petitions;
+    }
+
+    public function addSupervisorPetition(Petition $petition): self
+    {
+        if (!$this->supervisor_petitions->contains($petition)) {
+            $this->supervisor_petitionst[] = $petition;
+            $petition->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removePetition(Petition $petition): self
+    {
+        if ($this->petitions->removeElement($petition)) {
+            // set the owning side to null (unless already changed)
+            if ($petition->getEmployee() === $this) {
+                $petition->setEmployee(null);
+            }
+        }
 
         return $this;
     }

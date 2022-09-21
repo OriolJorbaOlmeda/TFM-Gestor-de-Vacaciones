@@ -28,6 +28,7 @@ services:
     volumes:
       - ./:/appdata/www
       - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./app/symfony/public/documents:/usr/src/app/documents
 
     ###> XDEBUG 3 ###
     # Use your client IP here

@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\PetitionRepository;
+use App\Modules\Petition\Infrastucture\PetitionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PetitionRepository::class)]
 class Petition
@@ -13,9 +14,13 @@ class Petition
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\GreaterThan('today', message: 'La fecha de inicio debe ser mayor a la fecha actual')]
+    #[Assert\LessThanOrEqual(propertyPath: 'final_date', message: 'La fecha inicio debe ser inferior o igual a la fecha de fin')]
     #[ORM\Column(type: 'date')]
     private $initial_date;
 
+    #[Assert\GreaterThan('today', message: 'La fecha fin debe ser mayor a la fecha actual')]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'initial_date', message: 'La fecha fin debe ser superior o igual a la fecha de inicio')]
     #[ORM\Column(type: 'date')]
     private $final_date;
 
@@ -35,8 +40,10 @@ class Petition
     private $petition_date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'petitions')]
-    #[ORM\JoinColumn(name: 'employee_id', referencedColumnName: 'id', nullable: false)]
     private $employee;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'supervisor_petitions')]
+    private $supervisor;
 
     #[ORM\ManyToOne(targetEntity: Calendar::class, inversedBy: 'petitions')]
     private $calendar;
@@ -143,6 +150,18 @@ class Petition
     public function setEmployee(User $employee): self
     {
         $this->employee = $employee;
+
+        return $this;
+    }
+
+    public function getSupervisor(): ?User
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(User $supervisor): self
+    {
+        $this->supervisor = $supervisor;
 
         return $this;
     }

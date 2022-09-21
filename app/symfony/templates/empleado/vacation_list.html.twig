@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        {% if is_granted(role_supervisor) %}
+            {{ include('supervisor/navbar.html.twig') }}
+        {% elseif is_granted(role_employee)%}
+            {{ include('empleado/navbar.html.twig') }}
+        {% endif %}
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: calc(100vh - calc(3.5rem + 1px));">
+
+
+            <!-- Main content -->
+            <div class="content">
+
+                <!-- VACACIONES -->
+                <div class="content-header">
+                    <div class="container">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"> {{ "vacationList.title1"|trans }} </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 p-0">
+                            <div class="card">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-bordered table-hover text-nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ "petition.initialDate"|trans }}</th>
+                                            <th>{{ "petition.finalDate"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.duration"|trans }}</th>
+                                            <th>{{ "petition.reason"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.state"|trans }}</th>
+                                            <th style="width: 50px"></th> <!-- Botón borrar -->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for petition in vacations %}
+                                            <tr>
+                                                <td> {{ petition.getInitialDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.duration}} </td>
+                                                <td> {{ petition.reason}} </td>
+                                                {% if petition.state == accepted %}
+                                                    <td><span class="badge bg-success">{{ "petition.states.accepted"|trans }}</span></td>
+                                                    <td></td>
+                                                {% elseif petition.state == pending %}
+                                                    <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
+                                                    <td>
+                                                        <div class="btn-group-sm">
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}&pagVac={{ pagVac }}&pagAbs={{ pagAbs }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                {% elseif petition.state == denied %}
+                                                    <td><span class="badge bg-danger">{{ "petition.states.denied"|trans }}</span></td>
+                                                    <td></td>
+                                                {% endif %}
+
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="justify-content: right;">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            {% if pagVac == 1 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac - 1}}&pagAbs={{ pagAbs }}">&laquo;</a></li>
+                            {% endif %}
+
+                            {% if vacations|length < 5 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac + 1}}&pagAbs={{ pagAbs }}">&raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- AUSENCIAS -->
+
+                <div class="content-header">
+                    <div class="container">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"> {{ "vacationList.title2"|trans }}</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 p-0">
+                            <div class="card">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-bordered table-hover text-nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ "petition.initialDate"|trans }}</th>
+                                            <th>{{ "petition.finalDate"|trans }}</th>
+                                            <th style="width: 50px">{{ "petition.duration"|trans }}</th>
+                                            <th>{{ "petition.reason"|trans }}</th>
+                                            <th style="width: 20px"> {{ "petition.justify"|trans }} </th>
+                                            <th style="width: 50px">{{ "petition.state"|trans }}</th>
+                                            <th style="width: 50px"></th> <!-- Botón borrar -->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for petition in absences %}
+
+                                            <tr>
+                                                <td> {{ petition.getInitialDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.getFinalDate()|date("d/m/Y") }} </td>
+                                                <td> {{ petition.duration}} </td>
+                                                <td> {{ petition.reason}} </td>
+                                                <td>
+                                                    {% if petition.justify %}
+                                                        <a  href="{{path('download_file',{filename: petition.justify.title})}}" style="text-decoration: none; color: #007bff">{{ "petition.download"|trans }}</a>
+                                                    {% endif %}
+                                                </td>
+                                                {% if petition.state == accepted %}
+                                                    <td><span class="badge bg-success">{{ "petition.states.accepted"|trans }}</span></td>
+                                                {% elseif petition.state == pending %}
+                                                    <td><span class="badge bg-warning">{{ "petition.states.pending"|trans }}</span></td>
+                                                    <td>
+                                                        <div class="btn-group-sm">
+                                                            <a href="/employee/delete_petition?petitionId={{ petition.id }}&pagVac={{ pagVac }}&pagAbs={{ pagAbs }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                {% elseif petition.state == denied %}
+                                                    <td><span class="badge bg-danger">{{ "petition.states.denied"|trans }}</span></td>
+                                                {% endif %}
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="justify-content: right;">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            {% if pagAbs == 1 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac}}&pagAbs={{ pagAbs - 1 }}">&laquo;</a></li>
+                            {% endif %}
+
+                            {% if absences|length < 5 %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="/employee/vacation?pagVac={{ pagVac}}&pagAbs={{ pagAbs + 1}}">&raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+{% endblock %}

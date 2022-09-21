@@ -1,0 +1,26 @@
+{
+  "name": "tfm-gestor-de-vacaciones",
+  "version": "1.0.0",
+  "description": "##### ICONOS https://fontawesome.com/icons",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OriolJorbaOlmeda/TFM-Gestor-de-Vacaciones.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OriolJorbaOlmeda/TFM-Gestor-de-Vacaciones/issues"
+  },
+  "homepage": "https://github.com/OriolJorbaOlmeda/TFM-Gestor-de-Vacaciones#readme",
+  "EZAjax": {
+    "type": "module"
+  },
+  "devDependencies": {
+    "cypress": "^10.4.0"
+  }
+}

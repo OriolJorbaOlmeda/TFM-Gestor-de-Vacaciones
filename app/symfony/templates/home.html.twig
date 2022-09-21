@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card">
+            <div class="card-body login-card-body">
+                <div class="login-logo">
+                    <b>{{ "general.applicationTitle"|trans }}</b>
+                    <img src="{{ asset('icono.png') }}"
+                         class="brand-image" style="opacity: .9; width: 30%" alt="logo">
+                </div>
+
+                <div style="text-align: center">
+                    <p><a href="{{ path('app_register_company') }}">{{ "homePage.registerCompany"|trans }}</a></p>
+                    <p><a href="{{ path('app_login') }}">{{ "homePage.login"|trans }}</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </body>
+{% endblock %}
