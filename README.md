@@ -1,10 +1,5 @@
 # TFM - GESTOR DE VACACIONES
 
-##### ICONOS
-https://fontawesome.com/icons
-
-- Si se quiere utilizar alguno pero no funciona, añadirlo en: "app/symfony/public/bootstrap_adminLTE/plugins/fontawesome-free/css/all.css"
-- También se pueden usar los de bootstrap
 
 
 ## 🐳 Primero pasos a seguir
@@ -28,19 +23,38 @@ Una vez instalado se ha de inicializar el proyecto, para ello se tiene que levan
         php bin/phpunit tests/UserTest.php
 
 
+## FUNCIONALIDADES
 
-##APARTADOS
+**USUARIO ADMINISTRADOR**
 
-- Modificar usuario 
-- Crear calendario 
+- Crear calendario
 - Dar de alta usuario
-- Aprobar o denegar solicitud vacaciones 
-- Cancelar unas vacaciones
-- Buscar en el calendario por departamento o empleado
+- Modificar usuario
+
+**USUARIO EMPLEADO**
 - Solicitar vacaciones
 - Solicitar ausencia justificada
-- Cambiar contraseña 
-- 
+- Borrar solicitud de vacaciones
+- Dashboard con su información personal
+- Calendario vacacional del resto de empleados
+- Listado del estado de solicitudes
+
+
+**USUARIO EMPLEADO SUPERVISOR**
+- Solicitar vacaciones
+- Solicitar ausencia justificada
+- Borrar solicitud de vacaciones
+- Dashboard con su información personal
+- Calendario vacacional del resto de empleados
+- Listado del estado de solicitudes
+- Aprobar o denegar solicitud de sus subordinados
+
+**GENERALES**
+- Login
+- Logout
+- Registrar una empresa
+- Cambiar contraseña
+- Cambiar idioma (inglés, castellano, catalán y euskera)
 
 
 ## SOLICITUDES
@@ -55,8 +69,3 @@ Tipos:
 - VACATION
 - ABSENCE
 
-## PERSISTIR LA CARPETA app/public/documents EN UN VOLUMEN DE DOCKER DE PHP
-
-He modificado docker-compose.yaml con la línea 31: ```- ./app/symfony/public/documents:/usr/src/app/documents```
-
-He modificado docker/php/Dockerfile con la línea 38: ```RUN mkdir -p /usr/src/app/documents```
